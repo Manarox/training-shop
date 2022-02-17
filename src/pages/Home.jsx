@@ -1,3 +1,4 @@
+import React from 'react';
 import { CategoryHome } from '../pages/CategoryHome';
 import './Home.css';
 

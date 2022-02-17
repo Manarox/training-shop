@@ -57,13 +57,13 @@ const Header = () => {
 
       <section className="menu__wrap flex container">
         <div className="menu__logo">
-          <Link to="/" className='header-nav-logo' data-test-id='header-logo-link'><img className="logo" src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="Logo" /></Link>
+          <Link to="/training-shop" className='header-nav-logo' data-test-id='header-logo-link'><img className="logo" src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="Logo" /></Link>
         </div>
         <div className='menu' data-test-id='menu'>
           <ul className="menu__list flex list-reset">
             <li className="menu__item"><Link to="/" data-test-id={`menu-link-about`}>About Us</Link></li>
-            <li className="menu__item"><Link to="/women" data-test-id={`menu-link-women`}>Women</Link></li>
-            <li className="menu__item"><Link to="/men" data-test-id={`menu-link-men`}>Men</Link></li>
+            <li className="menu__item"><Link to="women" data-test-id={`menu-link-women`}>Women</Link></li>
+            <li className="menu__item"><Link to="men" data-test-id={`menu-link-men`}>Men</Link></li>
             <li className="menu__item"><Link to="/" data-test-id={`menu-link-beauty`}>Beauty</Link></li>
             <li className="menu__item"><Link to="/" data-test-id={`menu-link-accessories`}>Accessories</Link></li>
             <li className="menu__item"><Link to="/" data-test-id={`menu-link-blog`}>Blog</Link></li>

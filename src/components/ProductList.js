@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 import '../pages/Home.css';
 import { useParams } from "react-router-dom";
 import './ProductList.css';
 import Data from "../pages/data.json";
 
 const ProductList = () => {
-  const {id} = useParams();
+  
   const {category} = useParams();
   const arr = [];
   

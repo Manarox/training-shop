@@ -6,8 +6,9 @@ import './ProductList.css';
 import Data from "../pages/data.json";
 
 const ProductList = () => {
-  // const {id} = useParams();
+  const id = useParams();
   const {category} = useParams();
+  const idProduct = Number(id.id) - 1
   const arr = [];
   
   if ({category}.category === 'women') {
@@ -24,14 +25,17 @@ const ProductList = () => {
         );
       })
   }
-  
+  console.log(id);
+console.log(arr);
+console.log(idProduct);
+console.log(arr[idProduct].id);
 return (
 <>
 <div className="page-product" data-test-id={`product-page-${category}`}>
-{arr.map(post => {
-  // if (Number({id}.id) === Number(post.id)) {
+{/* {arr.map(post => {
+  // if (Number({id}.id) === Number(post.id)) { */}
     
-    return (
+    {/* return ( */}
             <>
     <div class="background-grey_f8">
       <section class="bread flex container">
@@ -44,7 +48,7 @@ return (
               <Link to={`/training-shop/${category}`} className="bread__href">{category}</Link>
             </li>
             <li class="bread__item bread__item_active">
-              <a href="!#" class="bread__href">{post.name}</a>
+              <a href="!#" class="bread__href">{arr[idProduct].name}</a>
             </li>
           </ul>
           <button class="bread__btn">
@@ -52,7 +56,7 @@ return (
           </button>
         </div>
         <div class="bread__title">
-          <h1 class="bread__h1">{post.name}</h1>
+          <h1 class="bread__h1"> {arr[idProduct].name} </h1>
         </div>
 
         <div class="bread__bot flex">
@@ -179,7 +183,7 @@ return (
       <div class="strip"></div>
       <div class="actions">
         <div class="actions__price">
-          {post.price}$
+        {arr[idProduct].price}$
         </div>
         <div class="actions__add">
           <button class="add-to-card">Add to card</button>
@@ -476,11 +480,11 @@ return (
 
               
             </>
-          );
-        }
+          {/* ); */}
+        {/* // } */}
           
-      // }
-      )}
+      {/* // } */}
+      )
   </div>
   </>
       

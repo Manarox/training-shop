@@ -6,7 +6,7 @@ import './ProductList.css';
 import Data from "../pages/data.json";
 
 const ProductList = () => {
-  const {id} = useParams();
+  // const {id} = useParams();
   const {category} = useParams();
   const arr = [];
   

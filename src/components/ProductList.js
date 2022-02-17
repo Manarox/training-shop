@@ -10,13 +10,9 @@ const ProductList = () => {
   const arr = [];
   
   if ({category}.category === 'women') {
-    Data.women.map(post => {
-        arr.push(post);
-    })
+    Data.women.map(post => {arr.push(post);})
   } else if ({category}.category === 'men') {
-      Data.men.map(post => {
-        arr.push(post);
-    })
+      Data.men.map(post => {arr.push(post);})
   }
   
 return (

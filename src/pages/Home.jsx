@@ -115,10 +115,10 @@ const Home = () => {
     </div>
 
     <CategoryHome category={'men'}/>
-
-    <a href="!#" className="see-all flex see-all__link">
+    
+    <Link to="/training-shop" className="see-all flex see-all__link">
       See All
-    </a>
+    </Link>
   </section>
 
   <section className="ad flex container">

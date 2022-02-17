@@ -32,10 +32,10 @@ const Category = (props) => {
             <div className="bread__wrap">
                 <ul className="bread__list flex list-reset">
                 <li className="bread__item">
-                <Link to="/" className="bread__href">Home</Link>
+                    <Link to="/training-shop" className="bread__href">Home</Link>
                 </li>
                 <li className="bread__item bread__item_active">
-                    <Link to={`/${category}`} className="bread__href">{category}</Link>
+                    <Link to={`/training-shop/${category}`} className="bread__href">{category}</Link>
                 </li>
                 </ul>
                 <button className="bread__btn">
@@ -86,7 +86,7 @@ const Category = (props) => {
                 return (
                     
                     <li className="product__item" data-test-id={`clothes-card-${category}`}>
-                        <Link key={post.id} to={`/${category}/${post.id}`}>
+                        <Link key={post.id} to={`/training-shop/${category}/${post.id}`}>
                             <div className="product__img-block">
                                 <img src={process.env.PUBLIC_URL + "/images" + post.image} alt="Product name" className="product__img" />
                             </div>

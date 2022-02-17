@@ -10,7 +10,7 @@ function App() {
   return (
     
       <Routes>
-        <Route path="/training-shop/" element={<Layout />}>
+        <Route path="/training-shop" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/training-shop/:category" element={<Category />} />
           <Route path="/training-shop/:category/:id" element={<ProductList />} />

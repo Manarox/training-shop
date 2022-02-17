@@ -38,10 +38,10 @@ return (
         <div class="bread__wrap">
           <ul class="bread__list flex list-reset">
             <li class="bread__item">
-              <Link to="/" className="bread__href">Home</Link>
+              <Link to="/training-shop" className="bread__href">Home</Link>
             </li>
             <li class="bread__item">
-              <Link to={`/${category}`} className="bread__href">{category}</Link>
+              <Link to={`/training-shop/${category}`} className="bread__href">{category}</Link>
             </li>
             <li class="bread__item bread__item_active">
               <a href="!#" class="bread__href">{post.name}</a>

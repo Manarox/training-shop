@@ -54,16 +54,16 @@ const Footer = () => {
         </div>
         <ul className="footer__list list-reset">
           <li className="footer__item">
-            <Link to="/men" className="footer__link" data-test-id={'footer-nav-link-men'}>Men</Link>
+            <Link to="men" className="footer__link" data-test-id={'footer-nav-link-men'}>Men</Link>
           </li>
           <li className="footer__item">
-            <Link to="/women" className="footer__link" data-test-id={'footer-nav-link-women'}>Women</Link>
+            <Link to="women" className="footer__link" data-test-id={'footer-nav-link-women'}>Women</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-accessories'}>Accessories</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-accessories'}>Accessories</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-beauty'}>Beauty</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-beauty'}>Beauty</Link>
           </li>
         </ul>
       </div>
@@ -73,16 +73,16 @@ const Footer = () => {
         </div>
         <ul className="footer__list list-reset">
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-About-us'}>About Us</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-About-us'}>About Us</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Contact-Us'}>Contact Us</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Contact-Us'}>Contact Us</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Blog'}>Blog</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Blog'}>Blog</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-FAQs'}>FAQs</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-FAQs'}>FAQs</Link>
           </li>
         </ul>
       </div>
@@ -92,16 +92,16 @@ const Footer = () => {
         </div>
         <ul className="footer__list list-reset">
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Terms-&-Conditions'}>Terms & Conditions</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Terms-&-Conditions'}>Terms & Conditions</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Returns-&-Exchanges'}>Returns & Exchanges</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Returns-&-Exchanges'}>Returns & Exchanges</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Shipping-&-Delivery'}>Shipping & Delivery</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Shipping-&-Delivery'}>Shipping & Delivery</Link>
           </li>
           <li className="footer__item">
-            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Privacy-PolicyBeauty'}>Privacy PolicyBeauty</Link>
+            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Privacy-PolicyBeauty'}>Privacy PolicyBeauty</Link>
           </li>
         </ul>
       </div>

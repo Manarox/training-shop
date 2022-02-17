@@ -33,7 +33,7 @@ return (
 <>
 <div className="page-product" data-test-id={`product-page-${category}`}>
 {arr.map(post => {
-  if (Number({id}.id) === Number(post.id)) {
+  // if (Number({id}.id) === Number(post.id)) {
     
     return (
             <>
@@ -483,7 +483,8 @@ return (
           );
         }
           
-      })}
+      // }
+      )}
   </div>
   </>
       

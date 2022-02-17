@@ -271,9 +271,6 @@ button {
   cursor: pointer;
 }
 
-.prod {
-
-}
 .prod__image {
   width: 50%;
   flex-direction: row;

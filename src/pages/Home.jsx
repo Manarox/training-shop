@@ -172,7 +172,7 @@ const Home = () => {
     <div className="latest__list">
       <div className="latest__item">
         <div className="latest__img">
-          
+          <img src={process.env.PUBLIC_URL + "/images/latest-1.jpg"} alt=''/>
         </div>
         <div className="latest__info">
           <div className="info__title">
@@ -185,7 +185,7 @@ const Home = () => {
       </div>
       <div className="latest__item">
         <div className="latest__img">
-          <img src={process.env.PUBLIC_URL + "/images/latest-2.jpg"}/>
+          <img src={process.env.PUBLIC_URL + "/images/latest-2.jpg"} alt=''/>
         </div>
         <div className="latest__info">
           <div className="info__title">
@@ -198,7 +198,7 @@ const Home = () => {
       </div>
       <div className="latest__item">
         <div className="latest__img">
-          <img src={process.env.PUBLIC_URL + "/images/latest-3.jpg"}/>
+          <img src={process.env.PUBLIC_URL + "/images/latest-3.jpg"} alt=''/>
         </div>
         <div className="latest__info">
           <div className="info__title">

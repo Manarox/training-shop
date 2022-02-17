@@ -1,0 +1,119 @@
+{
+  "women": [
+     { 
+        "id": 1,
+        "name": "Women's tracksuit Q109",
+        "price": "30.00",
+        "rating": 4, 
+        "image": "/prod-w-1.jpg"
+     },
+      { 
+        "id": 2,
+        "name": "Women's tracksuit Q109", 
+        "price": "10.00",
+        "oldprice": "60.00",
+        "rating": 5, 
+        "image": "/prod-w-2.jpg"
+     },
+     { 
+        "id": 3,
+        "name": "Women's tracksuit Q109", 
+        "price": "30.00",
+        "rating": 2, 
+        "image": "/prod-w-3.jpg"
+     },
+     { 
+        "id": 4,
+        "name": "Women's tracksuit Q109", 
+        "price": "90.00",
+        "rating": 2, 
+        "image": "/prod-w-4.jpg"
+      },
+      { 
+        "id": 5,
+        "name": "Women's tracksuit Q109", 
+        "price": "40.00",
+        "rating": 2, 
+        "image": "/prod-w-5.jpg"
+      },
+      { 
+        "id": 6,
+        "name": "Women's tracksuit Q109", 
+        "price": "70.00",
+        "rating": 2, 
+        "image": "/prod-w-6.jpg"
+      },
+      { 
+        "id": 7,
+        "name": "Women's tracksuit Q109", 
+        "price": "30.00",
+        "rating": 2, 
+        "image": "/prod-w-7.jpg"
+      },
+      { 
+        "id": 8,
+        "name": "Women's tracksuit Q109", 
+        "price": "30.00",
+        "rating": 2, 
+        "image": "/prod-w-8.jpg"
+      }
+    ],
+  "men": [
+      { 
+        "id": 1,
+        "name": "Mens's tracksuit Q109", 
+        "price": "10.00",
+        "rating": 4, 
+        "image": "/prod-m-1.jpg"
+      },
+      { 
+        "id": 2,
+        "name": "Mens's tracksuit Q109", 
+        "price": "20.00",
+        "rating": 2, 
+        "image": "/prod-m-2.jpg"
+      },
+      { 
+        "id": 3,
+        "name": "Mens's tracksuit Q109", 
+        "price": "60.00",
+        "rating": 5, 
+        "image": "/prod-m-3.jpg"
+      },
+      {
+        "id": 4,
+        "name": "Mens's tracksuit Q109", 
+        "price": "40.00",
+        "rating": 4, 
+        "image": "/prod-m-4.jpg"
+      },
+      { 
+        "id": 5,
+        "name": "Mens's tracksuit Q109", 
+        "price": "38.00",
+        "rating": 4, 
+        "image": "/prod-m-5.jpg"
+      },
+      { 
+        "id": 6,
+        "name": "Mens's tracksuit Q109", 
+        "price": "35.00",
+        "rating": 4, 
+        "image": "/prod-m-6.jpg"
+      },
+      { 
+        "id": 7,
+        "name": "Mens's tracksuit Q109", 
+        "price": "33.00",
+        "rating": 4, 
+        "image": "/prod-m-7.jpg"
+      },
+      { 
+        "id": 8,
+        "name": "Mens's tracksuit Q109", 
+        "price": "32.00",
+        "rating": 4, 
+        "image": "/prod-m-8.jpg"
+      }
+    ]
+}

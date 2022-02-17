@@ -1,0 +1,114 @@
+/*copy black*/
+.black-line__text_footer {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    padding-left: 0px;
+    text-transform: uppercase;
+    padding-right: 100px;
+  }
+  .black-line_footer {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .form-footer__input {
+    background: #414141;
+    border: 0px;
+    width: 400px;
+    height: 32px;
+    padding: 7px 16px;
+    margin-right: 36px;
+  }
+  .form-footer__input::placeholder {
+    color: #FFFFFF;
+    opacity: 0.4;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .form-footer__button {
+    padding: 7px 24px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    background: #121212;
+    color: #fff;
+    border: 1px solid #FFF;
+  }
+
+/*footer*/
+.footer {
+    margin-bottom: 40px;
+    justify-content: space-between;
+  }
+  .footer__nav {
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .footer__title {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 13px;
+    text-transform: uppercase;
+    padding-bottom: 21px;
+  }
+  .footer__item {
+    font-size: 12px;
+    line-height: 13px;
+    opacity: 0.8;
+  }
+  .footer__item:not(:last-child) {
+    margin-bottom: 21px;
+  }
+  .footer__item_icon1 {
+    padding-left: 25px;
+    background-image: url(../../public/images/footer-1.svg);
+
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+  }
+  .footer__item_icon2 {
+    padding-left: 25px;
+    background-image: url(../../public/images/footer-2.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+  }
+  .footer__item_icon3 {
+    padding-left: 25px;
+    background-image: url(../../public/images/footer-3.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+  }
+  .footer__item_icon4 {
+    padding-left: 25px;
+    background-image: url(../../public/images/footer-4.svg);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+  }
+  
+  /*copyright*/
+  .grey-bg {
+    background: #F8F8F8;
+    padding: 9px 0;
+  }
+  .copyright {
+    justify-content: space-between;
+    align-items: center;
+  }
+  .copyright__copy, .copyright__clever {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 22px;
+    opacity: 0.8;
+  }
+  .payments__img:not(:last-child) {
+    margin-right: 5px;
+  }

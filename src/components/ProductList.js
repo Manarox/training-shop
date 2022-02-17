@@ -24,11 +24,7 @@ const ProductList = () => {
         );
       })
   }
-  arr.map(post => {
-    return (
-      arr.push(post)
-    );
-  })
+  
 return (
 <>
 <div className="page-product" data-test-id={`product-page-${category}`}>

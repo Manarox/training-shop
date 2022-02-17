@@ -10,7 +10,7 @@ const Footer = () => {
       <section className="black-line black-line_footer container">
         <div className="black-line__left flex">
           <div className="black-line__item flex">
-            <a href="!#" className="black-line__text black-line__text_footer">BE IN TOUCH WITH US:</a>
+            <Link to="/training-shop" className="black-line__text black-line__text_footer">BE IN TOUCH WITH US:</Link>
           </div>
           <div className="black-line__item flex">
             <form action="https://jsonplaceholder.typicode.com/posts" className="form-footer" method="post" name="form">

@@ -43,7 +43,7 @@ return (
               <Link to={`/training-shop/${category}`} className="bread__href">{category}</Link>
             </li>
             <li class="bread__item bread__item_active">
-              <a href="!#" class="bread__href">{arr[idProduct].name}</a>
+              <Link to={`/training-shop/${category}/${arr[idProduct].id}`} className="bread__href">{arr[idProduct].name}</Link>
             </li>
           </ul>
           <button class="bread__btn">
@@ -132,24 +132,24 @@ return (
         </div>
         <ul class="color__image-list flex list-reset">
           <li class="color__item">
-            <a href="!#" class="color__img-href">
+            <Link to="/training-shop" className="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-1.jpg"} alt="Rating product" />
-            </a>
+            </Link>
           </li>
           <li class="color__item">
-            <a href="!#" class="color__img-href">
+            <Link to="/training-shop" className="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-2.jpg"} alt="Rating product" />
-            </a>
+            </Link>
           </li>
           <li class="color__item">
-            <a href="!#" class="color__img-href">
+            <Link to="/training-shop" className="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-3.jpg"} alt="Rating product" />
-            </a>
+            </Link>
           </li>
           <li class="color__item">
-            <a href="!#" class="color__img-href">
+            <Link to="/training-shop" className="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-4.jpg"} alt="Rating product" />
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

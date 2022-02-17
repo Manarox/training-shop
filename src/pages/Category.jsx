@@ -85,7 +85,7 @@ const Category = (props) => {
             {arr.map(post => {
                 return (
                     
-                    <li className="product__item" data-test-id={`clothes-card-${category}`}>
+                    <li className="product__item cards-item" data-test-id={`clothes-card-${category}`}>
                         <Link key={post.id} to={`/training-shop/${category}/${post.id}`}>
                             <div className="product__img-block">
                                 <img src={process.env.PUBLIC_URL + "/images" + post.image} alt="Product name" className="product__img" />

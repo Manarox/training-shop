@@ -5,7 +5,7 @@ const Footer = () => {
     return (
     <>
     <footer>
-    <div data-test-id='footer'>
+    <div className="footer" data-test-id='footer'>
     <div className="black-background">
       <section className="black-line black-line_footer container">
         <div className="black-line__left flex">
@@ -47,7 +47,7 @@ const Footer = () => {
       </section>
     </div>
 
-    <section className="footer flex container">
+    <section className="footer1 flex container">
       <div className="footer__nav flex">
         <div className="footer__title">
           Categories

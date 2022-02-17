@@ -114,3 +114,250 @@ html {
     .grey-line_margin-big {
     margin-bottom: 96px;
     }
+
+    @media (max-width: 1024px){
+        .container {
+            padding: 20px;
+        }
+        .menu__wrap {
+            justify-content: center;
+        }
+        .logo {
+            padding-right: 0px;
+        }
+        .menu__wrap {
+            flex-direction: column;
+        }
+        .menu {
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        .banners__list {
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .banners {
+            justify-content: center;
+        }
+        .advantage {
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-direction: column;
+            max-width: 350px;
+        }
+        .advantage__item {
+            max-width: 350px;
+            padding-left: 0;
+        }
+        .advantage__item:not(:last-child) {
+            padding-bottom: 20px;
+        }
+        .product__nav {
+            flex-direction: column;
+            justify-content: center;
+        }
+        .product__h2 {
+            margin: 0 auto;
+            padding-bottom: 20px;
+        }
+        .product__nav-list {
+            margin: 0 auto;
+        }
+        .product__list {
+            justify-content: center;
+        }
+        .product__item:not(:nth-child(4n)) {
+            margin-right: 0;
+        }
+        .product__item {
+            border: solid white 20px;
+        }
+        .ad__list {
+            justify-content: center;
+        }
+        .latest__list {
+            justify-content: center;
+        }
+        .latest__item {
+            border: solid white 20px;
+        }
+        .black-line {
+            justify-content: center;
+            flex-direction: column;
+        }
+        .black-line__left {
+            justify-content: center;
+            flex-direction: column;
+        }
+        .form-footer {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .form-footer__input {
+            max-width: 400px;
+            width: 100%!important;
+            margin-right: 0!important;
+            margin-bottom: 10px;
+        }
+        .black-line__text_footer {
+            padding-right: 0!important;
+            margin-bottom: 10px;
+        }
+        .black-line__item:not(:last-child) {
+            margin-right: 0;
+        }
+        .form-footer__button {
+            margin-bottom: 10px;
+        }
+        .footer1 {
+            justify-content: center!important;
+            flex-direction: column;
+            width: 300px;
+        }
+        .footer__item_icon1, .footer__item_icon2, .footer__item_icon3, .footer__item_icon4 {
+            padding-left: 0!important;
+            background-image: none;
+        }
+        .footer__title {
+            text-align: center;
+        }
+        .footer__list {
+            text-align: center;
+        }
+        .footer__nav {
+            margin-bottom: 20px
+        }
+        .copyright {
+            flex-direction: column;
+            justify-content: center;
+        }
+        .copyright__copy {
+            margin-bottom: 20px
+        }
+        .copyright__payments {
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 20px
+        }
+        .payments__img {
+            display: flex;
+        }
+        .payments__img:not(:last-child) {
+            margin-bottom: 10px!important;
+        }
+        .subscrib-bg, .subscrib-bg-man {
+            display: none;
+        }
+        .black-line__icons {
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .bread__list {
+            justify-content: center;
+        }
+
+    }
+    @media (max-width: 597px){
+        .subscrib__form {
+            padding: 30px 20px 30px 20px;
+        }
+        .banners__item_height:not(:last-child) {
+            margin-right: 0;
+        }
+        .banners__item_height {
+            max-width: 240px;
+        }
+        .menu__list {
+            flex-direction: column;
+            text-align: center;
+        }
+        .menu__item:not(:last-child) {
+            margin-right: 0;
+        }
+        .menu__item {
+            margin-bottom: 10px;
+        }
+        .product__nav-list {
+            flex-direction: column;
+            text-align: center;
+        }
+        .product__nav-item:not(:last-child) {
+            margin-right: 0;
+        }
+        .product__nav-item {
+            margin-bottom: 10px;
+        }
+        .form {
+            width: 100%;
+        }
+        .prod {
+            flex-direction: column;
+            justify-content: center;
+        }
+        .prod__image {
+            width: 100%;
+        }
+        .actions__like {
+            padding-right: 0;
+        }
+        .actions__add {
+            padding-right: 0;
+        }
+        .advantage-prod {
+            flex-direction: column;
+        }
+        .actions {
+            flex-direction: column;    
+        }
+        .size__image-list {
+            flex-direction: column; 
+        }
+        .color__image-list  {
+            flex-direction: column;
+        }
+        .prod__info {
+            width: 100%;
+            padding-left: 0;
+        }
+        .color__item {
+            text-align: center;
+        }
+        .size__title {
+            text-align: center;
+        }
+        .size__image-list {
+            text-align: center;
+        }
+        .color__title {
+            text-align: center;
+        }
+        .size__guide {
+            text-align: center;
+        }
+    }
+    @media (max-width: 300px){
+        .subscrib__form {
+            padding: 15px 0 15px 0;
+        }
+        .banners__href_ad {
+            width: 100%;
+        }
+        .latest__info {
+            margin-left: 0;
+            max-width: 100%;
+            bottom: -113px;
+        }
+        .form__input {
+            padding: 6px;
+        }
+        .form__button {
+            padding: 6px;
+        }
+        .footer1 {
+            width: 100%;
+        }
+    }
+
+    

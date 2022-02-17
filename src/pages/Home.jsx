@@ -171,7 +171,7 @@ const Home = () => {
     <div className="latest__list">
       <div className="latest__item">
         <div className="latest__img">
-          <img src={process.env.PUBLIC_URL + "/images/latest-1.jpg"} />
+          
         </div>
         <div className="latest__info">
           <div className="info__title">

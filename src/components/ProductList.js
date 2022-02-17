@@ -25,18 +25,13 @@ const ProductList = () => {
         );
       })
   }
-  console.log(id);
-console.log(arr);
-console.log(idProduct);
-console.log(arr[idProduct].id);
+// console.log(id);
+// console.log(arr);
+// console.log(idProduct);
+// console.log(arr[idProduct].id);
 return (
-<>
+
 <div className="page-product" data-test-id={`product-page-${category}`}>
-{/* {arr.map(post => {
-  // if (Number({id}.id) === Number(post.id)) { */}
-    
-    {/* return ( */}
-            <>
     <div class="background-grey_f8">
       <section class="bread flex container">
         <div class="bread__wrap">
@@ -183,7 +178,7 @@ return (
       <div class="strip"></div>
       <div class="actions">
         <div class="actions__price">
-        {arr[idProduct].price}$
+          {arr[idProduct].price}$
         </div>
         <div class="actions__add">
           <button class="add-to-card">Add to card</button>
@@ -477,17 +472,8 @@ return (
       </ul>
     </div>
   </section>
-
-              
-            </>
-          {/* ); */}
-        {/* // } */}
-          
-      {/* // } */}
       )
   </div>
-  </>
-      
   )
 }
     

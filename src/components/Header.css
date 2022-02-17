@@ -92,6 +92,16 @@ html {
     .logo {
     padding-right: 79px;
     }
+    .header-nav-logo {
+    display: flex;
+    align-items: center;
+    width: 225px;
+    height: 19px;
+    background-image: url("/training-shop/images/logo.svg");
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    }
     .menu__item:not(:last-child) {
     margin-right: 32px;
     }

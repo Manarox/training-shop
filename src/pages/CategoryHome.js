@@ -23,7 +23,6 @@ const CategoryHome = (props) => {
 
     return (
         
-        <>
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul class="product__list flex list-reset">
             {arr.map(post => {
@@ -61,8 +60,6 @@ const CategoryHome = (props) => {
             })}
         </ul>
         </div>
-        </>
-        
     )
 }
 

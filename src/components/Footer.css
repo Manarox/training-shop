@@ -66,7 +66,7 @@
   }
   .footer__item_icon1 {
     padding-left: 25px;
-    background-image: url(/../../public/images/footer-1.svg);
+    background-image: url("/images/footer-1.svg");
 
     background-repeat: no-repeat;
     background-position: left;
@@ -74,21 +74,21 @@
   }
   .footer__item_icon2 {
     padding-left: 25px;
-    background-image: url(/../../public/images/footer-2.svg);
+    background-image: url("/images/footer-2.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: contain;
   }
   .footer__item_icon3 {
     padding-left: 25px;
-    background-image: url(/../../public/images/footer-3.svg);
+    background-image: url("/images/footer-3.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: contain;
   }
   .footer__item_icon4 {
     padding-left: 25px;
-    background-image: url(/../../public/images/footer-4.svg);
+    background-image: url("/images/footer-4.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: contain;

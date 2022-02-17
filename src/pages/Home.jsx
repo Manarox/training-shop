@@ -8,32 +8,32 @@ const Home = () => {
     <section className="banners flex container">
       <ul className="banners__list flex list-reset">
         <li className="banners__item banners__item_height banners__item_card1">
-          <a href="#" className="banners__href">
+          <a href="!#" className="banners__href">
             <span className="banners__test">Banner</span>
             your Title text
           </a>
-          <a href="#" className="banners__arrow_left">
+          <a href="!#" className="banners__arrow_left">
             <svg width="9" height="16" viewbox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#" className="banners__arrow_right">
+          <a href="!#" className="banners__arrow_right">
             <svg width="9" height="16" viewbox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L8 8L1 15" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </li>
         <div className="banners__wrap-column banners__item_height">
           <div className="banners__wrap-row">
             <li className="banners__item banners__item_card2">
-              <a href="#" className="banners__href banners__href_small">
+              <a href="!#" className="banners__href banners__href_small">
                 Women
               </a>
             </li>
             <li className="banners__item banners__item_card3">
-              <a href="#" className="banners__href banners__href_small">
+              <a href="!#" className="banners__href banners__href_small">
                 men
               </a>
             </li>
           </div>
           <li className="banners__item banners__item_card4">
-            <a href="#" className="banners__href">
+            <a href="!#" className="banners__href">
               Accessories
             </a>
           </li>
@@ -65,26 +65,26 @@ const Home = () => {
       </h2>
       <ul className="product__nav-list flex list-reset">
         <li className="product__nav-item product__nav-item_active">
-          <a href="#" className="product__link">NEW ARRIVALS</a>
+          <a href="!#" className="product__link">NEW ARRIVALS</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">SPECIALS</a>
+          <a href="!#" className="product__link">SPECIALS</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">BESTSELLERS</a>
+          <a href="!#" className="product__link">BESTSELLERS</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">MOST VIEWED</a>
+          <a href="!#" className="product__link">MOST VIEWED</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">FEATURED PRODUCTS</a>
+          <a href="!#" className="product__link">FEATURED PRODUCTS</a>
         </li>
       </ul>
     </div>
 
     <CategoryHome category={'women'}/>
 
-    <a href="#" className="see-all flex see-all__link">
+    <a href="!#" className="see-all flex see-all__link">
       See All
     </a>
   </section>
@@ -96,26 +96,26 @@ const Home = () => {
       </h2>
       <ul className="product__nav-list flex list-reset">
         <li className="product__nav-item product__nav-item_active">
-          <a href="#" className="product__link">NEW ARRIVALS</a>
+          <a href="!#" className="product__link">NEW ARRIVALS</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">SPECIALS</a>
+          <a href="!#" className="product__link">SPECIALS</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">BESTSELLERS</a>
+          <a href="!#" className="product__link">BESTSELLERS</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">MOST VIEWED</a>
+          <a href="!#" className="product__link">MOST VIEWED</a>
         </li>
         <li className="product__nav-item">
-          <a href="#" className="product__link">FEATURED PRODUCTS</a>
+          <a href="!#" className="product__link">FEATURED PRODUCTS</a>
         </li>
       </ul>
     </div>
 
     <CategoryHome category={'men'}/>
 
-    <a href="#" className="see-all flex see-all__link">
+    <a href="!#" className="see-all flex see-all__link">
       See All
     </a>
   </section>
@@ -123,13 +123,13 @@ const Home = () => {
   <section className="ad flex container">
     <ul className="ad__list flex list-reset">
       <li className="ad__item ad__item_height banners__item ad__item_card1">
-        <a href="#" className="banners__href banners__href_ad">
+        <a href="!#" className="banners__href banners__href_ad">
           <span className="banners__test banners__test_small">New Season</span>
           lookbook collection
         </a>
       </li>
       <li className="ad__item ad__item_height banners__item ad__item_card2">
-        <a href="#" className="banners__href banners__href_ad">
+        <a href="!#" className="banners__href banners__href_ad">
           <span className="banners__test banners__test_small">Sale</span>
           Get UP to <span className="ad__item_span">50% off</span>
         </a>
@@ -171,7 +171,7 @@ const Home = () => {
     <div className="latest__list">
       <div className="latest__item">
         <div className="latest__img">
-          <img src={process.env.PUBLIC_URL + "/images/latest-1.jpg"} alt="Latest image"/>
+          <img src={process.env.PUBLIC_URL + "/images/latest-1.jpg"}/>
         </div>
         <div className="latest__info">
           <div className="info__title">
@@ -184,7 +184,7 @@ const Home = () => {
       </div>
       <div className="latest__item">
         <div className="latest__img">
-          <img src={process.env.PUBLIC_URL + "/images/latest-2.jpg"} alt="Latest image"/>
+          <img src={process.env.PUBLIC_URL + "/images/latest-2.jpg"}/>
         </div>
         <div className="latest__info">
           <div className="info__title">
@@ -197,7 +197,7 @@ const Home = () => {
       </div>
       <div className="latest__item">
         <div className="latest__img">
-          <img src={process.env.PUBLIC_URL + "/images/latest-3.jpg"} alt="Latest image"/>
+          <img src={process.env.PUBLIC_URL + "/images/latest-3.jpg"}/>
         </div>
         <div className="latest__info">
           <div className="info__title">

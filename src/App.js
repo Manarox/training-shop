@@ -1,7 +1,6 @@
 import './App.css';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
-import { Notfound } from './pages/Notfound';
 import { Category } from './pages/Category';
 import { ProductList } from './components/ProductList';
 import { Layout } from './components/Layout';

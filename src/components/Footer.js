@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -9,7 +9,7 @@ const Footer = () => {
       <section className="black-line black-line_footer container">
         <div className="black-line__left flex">
           <div className="black-line__item flex">
-            <a className="black-line__text black-line__text_footer" href="#">BE IN TOUCH WITH US:</a>
+            <a href="!#" className="black-line__text black-line__text_footer">BE IN TOUCH WITH US:</a>
           </div>
           <div className="black-line__item flex">
             <form action="https://jsonplaceholder.typicode.com/posts" className="form-footer" method="post" name="form">

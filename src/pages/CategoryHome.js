@@ -7,11 +7,11 @@ const CategoryHome = (props) => {
     
     const arr = [];
 
-    if ({category}.category == 'women') {
+    if ({category}.category === 'women') {
         Data.women.map(post => {
             arr.push(post)
         })
-    } else if ({category}.category == 'men') {
+    } else if ({category}.category === 'men') {
         Data.men.map(post => {
             arr.push(post)
         })

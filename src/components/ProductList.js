@@ -9,13 +9,13 @@ const ProductList = () => {
   const {category} = useParams();
   const arr = [];
   
-  if ({category}.category == 'women') {
+  if ({category}.category === 'women') {
     Data.women.map(post => {
-        arr.push(post)
+        arr.push(post);
     })
-  } else if ({category}.category == 'men') {
+  } else if ({category}.category === 'men') {
       Data.men.map(post => {
-        arr.push(post)
+        arr.push(post);
     })
   }
   
@@ -23,7 +23,7 @@ return (
 <>
 <div className="page-product" data-test-id={`product-page-${category}`}>
 {arr.map(post => {
-  if ({id}.id == post.id) {
+  if (Number({id}.id) === Number(post.id)) {
     
     return (
             <>
@@ -35,11 +35,10 @@ return (
               <Link to="/" className="bread__href">Home</Link>
             </li>
             <li class="bread__item">
-              <a href="#" class="bread__href"></a>
               <Link to={`/${category}`} className="bread__href">{category}</Link>
             </li>
             <li class="bread__item bread__item_active">
-              <a href="#" class="bread__href">{post.name}</a>
+              <a href="!#" class="bread__href">{post.name}</a>
             </li>
           </ul>
           <button class="bread__btn">
@@ -128,22 +127,22 @@ return (
         </div>
         <ul class="color__image-list flex list-reset">
           <li class="color__item">
-            <a href="#" class="color__img-href">
+            <a href="!#" class="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-1.jpg"} alt="Rating product" />
             </a>
           </li>
           <li class="color__item">
-            <a href="#" class="color__img-href">
+            <a href="!#" class="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-2.jpg"} alt="Rating product" />
             </a>
           </li>
           <li class="color__item">
-            <a href="#" class="color__img-href">
+            <a href="!#" class="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-3.jpg"} alt="Rating product" />
             </a>
           </li>
           <li class="color__item">
-            <a href="#" class="color__img-href">
+            <a href="!#" class="color__img-href">
               <img src={process.env.PUBLIC_URL + "/images/img-4.jpg"} alt="Rating product" />
             </a>
           </li>

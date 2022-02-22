@@ -10,12 +10,12 @@ function App() {
   return (
     
       <Routes>
-        <Route path="/training-shop" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/training-shop/:category" element={<Category />} />
           <Route path="/training-shop/:category/:id" element={<ProductList />} />
           <Route path="*" element={<Home />} />
-          <Route path="training-shop" element={<Home />} />
+          <Route path="/" element={<Home />} />
         </Route>
       </Routes>
     

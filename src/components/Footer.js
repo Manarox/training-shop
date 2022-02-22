@@ -10,7 +10,7 @@ const Footer = () => {
       <section className="black-line black-line_footer container">
         <div className="black-line__left flex">
           <div className="black-line__item flex">
-            <Link to="/training-shop" className="black-line__text black-line__text_footer">BE IN TOUCH WITH US:</Link>
+            <Link to="/" className="black-line__text black-line__text_footer">BE IN TOUCH WITH US:</Link>
           </div>
           <div className="black-line__item flex">
             <form action="https://jsonplaceholder.typicode.com/posts" className="form-footer" method="post" name="form">
@@ -60,10 +60,10 @@ const Footer = () => {
             <Link to="women" className="footer__link" data-test-id={'footer-nav-link-women'}>Women</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-accessories'}>Accessories</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-accessories'}>Accessories</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-beauty'}>Beauty</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-beauty'}>Beauty</Link>
           </li>
         </ul>
       </div>
@@ -73,16 +73,16 @@ const Footer = () => {
         </div>
         <ul className="footer__list list-reset">
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-About-us'}>About Us</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-About-us'}>About Us</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Contact-Us'}>Contact Us</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Contact-Us'}>Contact Us</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Blog'}>Blog</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Blog'}>Blog</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-FAQs'}>FAQs</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-FAQs'}>FAQs</Link>
           </li>
         </ul>
       </div>
@@ -92,16 +92,16 @@ const Footer = () => {
         </div>
         <ul className="footer__list list-reset">
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Terms-&-Conditions'}>Terms & Conditions</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Terms-&-Conditions'}>Terms & Conditions</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Returns-&-Exchanges'}>Returns & Exchanges</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Returns-&-Exchanges'}>Returns & Exchanges</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Shipping-&-Delivery'}>Shipping & Delivery</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Shipping-&-Delivery'}>Shipping & Delivery</Link>
           </li>
           <li className="footer__item">
-            <Link to="/training-shop" className="footer__link" data-test-id={'footer-nav-link-Privacy-PolicyBeauty'}>Privacy PolicyBeauty</Link>
+            <Link to="/" className="footer__link" data-test-id={'footer-nav-link-Privacy-PolicyBeauty'}>Privacy PolicyBeauty</Link>
           </li>
         </ul>
       </div>

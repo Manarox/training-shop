@@ -10,32 +10,32 @@ const Home = () => {
     <section className="banners flex container">
       <ul className="banners__list flex list-reset">
         <li className="banners__item banners__item_height banners__item_card1">
-          <Link to="/training-shop" className="banners__href">
+          <Link to="/" className="banners__href">
             <span className="banners__test">Banner</span>
             your Title text
           </Link>
-          <Link to="/training-shop" className="banners__arrow_left">
+          <Link to="/" className="banners__arrow_left">
           <svg width="9" height="16" viewbox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </Link>
-          <Link to="/training-shop" className="banners__arrow_right">
+          <Link to="/" className="banners__arrow_right">
             <svg width="9" height="16" viewbox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L8 8L1 15" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </Link>
         </li>
         <div className="banners__wrap-column banners__item_height">
           <div className="banners__wrap-row">
             <li className="banners__item banners__item_card2">
-              <Link to="/training-shop/women" className="banners__href banners__href_small">
+              <Link to="women" className="banners__href banners__href_small">
                 Women
               </Link>
             </li>
             <li className="banners__item banners__item_card3">
-              <Link to="/training-shop/men" className="banners__href banners__href_small">
+              <Link to="men" className="banners__href banners__href_small">
                 men
               </Link>
             </li>
           </div>
           <li className="banners__item banners__item_card4">
-            <Link to="/training-shop" className="banners__href">
+            <Link to="/" className="banners__href">
               Accessories
             </Link>
           </li>
@@ -67,25 +67,25 @@ const Home = () => {
       </h2>
       <ul className="product__nav-list flex list-reset">
         <li className="product__nav-item product__nav-item_active">
-          <Link to="/training-shop" className="product__link">NEW ARRIVALS</Link>
+          <Link to="/" className="product__link">NEW ARRIVALS</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">SPECIALS</Link>
+          <Link to="/" className="product__link">SPECIALS</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">BESTSELLERS</Link>
+          <Link to="/" className="product__link">BESTSELLERS</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">MOST VIEWED</Link>
+          <Link to="/" className="product__link">MOST VIEWED</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">FEATURED PRODUCTS</Link>
+          <Link to="/" className="product__link">FEATURED PRODUCTS</Link>
         </li>
       </ul>
     </div>
 
     <CategoryHome category={'women'}/>
-    <Link to="/training-shop" className="see-all flex see-all__link">
+    <Link to="/" className="see-all flex see-all__link">
       See All
     </Link>
   </section>
@@ -97,26 +97,26 @@ const Home = () => {
       </h2>
       <ul className="product__nav-list flex list-reset">
         <li className="product__nav-item product__nav-item_active">
-          <Link to="/training-shop" className="product__link">NEW ARRIVALS</Link>
+          <Link to="/" className="product__link">NEW ARRIVALS</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">SPECIALS</Link>
+          <Link to="/" className="product__link">SPECIALS</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">BESTSELLERS</Link>
+          <Link to="/" className="product__link">BESTSELLERS</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">MOST VIEWED</Link>
+          <Link to="/" className="product__link">MOST VIEWED</Link>
         </li>
         <li className="product__nav-item">
-          <Link to="/training-shop" className="product__link">FEATURED PRODUCTS</Link>
+          <Link to="/" className="product__link">FEATURED PRODUCTS</Link>
         </li>
       </ul>
     </div>
 
     <CategoryHome category={'men'}/>
     
-    <Link to="/training-shop" className="see-all flex see-all__link">
+    <Link to="/" className="see-all flex see-all__link">
       See All
     </Link>
   </section>
@@ -124,13 +124,13 @@ const Home = () => {
   <section className="ad flex container">
     <ul className="ad__list flex list-reset">
       <li className="ad__item ad__item_height banners__item ad__item_card1">
-        <Link to="/training-shop" className="banners__href banners__href_ad">
+        <Link to="/" className="banners__href banners__href_ad">
           <span className="banners__test banners__test_small">New Season</span>
           lookbook collection
         </Link>
       </li>
       <li className="ad__item ad__item_height banners__item ad__item_card2">
-        <Link to="/training-shop" className="banners__href banners__href_ad">
+        <Link to="/" className="banners__href banners__href_ad">
           <span className="banners__test banners__test_small">Sale</span>
           Get UP to <span className="ad__item_span">50% off</span>
         </Link>

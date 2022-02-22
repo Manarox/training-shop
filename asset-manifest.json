@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/training-shop/static/css/main.d4876757.chunk.css",
-    "main.js": "/training-shop/static/js/main.8b12fe60.chunk.js",
-    "main.js.map": "/training-shop/static/js/main.8b12fe60.chunk.js.map",
-    "runtime~main.js": "/training-shop/static/js/runtime~main.3bf2f39d.js",
-    "runtime~main.js.map": "/training-shop/static/js/runtime~main.3bf2f39d.js.map",
-    "static/js/2.15d55a89.chunk.js": "/training-shop/static/js/2.15d55a89.chunk.js",
-    "static/js/2.15d55a89.chunk.js.map": "/training-shop/static/js/2.15d55a89.chunk.js.map",
-    "static/js/3.76c3d8c6.chunk.js": "/training-shop/static/js/3.76c3d8c6.chunk.js",
-    "static/js/3.76c3d8c6.chunk.js.map": "/training-shop/static/js/3.76c3d8c6.chunk.js.map",
+    "main.css": "/training-shop/static/css/main.12a4d4cb.chunk.css",
+    "main.js": "/training-shop/static/js/main.4e833312.chunk.js",
+    "main.js.map": "/training-shop/static/js/main.4e833312.chunk.js.map",
+    "runtime~main.js": "/training-shop/static/js/runtime~main.423f35b7.js",
+    "runtime~main.js.map": "/training-shop/static/js/runtime~main.423f35b7.js.map",
+    "static/js/2.0e10e4e3.chunk.js": "/training-shop/static/js/2.0e10e4e3.chunk.js",
+    "static/js/2.0e10e4e3.chunk.js.map": "/training-shop/static/js/2.0e10e4e3.chunk.js.map",
+    "static/js/3.c70b6b5b.chunk.js": "/training-shop/static/js/3.c70b6b5b.chunk.js",
+    "static/js/3.c70b6b5b.chunk.js.map": "/training-shop/static/js/3.c70b6b5b.chunk.js.map",
     "index.html": "/training-shop/index.html",
-    "precache-manifest.9a67b137feda00cdc1e6bfadbd94808b.js": "/training-shop/precache-manifest.9a67b137feda00cdc1e6bfadbd94808b.js",
+    "precache-manifest.baf2be6e48fb91b35c7c4b1e792d1667.js": "/training-shop/precache-manifest.baf2be6e48fb91b35c7c4b1e792d1667.js",
     "service-worker.js": "/training-shop/service-worker.js",
-    "static/css/main.d4876757.chunk.css.map": "/training-shop/static/css/main.d4876757.chunk.css.map"
+    "static/css/main.12a4d4cb.chunk.css.map": "/training-shop/static/css/main.12a4d4cb.chunk.css.map"
   }
 }

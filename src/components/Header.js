@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useState } from "react";
+import classNames from 'classnames';
 
 const Header = () => {
-    
+    const [isMenuOpen, toggleMenu] = useState(false);
+
+    function tooggleMenuMode() {
+        toggleMenu(!isMenuOpen);
+    }
+
     return (
     <>
     <header className="header">
@@ -103,6 +110,14 @@ const Header = () => {
               </Link>
             </li>
           </ul>
+        </div>
+        <span
+          className={classNames('burger-menu-btn', { visible: isMenuOpen })}
+          onClick={tooggleMenuMode}>
+        </span>
+        <div className={classNames('burger-menu', { visible_menu: isMenuOpen })}
+          onClick={tooggleMenuMode}>
+          asd
         </div>
         
       </section>

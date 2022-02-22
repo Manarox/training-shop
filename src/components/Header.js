@@ -61,13 +61,13 @@ const Header = () => {
         </div>
         <div className='menu' data-test-id='menu'>
           <ul className="menu__list flex list-reset">
-            <li className="menu__item"><Link className="menu-item" to="/training-shop" data-test-id={`menu-link-about`}>About Us</Link></li>
+            <li className="menu__item"><Link className="menu-item" to="/" data-test-id={`menu-link-about`}>About Us</Link></li>
             <li className="menu__item"><Link className="menu-item" to="women" data-test-id={`menu-link-women`}>Women</Link></li>
             <li className="menu__item"><Link className="menu-item" to="men" data-test-id={`menu-link-men`}>Men</Link></li>
-            <li className="menu__item"><Link className="menu-item" to="/training-shop" data-test-id={`menu-link-beauty`}>Beauty</Link></li>
-            <li className="menu__item"><Link className="menu-item" to="/training-shop" data-test-id={`menu-link-accessories`}>Accessories</Link></li>
-            <li className="menu__item"><Link className="menu-item" to="/training-shop" data-test-id={`menu-link-blog`}>Blog</Link></li>
-            <li className="menu__item"><Link className="menu-item" to="/training-shop" data-test-id={`menu-link-contact`}>Contact</Link></li>
+            <li className="menu__item"><Link className="menu-item" to="/" data-test-id={`menu-link-beauty`}>Beauty</Link></li>
+            <li className="menu__item"><Link className="menu-item" to="/" data-test-id={`menu-link-accessories`}>Accessories</Link></li>
+            <li className="menu__item"><Link className="menu-item" to="/" data-test-id={`menu-link-blog`}>Blog</Link></li>
+            <li className="menu__item"><Link className="menu-item" to="/" data-test-id={`menu-link-contact`}>Contact</Link></li>
           </ul>
         </div>
         <div className="menu__icon">

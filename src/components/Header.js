@@ -127,8 +127,8 @@ const Header = () => {
         onClick={tooggleMenuMode}></div>
 
       <div className={classNames('burger-menu', { visible_menu: isMenuOpen })}
-        onClick={tooggleMenuMode} data-test-id='burger-menu'>
-        <div className="burger-menu__block"> 
+        onClick={tooggleMenuMode}>
+        <div className="burger-menu__block" data-test-id='burger-menu'> 
           <ul className="burger-menu__list flex list-reset">
             <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-about`}>About Us</Link></li>
             <li className="burger-menu__item"><Link className="menu-item burger-item" to="women" data-test-id={`menu-link-women`}>Women</Link></li>

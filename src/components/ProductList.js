@@ -137,7 +137,7 @@ return (
         </button>
       </div>
     </div> */}
-<div className="prod__image flex">
+<div className="prod__image flex" data-test-id="product-slider">
   <div className="image__slider">
       <div className="image__navigate">
           <button className="image__btn-up">
@@ -491,6 +491,7 @@ return (
       </div>
     </div>
   <Swiper
+    data-test-id='related-slider'
     slidesPerView={4}
     spaceBetween={30}
     freeMode={true}
@@ -503,6 +504,7 @@ return (
       prevEl: ".related__left",
     }}
     className="container"
+    
   >
   <div class="related__blog">
     <ul class="product__list flex list-reset">

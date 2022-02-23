@@ -6,6 +6,7 @@ import { Category } from './pages/Category';
 import { ProductList } from './components/ProductList';
 import { Layout } from './components/Layout';
 
+
 function App() {
   return (
     

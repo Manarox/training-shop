@@ -30,13 +30,13 @@
   }
   .banners__item_card1 {
     position: relative;
-    background-image: url("/training-shop/images/banner-1.jpg");
+    background-image: url("../images/banner-1.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
   }
   .banners__item_card2 {
-    background-image: url("/training-shop/images/banner-2.jpg");
+    background-image: url("../images/banner-2.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -44,7 +44,7 @@
     width: 255px;
   }
   .banners__item_card3 {
-    background-image: url("/training-shop/images/banner-3.jpg");
+    background-image: url("../images/banner-3.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -52,7 +52,7 @@
     width: 255px;
   }
   .banners__item_card4 {
-    background-image: url("/training-shop/images/banner-4.jpg");
+    background-image: url("../images/banner-4.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -118,19 +118,19 @@
     padding-left: 45px;
   }
   .advantage__item_card1 {
-    background-image: url("/training-shop/images/shipping.svg");
+    background-image: url("../images/shipping.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: 30px;
   }
   .advantage__item_card2 {
-    background-image: url("/training-shop/images/return.svg");
+    background-image: url("../images/return.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: 30px;
   }
   .advantage__item_card3 {
-    background-image: url("/training-shop/images/support.svg");
+    background-image: url("../images/support.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: 30px;
@@ -161,13 +161,13 @@
     min-height: 260px;
   }
   .ad__item_card1 {
-    background-image: url("/training-shop/images/ad-im-1.jpg");
+    background-image: url("../images/ad-im-1.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
   }
   .ad__item_card2 {
-    background-image: url("/training-shop/images/ad-im-2.jpg");
+    background-image: url("../images/ad-im-2.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -259,7 +259,7 @@
     top: 0px;
     width: 300px;
     height: 100%;
-    background-image: url("/training-shop/images/woman-bg.png");
+    background-image: url("../images/woman-bg.png");
     background-position: bottom -39px right 4px;
     background-repeat: no-repeat;
   }
@@ -269,7 +269,7 @@
     top: 0px;
     width: 300px;
     height: 100%;
-    background-image: url("/training-shop/images/man-bg.png");
+    background-image: url("../images/man-bg.png");
     background-position: bottom 10px right 87px;
     background-repeat: no-repeat;
   }

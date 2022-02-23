@@ -99,7 +99,7 @@ html {
     align-items: center;
     width: 153px;
     height: 19px;
-    background-image: url("/training-shop/images/logo.svg");
+    background-image: url("../images/logo.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: contain;

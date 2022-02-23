@@ -1,26 +1,62 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper";
+
 import { CategoryHome } from '../pages/CategoryHome';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import './SwiperHome.css';
+
 
 const Home = () => {
     return (
 <main className="main">
+
   <div className='app' data-test-id='app'>
     <section className="banners flex container">
       <ul className="banners__list flex list-reset">
-        <li className="banners__item banners__item_height banners__item_card1">
-          <Link to="/" className="banners__href">
-            <span className="banners__test">Banner</span>
-            your Title text
-          </Link>
-          <Link to="/" className="banners__arrow_left">
-          <svg width="9" height="16" viewbox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </Link>
-          <Link to="/" className="banners__arrow_right">
-            <svg width="9" height="16" viewbox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L8 8L1 15" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </Link>
-        </li>
+        <Swiper navigation={true} modules={[Navigation]} className="mySwiper" data-test-id='main-slider'>
+          <SwiperSlide>
+          <li className="banners__item banners__item_height banners__item_card1">
+            <Link to="/" className="banners__href">
+              <span className="banners__test">Banner</span>
+              your Title text
+            </Link>
+          </li>
+          </SwiperSlide>
+          <SwiperSlide>
+          <li className="banners__item banners__item_height banners__item_card1">
+            <Link to="/" className="banners__href">
+              <span className="banners__test">Banner</span>
+              your Title text
+            </Link>
+          </li>
+          </SwiperSlide>
+          <SwiperSlide>
+          <li className="banners__item banners__item_height banners__item_card1">
+            <Link to="/" className="banners__href">
+              <span className="banners__test">Banner</span>
+              your Title text
+            </Link>
+          </li>
+          </SwiperSlide>
+          <SwiperSlide>
+          <li className="banners__item banners__item_height banners__item_card1">
+            <Link to="/" className="banners__href">
+              <span className="banners__test">Banner</span>
+              your Title text
+            </Link>
+          </li>
+          </SwiperSlide>
+        </Swiper>
+        
+
+
+
+
+
         <div className="banners__wrap-column banners__item_height">
           <div className="banners__wrap-row">
             <li className="banners__item banners__item_card2">

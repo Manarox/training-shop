@@ -178,6 +178,7 @@ html {
 }
 
 /*burger-menu*/
+
 #root {
     position: relative;
 }
@@ -224,17 +225,8 @@ html {
     padding-bottom: 20px;
 }
 /*menu close*/
-    @media (min-width: 1024px){
-        .burger-menu__wrapp {
-            display: none;
-        }
-        .burger-menu {
-            display: none;
-        }
-        .burger-menu__block {
-            display: none;
-        }
-    }
+
+
     @media (max-width: 1024px){
         .menu {
             display: none;
@@ -275,7 +267,9 @@ html {
         }
         .advantage__item {
             max-width: 350px;
-            padding-left: 0;
+        }
+        .advantage__item_card2, .advantage__item_card1, .advantage__item_card3 {
+            background-position: left top 6px;
         }
         .advantage__item:not(:last-child) {
             padding-bottom: 20px;
@@ -384,9 +378,48 @@ html {
         .bread__list {
             justify-content: center;
         }
+        .prod {
+            flex-direction: column;
+            align-items: center;
+        }
+        .prod__image {
+            width: 550px;
+            margin-bottom: 20px;
+        }
+        .prod__info {
+            width: 100%;
+            padding-left: 0;
+        }
+        .actions {
+            justify-content: center;
+        }
+        .color, .size {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
     }
-    @media (max-width: 597px){
+    @media (max-width: 597px) {
+        .ad__item_card1 {
+            margin-bottom: 20px;
+        }
+        .menu__icon-item:not(:last-child) {
+            margin-right: 10px;
+        }
+        .banners__href {
+            width: 230px;
+        }
+        .banners__wrap-row {
+            flex-direction: column;
+            align-items: center;
+        }
+        .banners__item_card2, .banners__item_card3, .banners__item_card4 {
+            width: 360px;
+        }
+        .banners__item_card2, .banners__item_card3 {
+            margin-bottom: 20px;
+        }
         .subscrib__form {
             padding: 30px 20px 30px 20px;
         }
@@ -394,7 +427,8 @@ html {
             margin-right: 0;
         }
         .banners__item_height {
-            max-width: 240px;
+            width: 100%;
+            align-items: center;
         }
         .menu__list {
             flex-direction: column;
@@ -463,6 +497,49 @@ html {
         .size__guide {
             text-align: center;
         }
+        .color__item:not(:last-child) {
+            padding-right: 0;
+        }
+        .size__item:not(:last-child) {
+            padding-right: 0;
+        }
+        .size__item {
+            margin-bottom: 10px;
+        }
+        .actions__price {
+            padding-right: 0;
+        }
+        .advantage-prod__item {
+            margin-bottom: 10px;
+        }
+    }
+    @media (max-width: 360px) {
+        .banners__item_card2, .banners__item_card3, .banners__item_card4 {
+            width: 300px;
+        }
+        .banners__href {
+            width: 155px;
+            font-size: 14px;
+        }
+        .latest__navigate {
+            flex-direction: column;
+        }
+        .latest__title {
+            margin-bottom: 10px;
+        }
+        .menu__wrap {
+            flex-direction: column;
+            align-items: center;
+        }
+        .menu__icon {
+            padding-right: 0;
+        }
+        .burger-menu-btn {
+            top: 33px;
+        }
+        .menu__logo {
+            margin-bottom: 10px;
+        }
     }
     @media (max-width: 300px){
         .subscrib__form {
@@ -486,5 +563,4 @@ html {
             width: 100%;
         }
     }
-
     

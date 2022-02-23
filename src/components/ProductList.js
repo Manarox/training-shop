@@ -210,19 +210,19 @@ return (
         style={{height: '555px'}}
       >
         <SwiperSlide>
-          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
         </SwiperSlide>
         <SwiperSlide>
-          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
         </SwiperSlide>
       </Swiper>
  
@@ -503,7 +503,25 @@ return (
       nextEl: ".related__right", 
       prevEl: ".related__left",
     }}
-    className="container"
+    className="container swiper__related"
+    breakpoints={{
+      10: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+      },
+      300: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+      },
+      640: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+      },
+    }}
     
   >
   <div class="related__blog">
@@ -677,7 +695,7 @@ return (
       </ul>
     </div>
   </section> */}
-      )
+      
   </div>
   )
 }

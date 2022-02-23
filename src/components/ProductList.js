@@ -521,7 +521,11 @@ return (
         slidesPerView: 3,
         spaceBetween: 40,
       },
-      1024: {
+      1110: {
+        slidesPerView: 3,
+        spaceBetween: 40,
+      },
+      1111: {
         slidesPerView: 4,
         spaceBetween: 40,
       },

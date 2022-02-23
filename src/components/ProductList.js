@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
@@ -471,7 +472,83 @@ return (
     </div>
   </section>
     
-    <section class="related flex container">
+<section class="related flex container">
+    <div class="related__top">
+      <div class="related__title">
+        RELATED PRODUCTS
+      </div>
+      <div class="related__slide">
+        <button class="related__left">
+          <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="related__right">
+          <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L8 8L1 15" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  <Swiper
+    slidesPerView={4}
+    spaceBetween={30}
+    freeMode={true}
+    pagination={{
+      clickable: false,
+    }}
+    modules={[FreeMode, Navigation]}
+    navigation={{
+      nextEl: ".related__right", 
+      prevEl: ".related__left",
+    }}
+    className="container"
+  >
+  <div class="related__blog">
+    <ul class="product__list flex list-reset">
+    {arr.map(post => {
+        return (
+        <SwiperSlide>   
+          <li class="product__item">
+            <Link key={post.id} to={`/${category}/${post.id}`}>
+              <div class="product__img-block">
+                <img src={process.env.PUBLIC_URL + "/images" + post.image} alt="Rating product" />
+              </div>
+              <div class="product__about flex">
+                <div class="product__name">
+                  {post.name}
+                </div>
+                <div class="product__info flex">
+                  <div class="product__cost flex">
+                    <div class="product__price">
+                      {post.price} $
+                    </div>
+                    <div class="product__old-price">
+                      {post.oldprice}
+                    </div>
+                  </div>
+                  <div class="product__rating">
+                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
+                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
+                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
+                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
+                    <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
+                  </div>
+                </div>
+              </div>
+            </Link>
+            </li>
+          </SwiperSlide>
+        );
+      })}
+    
+    </ul>
+  </div>
+  </Swiper>
+</section>
+
+
+    {/* <section class="related flex container">
     <div class="related__top">
       <div class="related__title">
         RELATED PRODUCTS
@@ -597,7 +674,7 @@ return (
         </li>
       </ul>
     </div>
-  </section>
+  </section> */}
       )
   </div>
   )

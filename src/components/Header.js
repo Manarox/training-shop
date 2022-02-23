@@ -117,10 +117,16 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <span
+        {/* <span
           className={classNames('burger-menu-btn', { visible: isMenuOpen })}
           onClick={tooggleMenuMode} data-test-id='burger-menu-btn'>
-        </span>
+        </span> */}
+        <button type="button" className={classNames('burger-menu-btn_b', { visible: isMenuOpen })}
+          onClick={tooggleMenuMode} data-test-id='burger-menu-btn'>
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </button>
         
       </section>
       <div className={classNames('burger-menu__wrapp', { visible_menu: isMenuOpen })}

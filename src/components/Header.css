@@ -176,7 +176,44 @@ html {
 .visible body {
     overflow-y: hidden;
 }
+.burger-menu-btn_b {
+    display: none;
+    flex-direction: column;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: space-around;
+}
 
+.line1 {
+    background-color: #2d2d2d;
+    height: 3px;
+    width: 30px;
+    transition: width .3s,transform .5s;
+}
+.burger-menu-btn_b.visible .line1 {
+    transform: rotate(-45deg) translate(-8px,10px);
+}
+.line2 {
+    background-color: #2d2d2d;
+    height: 3px;
+    /* top: calc(50% - 0.8px); */
+    width: 30px;
+    transition: width .3s,transform .5s;
+}
+.burger-menu-btn_b.visible .line2 {
+    display: none;
+}
+.line3 {
+    background-color: #2d2d2d;
+    height: 3px;
+    /* top: calc(50% - 0.8px); */
+    width: 30px;
+    transition: width .3s,transform .5s;
+}
+.burger-menu-btn_b.visible .line3 {
+    transform: rotate(45deg) translate(-3px,-6px);
+}
 /*burger-menu*/
 
 #root {
@@ -234,6 +271,9 @@ html {
         .burger-menu-btn {
             display: block;
             right: 20px;
+        }
+        .burger-menu-btn_b {
+            display: flex;
         }
         .menu__icon {
             padding-right: 60px;

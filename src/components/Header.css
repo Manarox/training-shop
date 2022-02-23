@@ -224,7 +224,17 @@ html {
     padding-bottom: 20px;
 }
 /*menu close*/
-
+    @media (min-width: 1024px){
+        .burger-menu__wrapp {
+            display: none;
+        }
+        .burger-menu {
+            display: none;
+        }
+        .burger-menu__block {
+            display: none;
+        }
+    }
     @media (max-width: 1024px){
         .menu {
             display: none;

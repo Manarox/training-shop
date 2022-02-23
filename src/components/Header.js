@@ -119,7 +119,7 @@ const Header = () => {
         </div>
         <span
           className={classNames('burger-menu-btn', { visible: isMenuOpen })}
-          onClick={tooggleMenuMode}>
+          onClick={tooggleMenuMode} data-test-id='burger-menu-btn'>
         </span>
         
       </section>
@@ -127,7 +127,7 @@ const Header = () => {
         onClick={tooggleMenuMode}></div>
 
       <div className={classNames('burger-menu', { visible_menu: isMenuOpen })}
-        onClick={tooggleMenuMode} data-test-id='menu'>
+        onClick={tooggleMenuMode} data-test-id='burger-menu'>
         <div className="burger-menu__block"> 
           <ul className="burger-menu__list flex list-reset">
             <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-about`}>About Us</Link></li>

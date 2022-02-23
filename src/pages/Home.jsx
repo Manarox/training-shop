@@ -153,16 +153,16 @@ const Home = () => {
 
   <section className="ad flex container">
     <ul className="ad__list flex list-reset">
-      <li className="ad__item ad__item_height banners__item ad__item_card1">
-        <Link to="/" className="banners__href banners__href_ad">
-          <span className="banners__test banners__test_small">New Season</span>
-          lookbook collection
-        </Link>
-      </li>
       <li className="ad__item ad__item_height banners__item ad__item_card2">
         <Link to="/" className="banners__href banners__href_ad">
           <span className="banners__test banners__test_small">Sale</span>
           Get UP to <span className="ad__item_span">50% off</span>
+        </Link>
+      </li>
+      <li className="ad__item ad__item_height banners__item ad__item_card1">
+        <Link to="/" className="banners__href banners__href_ad">
+          <span className="banners__test banners__test_small">New Season</span>
+          lookbook collection
         </Link>
       </li>
     </ul>

@@ -2,8 +2,18 @@
     width: 540px;
     margin-right: 30px;
 }
-    
-.banners__list .swiper-button-prev, .swiper-button-next {
+.image__slider .swiper, .swiper-wrapper {
+    width: 100%;
+}
+.swiper-button-next {
+    background: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #000;
+}
+.swiper-button-prev {
     background: #fff;
     border: none;
     width: 40px;
@@ -12,6 +22,17 @@
     color: #000;
 }
 
-.banners__list .swiper-button-next::after, .swiper-button-prev::after {
+.swiper-button-next::after, .swiper-button-prev::after {
     font-size: 15px;
+}
+.swiper-slide-visible {
+    height: 126px!important;
+    margin-bottom: 0px;
+    opacity: 50%;
+}
+.swiper-slide-thumb-active {
+    opacity: 100%;
+}
+.swiper-slide {
+    text-align: center;
 }

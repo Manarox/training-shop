@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/Home.css';
 import { useParams } from "react-router-dom";
 import './ProductList.css';
+import '../pages/SwiperHome.css';
 import Data from "../pages/data.json";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import { FreeMode, Navigation, Thumbs } from "swiper";
+
 const ProductList = () => {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
   const id = useParams();
   const {category} = useParams();
   const idProduct = Number(id.id) - 1
@@ -82,7 +92,8 @@ return (
     </div>
 
     <section class="prod flex container">
-    <div class="prod__image flex">
+
+    {/* <div class="prod__image flex">
       <div class="image__slider">
         <div class="image__navigate">
           <button class="image__btn-up">
@@ -124,7 +135,122 @@ return (
           </svg>
         </button>
       </div>
-    </div>
+    </div> */}
+<div className="prod__image flex">
+  <div className="image__slider">
+      <div className="image__navigate">
+          <button className="image__btn-up">
+            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button className="image__btn-down">
+            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+      </div>
+      <div className="image__img-list">
+        <Swiper
+          onSwiper={setThumbsSwiper}
+          spaceBetween={10}
+          slidesPerView={4}
+          freeMode={true}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Navigation, Thumbs]}
+          navigation={{
+            nextEl: ".image__btn-down", 
+            prevEl: ".image__btn-up",
+          }}
+          className=".image__img-list"
+          direction={'vertical'}
+          style={{height: '500px'}}
+        >
+          <SwiperSlide>
+          <div class="image__img-item">
+            <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="img"/>
+          </div>
+          </SwiperSlide>
+          <SwiperSlide>
+          <div class="image__img-item">
+            <img src={process.env.PUBLIC_URL + "/images/prod-img-2.jpg"} alt="img"/>
+          </div>
+          </SwiperSlide>
+          <SwiperSlide>
+          <div class="image__img-item">
+            <img src={process.env.PUBLIC_URL + "/images/prod-img-3.jpg"} alt="img"/>
+          </div>
+          </SwiperSlide>
+          <SwiperSlide>
+          <div class="image__img-item">
+            <img src={process.env.PUBLIC_URL + "/images/prod-img-4.jpg"} alt="img"/>
+          </div>
+          </SwiperSlide>
+          <SwiperSlide>
+          <div class="image__img-item">
+            <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="img"/>
+          </div>
+          </SwiperSlide>
+        </Swiper>
+      </div>
+  </div>
+
+      <Swiper
+        // style={{
+        //   "--swiper-navigation-color": "#fff",
+        //   "--swiper-pagination-color": "#fff",
+          
+        // }}
+        spaceBetween={10}
+        navigation={true}
+        thumbs={{ swiper: thumbsSwiper }}
+        modules={[FreeMode, Navigation, Thumbs]}
+        className="mySwiper2"
+        style={{height: '555px'}}
+      >
+        <SwiperSlide>
+          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
+        </SwiperSlide>
+      </Swiper>
+ 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="prod__info flex">
       <div class="color">
         <div class="color__title">

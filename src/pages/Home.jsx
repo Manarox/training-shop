@@ -51,12 +51,6 @@ const Home = () => {
           </li>
           </SwiperSlide>
         </Swiper>
-        
-
-
-
-
-
         <div className="banners__wrap-column banners__item_height">
           <div className="banners__wrap-row">
             <li className="banners__item banners__item_card2">

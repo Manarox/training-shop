@@ -84,6 +84,7 @@ html {
     
     /*Menu*/
     .menu__wrap {
+    position: relative;
     align-items: center;
     flex-wrap: wrap;
     padding-top: 25px;
@@ -98,7 +99,7 @@ html {
     align-items: center;
     width: 153px;
     height: 19px;
-    background-image: url("/training-shop/images/logo.svg");
+    background-image: url("/images/logo.svg");
     background-repeat: no-repeat;
     background-position: left;
     background-size: contain;
@@ -128,9 +129,9 @@ html {
 
 /*menu-burger*/
 .burger-menu-btn {
+    display: none;
     background-color: #2d2d2d;
     height: 3px;
-    left: 0;
     position: absolute;
     /* top: calc(50% - 0.8px); */
     width: 30px;
@@ -172,18 +173,29 @@ html {
     -webkit-transform-origin: center;
     transform-origin: center;
 }
+.visible body {
+    overflow-y: hidden;
+}
 
 /*burger-menu*/
 #root {
     position: relative;
+}
+.burger-menu__wrapp {
+    display: none;
+    position: fixed;
+    background-color: #e0e0e0;
+    opacity: .5;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 10;
 }
 .burger-menu {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #aaa;
-    opacity: .5;
     height: 100vh;
     width: 100%;
     z-index: 10;
@@ -191,25 +203,47 @@ html {
 .visible_menu {
     display: block;
 }
+.burger-menu__block {
+    padding-top: 200px;
+    margin: auto 0 auto auto;
+    max-width: 300px;
+}
+.burger-menu__list {
+    flex-direction: column;
+    align-items: flex-end;
+    background: #fff;
+    padding: 30px;
+    padding-right: 20px;
+}
+.burger-menu__item {
+    font-size: 25px;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+.burger-menu__item:not(:last-child) {
+    padding-bottom: 20px;
+}
 /*menu close*/
 
-
-
     @media (max-width: 1024px){
+        .menu {
+            display: none;
+        }
+        .burger-menu-btn {
+            display: block;
+            right: 20px;
+        }
+        .menu__icon {
+            padding-right: 60px;
+        }
         .header-nav-logo {
             margin-right: 0;
         }
         .container {
             padding: 20px;
         }
-        .menu__wrap {
-            justify-content: center;
-        }
         .logo {
             padding-right: 0px;
-        }
-        .menu__wrap {
-            flex-direction: column;
         }
         .menu {
             padding-bottom: 20px;

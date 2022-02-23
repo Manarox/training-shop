@@ -2,12 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import classNames from 'classnames';
+let num = 0;
 
 const Header = () => {
     const [isMenuOpen, toggleMenu] = useState(false);
-
+    
     function tooggleMenuMode() {
         toggleMenu(!isMenuOpen);
+        document.body.style.overflow = 'hidden';
+        num++;
+        if (num%2 === 0) {
+          document.body.style.overflow = 'inherit';
+        }
     }
 
     return (
@@ -115,13 +121,25 @@ const Header = () => {
           className={classNames('burger-menu-btn', { visible: isMenuOpen })}
           onClick={tooggleMenuMode}>
         </span>
-        <div className={classNames('burger-menu', { visible_menu: isMenuOpen })}
-          onClick={tooggleMenuMode}>
-          asd
-        </div>
         
       </section>
+      <div className={classNames('burger-menu__wrapp', { visible_menu: isMenuOpen })}
+        onClick={tooggleMenuMode}></div>
 
+      <div className={classNames('burger-menu', { visible_menu: isMenuOpen })}
+        onClick={tooggleMenuMode} data-test-id='menu'>
+        <div className="burger-menu__block"> 
+          <ul className="burger-menu__list flex list-reset">
+            <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-about`}>About Us</Link></li>
+            <li className="burger-menu__item"><Link className="menu-item burger-item" to="women" data-test-id={`menu-link-women`}>Women</Link></li>
+            <li className="burger-menu__item"><Link className="menu-item burger-item" to="men" data-test-id={`menu-link-men`}>Men</Link></li>
+            <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-beauty`}>Beauty</Link></li>
+            <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-accessories`}>Accessories</Link></li>
+            <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-blog`}>Blog</Link></li>
+            <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-contact`}>Contact</Link></li>
+          </ul>
+        </div>
+      </div>
       <div className="grey-line"></div>
       </div>
     </header>

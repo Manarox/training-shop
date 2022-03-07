@@ -9,7 +9,6 @@ import '../components/ProductList.css';
 const Category = (props) => {
     const {category} = useParams();
     const arr = [];
-    
 
     if ({category}.category === 'women') {
         PRODUCTS.women.map(post => {
@@ -25,12 +24,6 @@ const Category = (props) => {
         })
     } 
     console.log(arr)
-
-    var resultArr = arr.filter(function(number) {
-        return number.id === '6200f157c110271da7221004';
-    });
-
-    console.log(resultArr[0].name)
 
     return (
         

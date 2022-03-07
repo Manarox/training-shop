@@ -1,27 +1,26 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import Data from "./data.json";
+// import Data from "./data.json";
+import { PRODUCTS } from "../components/products.js";
 import '../components/ProductList.css';
 
 const CategoryHome = (props) => {
     const {category} = props;
-    
     const arr = [];
 
     if ({category}.category === 'women') {
-        Data.women.map(post => {
+        PRODUCTS.women.map(post => {
             return (
                 arr.push(post)
             )
         })
     } else if ({category}.category === 'men') {
-        Data.men.map(post => {
+        PRODUCTS.men.map(post => {
             return (
                 arr.push(post)
             )
         })
     } 
-
     return (
         <>
         <div className='clothes' data-test-id={`clothes-${category}`}>
@@ -31,7 +30,10 @@ const CategoryHome = (props) => {
                     <li class="product__item" data-test-id={`clothes-card-${category}`}>
                         <Link to={`/${category}/${post.id}`}>
                         <div class="product__img-block">
-                            <img src={process.env.PUBLIC_URL + "/images" + post.image} alt="Product name" class="product__img" />
+                            <img src={"https://training.cleverland.by/shop" + post.images[0]?.url} alt="Product name" class="product__img" />
+                            <div className="product__discount">
+                                {post.discount}
+                            </div>
                         </div>
                         <div class="product__about flex">
                             <div class="product__name">
@@ -40,7 +42,7 @@ const CategoryHome = (props) => {
                             <div class="product__info flex">
                                 <div class="product__cost flex">
                                     <div class="product__price">
-                                        {post.price}
+                                        {post.price} $
                                     </div>
                                     <div class="product__old-price">
                                         {post.oldprice}

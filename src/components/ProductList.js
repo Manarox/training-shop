@@ -4,7 +4,8 @@ import '../pages/Home.css';
 import { useParams } from "react-router-dom";
 import './ProductList.css';
 import '../pages/SwiperHome.css';
-import Data from "../pages/data.json";
+// import Data from "../pages/data.json";
+import { PRODUCTS } from "../components/products.js";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -19,27 +20,27 @@ const ProductList = () => {
 
   const id = useParams();
   const {category} = useParams();
-  const idProduct = Number(id.id) - 1
   const arr = [];
   
   if ({category}.category === 'women') {
-    Data.women.map(post => {
+    PRODUCTS.women.map(post => {
       return (
         arr.push(post)
       )
     })
 
   } else if ({category}.category === 'men') {
-      Data.men.map(post => {
+      PRODUCTS.men.map(post => {
         return (
           arr.push(post)
         );
       })
   }
-// console.log(id);
-// console.log(arr);
-// console.log(idProduct);
-// console.log(arr[idProduct].id);
+
+  var resultArr = arr.filter(function(number) {
+    return number.id === id.id;
+  });
+
 return (
 
 <div className="page-product" data-test-id={`product-page-${category}`}>
@@ -54,7 +55,7 @@ return (
               <Link to={`/${category}`} className="bread__href">{category}</Link>
             </li>
             <li class="bread__item bread__item_active">
-              <Link to={`/${category}/${arr[idProduct].id}`} className="bread__href">{arr[idProduct].name}</Link>
+              <Link to={`/${category}/${resultArr[0].id}`} className="bread__href">{resultArr[0].name}</Link>
             </li>
           </ul>
           <button class="bread__btn">
@@ -62,7 +63,7 @@ return (
           </button>
         </div>
         <div class="bread__title">
-          <h1 class="bread__h1"> {arr[idProduct].name} </h1>
+          <h1 class="bread__h1"> {resultArr[0].name} </h1>
         </div>
 
         <div class="bread__bot flex">
@@ -94,49 +95,6 @@ return (
 
     <section class="prod flex container">
 
-    {/* <div class="prod__image flex">
-      <div class="image__slider">
-        <div class="image__navigate">
-          <button class="image__btn-up">
-            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button class="image__btn-down">
-            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-        <div class="image__img-list">
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="Rating product" />
-          </div>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-2.jpg"} alt="Rating product" />
-          </div>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-3.jpg"} alt="Rating product" />
-          </div>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-4.jpg"} alt="Rating product" />
-          </div>
-        </div>
-      </div>
-      <div class="image__img">
-        <img class="image__full-img" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="Rating product" />
-        <button class="image__btn-left">
-          <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <button class="image__btn-right">
-          <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L8 8L1 15" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div> */}
 <div className="prod__image flex" data-test-id="product-slider">
   <div className="image__slider">
       <div className="image__navigate">
@@ -197,11 +155,6 @@ return (
   </div>
 
       <Swiper
-        // style={{
-        //   "--swiper-navigation-color": "#fff",
-        //   "--swiper-pagination-color": "#fff",
-          
-        // }}
         spaceBetween={10}
         navigation={true}
         thumbs={{ swiper: thumbsSwiper }}
@@ -227,30 +180,6 @@ return (
       </Swiper>
  
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="prod__info flex">
       <div class="color">
@@ -305,7 +234,7 @@ return (
       <div class="strip"></div>
       <div class="actions">
         <div class="actions__price">
-          {arr[idProduct].price}$
+          {resultArr[0].price}$
         </div>
         <div class="actions__add">
           <button class="add-to-card">Add to card</button>
@@ -530,7 +459,6 @@ return (
         spaceBetween: 40,
       },
     }}
-    
   >
   <div class="related__blog">
     <ul class="product__list flex list-reset">
@@ -540,7 +468,10 @@ return (
           <li class="product__item">
             <Link key={post.id} to={`/${category}/${post.id}`}>
               <div class="product__img-block">
-                <img src={process.env.PUBLIC_URL + "/images" + post.image} alt="Rating product" />
+                <img src={"https://training.cleverland.by/shop" + post.images[0]?.url} alt="Product name"/>
+                <div className="product__discount">
+                    {post.discount}
+                </div>
               </div>
               <div class="product__about flex">
                 <div class="product__name">
@@ -575,135 +506,6 @@ return (
   </Swiper>
 </section>
 
-
-    {/* <section class="related flex container">
-    <div class="related__top">
-      <div class="related__title">
-        RELATED PRODUCTS
-      </div>
-      <div class="related__slide">
-        <button class="related__left">
-          <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <button class="related__right">
-          <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L8 8L1 15" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="related__blog">
-      <ul class="product__list flex list-reset">
-        <li class="product__item">
-          <div class="product__img-block">
-            <img src={process.env.PUBLIC_URL + "/images/related-1.jpg"} alt="Rating product" />
-          </div>
-          <div class="product__about flex">
-            <div class="product__name">
-              Women's tracksuit Q109
-            </div>
-            <div class="product__info flex">
-              <div class="product__cost flex">
-                <div class="product__price">
-                  $ 30.00
-                </div>
-                <div class="product__old-price">
-                </div>
-              </div>
-              <div class="product__rating">
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="product__item">
-          <div class="product__img-block">
-            <img src={process.env.PUBLIC_URL + "/images/related-2.jpg"} alt="Rating product" />
-          </div>
-          <div class="product__about flex">
-            <div class="product__name">
-              Women's tracksuit Q109
-            </div>
-            <div class="product__info flex">
-              <div class="product__cost flex">
-                <div class="product__price">
-                  $ 30.00
-                </div>
-                <div class="product__old-price">
-                </div>
-              </div>
-              <div class="product__rating">
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="product__item">
-          <div class="product__img-block">
-            <img src={process.env.PUBLIC_URL + "/images/related-3.jpg"} alt="Rating product" />
-          </div>
-          <div class="product__about flex">
-            <div class="product__name">
-              Women's tracksuit Q109
-            </div>
-            <div class="product__info flex">
-              <div class="product__cost flex">
-                <div class="product__price">
-                  $ 30.00
-                </div>
-                <div class="product__old-price">
-                </div>
-              </div>
-              <div class="product__rating">
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="product__item">
-          <div class="product__img-block">
-            <img src={process.env.PUBLIC_URL + "/images/related-4.jpg"} alt="Rating product" />
-          </div>
-          <div class="product__about flex">
-            <div class="product__name">
-              Women's tracksuit Q109
-            </div>
-            <div class="product__info flex">
-              <div class="product__cost flex">
-                <div class="product__price">
-                  $ 30.00
-                </div>
-                <div class="product__old-price">
-                </div>
-              </div>
-              <div class="product__rating">
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section> */}
-      
   </div>
   )
 }

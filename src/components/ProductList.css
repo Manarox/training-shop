@@ -56,6 +56,9 @@
     font-size: 12px;
     line-height: 12px;
   }
+  .product__discount:empty {
+    display: none;
+  }
   .product__about {
     flex-direction: column;
   }

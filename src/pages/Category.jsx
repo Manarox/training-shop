@@ -1,28 +1,37 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Data from "./data.json";
+// import Data from "./data.json";
+import { PRODUCTS } from "../components/products.js";
 import '../components/ProductList.css';
 
 
 const Category = (props) => {
     const {category} = useParams();
     const arr = [];
+    
 
     if ({category}.category === 'women') {
-        Data.women.map(post => {
+        PRODUCTS.women.map(post => {
             return (
                 arr.push(post)
             )
         })
     } else if ({category}.category === 'men') {
-        Data.men.map(post => {
+        PRODUCTS.men.map(post => {
             return (
                 arr.push(post)
             )
         })
     } 
-    
+    console.log(arr)
+
+    var resultArr = arr.filter(function(number) {
+        return number.id === '6200f157c110271da7221004';
+    });
+
+    console.log(resultArr[0].name)
+
     return (
         
         <>
@@ -47,7 +56,6 @@ const Category = (props) => {
             </div>
             </section>
         </div>
-
 
         <section className="filter flex container">
             <div className="filter__wrap">
@@ -88,7 +96,10 @@ const Category = (props) => {
                     <li className="product__item cards-item" data-test-id={`clothes-card-${category}`}>
                         <Link key={post.id} to={`/${category}/${post.id}`}>
                             <div className="product__img-block">
-                                <img src={process.env.PUBLIC_URL + "/images" + post.image} alt="Product name" className="product__img" />
+                                <img src={"https://training.cleverland.by/shop" + post.images[0]?.url} alt="Product name" class="product__img" />
+                                <div className="product__discount">
+                                    {post.discount}
+                                </div>
                             </div>
                             <div className="product__about flex">
                                 <div className="product__name">
@@ -97,7 +108,7 @@ const Category = (props) => {
                                 <div className="product__info flex">
                                     <div className="product__cost flex">
                                         <div className="product__price">
-                                            {post.price}
+                                            {post.price} $
                                         </div>
                                         <div className="product__old-price">
                                             {post.oldprice}

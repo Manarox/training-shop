@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
 import { PRODUCTS } from "../components/products.js";
+import { Rating } from '../components/Rating';
 import '../components/ProductList.css';
 
 const CategoryHome = (props) => {
@@ -48,13 +49,7 @@ const CategoryHome = (props) => {
                                         {post.oldprice}
                                     </div>
                                 </div>
-                                <div class="product__rating">
-                                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                    <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-                                </div>
+                                <Rating rating={post.rating}/>
                             </div>
                         </div>
                         </Link>

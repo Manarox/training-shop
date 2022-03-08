@@ -2,8 +2,6 @@ import React from 'react';
 
 const Rating = (props) => {
     const {rating} = props;
-    console.log({rating}.rating);
-
     return (
         <div className='rating-block'>
             <img src={{rating}.rating >= 1 ? process.env.PUBLIC_URL + "/images/i-star.png" : process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />

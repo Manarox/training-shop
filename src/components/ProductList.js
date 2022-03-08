@@ -7,6 +7,7 @@ import '../pages/SwiperHome.css';
 // import Data from "../pages/data.json";
 import { PRODUCTS } from "../components/products.js";
 import { Rating } from '../components/Rating';
+import { Unique } from '../components/Unique';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -53,7 +54,7 @@ return (
               <Link to="/" className="bread__href">Home</Link>
             </li>
             <li class="bread__item">
-              <Link to={`/${category}`} className="bread__href">{category}</Link>
+              <Link to={`/${category}`} className="bread__href">{resultArr[0].category}</Link>
             </li>
             <li class="bread__item bread__item_active">
               <Link to={`/${category}/${resultArr[0].id}`} className="bread__href">{resultArr[0].name}</Link>
@@ -70,7 +71,7 @@ return (
         <div class="bread__bot flex">
           <div class="bread__left flex">
             <Rating rating={resultArr[0].rating}/>
-            <div class="bread__rating-text">2 Reviews</div>
+            <div class="bread__rating-text">{resultArr[0].reviews.length} Reviews</div>
           </div>
           <div class="bread__right flex">
             <ul class="bread__list-info flex list-reset">
@@ -316,17 +317,19 @@ return (
         </div>
         <ul class="info-prod__list flex list-reset">
           <li class="info-prod__item">
-            Color: <span class="info-prod__span">Blue, White, Black, Grey</span>
+            Color: <span class="info-prod__span"><Unique content={resultArr[0].images}/></span>
           </li>
           <li class="info-prod__item">
-            Size: <span class="info-prod__span">XS, S, M, L</span>
+            Size: <span class="info-prod__span">{resultArr[0].sizes.join(`, `)}</span>
           </li>
           <li class="info-prod__item">
-            Material: <span class="info-prod__span">100% Polyester</span>
+            Material: <span class="info-prod__span">{resultArr[0].material}</span>
           </li>
         </ul>
       </div>
       <div class="strip"></div>
+
+
       <div class="reviews">
         <div class="reviews__title">
           REVIEWS
@@ -392,6 +395,9 @@ return (
           </div>
         </div>
       </div>
+
+
+      
       <div class="strip"></div>
     </div>
   </section>

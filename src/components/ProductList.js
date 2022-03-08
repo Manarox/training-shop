@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/Home.css';
 import { useParams } from "react-router-dom";
@@ -11,6 +11,7 @@ import { Rating } from '../components/Rating';
 import { Unique } from '../components/Unique';
 import { Slider } from '../components/Slider';
 import { Review } from '../components/Review';
+import classNames from 'classnames';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -22,6 +23,7 @@ import { FreeMode, Navigation } from "swiper";
 
 const ProductList = () => {
   // const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  
 
   const id = useParams();
   const {category} = useParams();
@@ -46,6 +48,24 @@ const ProductList = () => {
     return number.id === id.id;
   });
 
+  let [btnContent, setBtnContent] = useState(resultArr[0].sizes[0]);
+  const [isMenuOpen, toggleMenu] = useState(false);
+
+  function tooggleMenuMode(e) {
+    const items = document.querySelectorAll(".size__btn");
+    const target = e.currentTarget;
+    Array.from(items).forEach((item) => {
+      item.classList.remove("size__btn_active");
+    });
+    target.classList.add("size__btn_active");
+    setBtnContent((btnContent = e.currentTarget.textContent))
+  }
+  
+  // const btnName = (e) =>
+  // setBtnContent((btnContent = e.currentTarget.textContent));
+
+ 
+  // console.log(useTitle);
 return (
 
 <div className="page-product" data-test-id={`product-page-${category}`}>
@@ -94,91 +114,6 @@ return (
 
     <section class="prod flex container">
     <Slider images={resultArr[0].images}/>
-{/* <div className="prod__image flex" data-test-id="product-slider">
-  <div className="image__slider">
-      <div className="image__navigate">
-          <button className="image__btn-up">
-            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button className="image__btn-down">
-            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 15L1 8L8 1" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-      </div>
-      <div className="image__img-list">
-        <Swiper
-          onSwiper={setThumbsSwiper}
-          spaceBetween={10}
-          slidesPerView={4}
-          freeMode={true}
-          watchSlidesProgress={true}
-          modules={[FreeMode, Navigation, Thumbs]}
-          navigation={{
-            nextEl: ".image__btn-down", 
-            prevEl: ".image__btn-up",
-          }}
-          className=".image__img-list"
-          direction={'vertical'}
-          style={{height: '500px'}}
-        >
-          <SwiperSlide>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="img"/>
-          </div>
-          </SwiperSlide>
-          <SwiperSlide>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-2.jpg"} alt="img"/>
-          </div>
-          </SwiperSlide>
-          <SwiperSlide>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-3.jpg"} alt="img"/>
-          </div>
-          </SwiperSlide>
-          <SwiperSlide>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-4.jpg"} alt="img"/>
-          </div>
-          </SwiperSlide>
-          <SwiperSlide>
-          <div class="image__img-item">
-            <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="img"/>
-          </div>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-  </div>
-
-      <Swiper
-        spaceBetween={10}
-        navigation={true}
-        thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2"
-        style={{height: '555px'}}
-      >
-        <SwiperSlide>
-          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-        </SwiperSlide>
-      </Swiper>
- 
-</div> */}
 
     <div class="prod__info flex">
       <div class="color">
@@ -208,28 +143,36 @@ return (
           </li>
         </ul>
       </div>
+
+      
+
+
       <div class="size">
         <div class="size__title">
-          <span class="color__text">size:</span><span class="color__span">S</span>
+          <span class="color__text">size:</span><span class="color__span">{btnContent}</span>
         </div>
         <ul class="size__image-list flex list-reset">
           <li class="size__item">
-            <button class="size__btn">xs</button>
+            <button className={classNames('size__btn')} onClick={tooggleMenuMode}>XS</button>
           </li>
           <li class="size__item">
-            <button class="size__btn size__btn_active">s</button>
+            <button class="size__btn" onClick={tooggleMenuMode}>S</button>
           </li>
           <li class="size__item">
-            <button class="size__btn">m</button>
+            <button class="size__btn" onClick={tooggleMenuMode}>M</button>
           </li>
           <li class="size__item">
-            <button class="size__btn">l</button>
+            <button class="size__btn" onClick={tooggleMenuMode}>L</button>
           </li>
         </ul>
         <div class="size__guide">
           <button class="size__guide-btn">Size guide</button>
         </div>
       </div>
+
+
+
+
       <div class="strip"></div>
       <div class="actions">
         <div class="actions__price">

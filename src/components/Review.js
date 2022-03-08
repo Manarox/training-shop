@@ -4,8 +4,6 @@ import { Rating } from '../components/Rating';
 const Review = (props) => {
     const {reviews} = props;
 
-    console.log(`reviews`, {reviews})
-
     // console.log(`result`, result)
 
     return (

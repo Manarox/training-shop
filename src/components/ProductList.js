@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/Home.css';
 import { useParams } from "react-router-dom";
@@ -8,6 +9,8 @@ import '../pages/SwiperHome.css';
 import { PRODUCTS } from "../components/products.js";
 import { Rating } from '../components/Rating';
 import { Unique } from '../components/Unique';
+import { Slider } from '../components/Slider';
+import { Review } from '../components/Review';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -15,10 +18,10 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/thumbs";
-import { FreeMode, Navigation, Thumbs } from "swiper";
+import { FreeMode, Navigation } from "swiper";
 
 const ProductList = () => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  // const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const id = useParams();
   const {category} = useParams();
@@ -90,8 +93,8 @@ return (
     </div>
 
     <section class="prod flex container">
-
-<div className="prod__image flex" data-test-id="product-slider">
+    <Slider images={resultArr[0].images}/>
+{/* <div className="prod__image flex" data-test-id="product-slider">
   <div className="image__slider">
       <div className="image__navigate">
           <button className="image__btn-up">
@@ -175,7 +178,7 @@ return (
         </SwiperSlide>
       </Swiper>
  
-</div>
+</div> */}
 
     <div class="prod__info flex">
       <div class="color">
@@ -283,25 +286,25 @@ return (
         <div class="guaranteed__icons">
           <ul class="guaranteed__list flex list-reset">
             <li class="guaranteed__item">
-              <img src={process.env.PUBLIC_URL + "/images/icon-stripe.png"} alt="Rating product" />
+              <img src={process.env.PUBLIC_URL + "/images/icon-stripe.png"} alt="stripe" />
             </li>
             <li class="guaranteed__item">
-              <img src={process.env.PUBLIC_URL + "/images/icon-aes.png"} alt="Rating product" />
+              <img src={process.env.PUBLIC_URL + "/images/icon-aes.png"} alt="aes" />
             </li>
             <li class="guaranteed__item">
-              <img src={process.env.PUBLIC_URL + "/images/icon-paypal.png"} alt="Rating product" />
+              <img src={process.env.PUBLIC_URL + "/images/icon-paypal.png"} alt="paypal" />
             </li>
             <li class="guaranteed__item">
-              <img src={process.env.PUBLIC_URL + "/images/icon-visa.png"} alt="Rating product" />
+              <img src={process.env.PUBLIC_URL + "/images/icon-visa.png"} alt="visa" />
             </li>
             <li class="guaranteed__item">
-              <img src={process.env.PUBLIC_URL + "/images/icon-mastercard.png"} alt="Rating product" />
+              <img src={process.env.PUBLIC_URL + "/images/icon-mastercard.png"} alt="mastercard" />
             </li>
             <li class="guaranteed__item">
-              <img src={process.env.PUBLIC_URL + "/images/icon-discover.png"} alt="Rating product" />
+              <img src={process.env.PUBLIC_URL + "/images/icon-discover.png"} alt="discover" />
             </li>
             <li class="guaranteed__item">
-              <img src={process.env.PUBLIC_URL + "/images/icon-american.png"} alt="Rating product" />
+              <img src={process.env.PUBLIC_URL + "/images/icon-american.png"} alt="american" />
             </li>
           </ul>
         </div>
@@ -336,15 +339,9 @@ return (
         </div>
         <div class="reviews__top">
           <div class="reviews__rating">
-            <div class="product__rating">
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-            </div>
+            <Rating rating={resultArr[0].rating}/>
             <div class="reviews__count">
-              2 Reviews
+              {resultArr[0].reviews.length} Reviews
             </div>
           </div>
           <div class="reviews__write">
@@ -356,7 +353,10 @@ return (
             </button>
           </div>
         </div>
-        <div class="reviews__item">
+        
+        <Review reviews={resultArr[0].reviews}/>
+
+        {/* <div class="reviews__item">
           <div class="reviews__fio">
             <div class="reviews__name">
               Oleh Chabanov
@@ -393,11 +393,8 @@ return (
           <div class="reviews__descr">
             At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
           </div>
-        </div>
+        </div> */}
       </div>
-
-
-      
       <div class="strip"></div>
     </div>
   </section>

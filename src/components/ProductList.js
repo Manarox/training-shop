@@ -49,7 +49,6 @@ const ProductList = () => {
   });
 
   let [btnContent, setBtnContent] = useState(resultArr[0].sizes[0]);
-  const [isMenuOpen, toggleMenu] = useState(false);
 
   function tooggleMenuMode(e) {
     const items = document.querySelectorAll(".size__btn");

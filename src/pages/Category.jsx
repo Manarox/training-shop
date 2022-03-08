@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
 import { PRODUCTS } from "../components/products.js";
+import { Rating } from '../components/Rating';
 import '../components/ProductList.css';
 
 
@@ -23,7 +24,6 @@ const Category = (props) => {
             )
         })
     } 
-    console.log(arr)
 
     return (
         
@@ -107,13 +107,7 @@ const Category = (props) => {
                                             {post.oldprice}
                                         </div>
                                     </div>
-                                    <div className="product__rating">
-                                        <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                        <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                        <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                        <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                                        <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-                                    </div>
+                                    <Rating rating={post.rating}/>
                                 </div>
                             </div>
                         </Link>

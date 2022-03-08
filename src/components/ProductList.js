@@ -6,6 +6,7 @@ import './ProductList.css';
 import '../pages/SwiperHome.css';
 // import Data from "../pages/data.json";
 import { PRODUCTS } from "../components/products.js";
+import { Rating } from '../components/Rating';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -68,13 +69,7 @@ return (
 
         <div class="bread__bot flex">
           <div class="bread__left flex">
-            <div class="product__rating">
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-              <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-            </div>
+            <Rating rating={resultArr[0].rating}/>
             <div class="bread__rating-text">2 Reviews</div>
           </div>
           <div class="bread__right flex">

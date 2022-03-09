@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/Home.css';
 import { useParams } from "react-router-dom";
@@ -11,7 +11,9 @@ import { Rating } from '../components/Rating';
 import { Unique } from '../components/Unique';
 import { Slider } from '../components/Slider';
 import { Review } from '../components/Review';
-import classNames from 'classnames';
+import { Size } from '../components/Size';
+import { Color } from '../components/Color';
+// import classNames from 'classnames';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -48,17 +50,20 @@ const ProductList = () => {
     return number.id === id.id;
   });
 
-  let [btnContent, setBtnContent] = useState(resultArr[0].sizes[0]);
+  // console.log(resultArr[0])
+  // console.log(resultArr)
 
-  function tooggleMenuMode(e) {
-    const items = document.querySelectorAll(".size__btn");
-    const target = e.currentTarget;
-    Array.from(items).forEach((item) => {
-      item.classList.remove("size__btn_active");
-    });
-    target.classList.add("size__btn_active");
-    setBtnContent((btnContent = e.currentTarget.textContent))
-  }
+  // let [btnContent, setBtnContent] = useState(resultArr[0].sizes[0]);
+
+  // function tooggleMenuMode(e) {
+  //   const items = document.querySelectorAll(".size__btn");
+  //   const target = e.currentTarget;
+  //   Array.from(items).forEach((item) => {
+  //     item.classList.remove("size__btn_active");
+  //   });
+  //   target.classList.add("size__btn_active");
+  //   setBtnContent((btnContent = e.currentTarget.textContent))
+  // }
   
   // const btnName = (e) =>
   // setBtnContent((btnContent = e.currentTarget.textContent));
@@ -112,10 +117,14 @@ return (
     </div>
 
     <section class="prod flex container">
+
     <Slider images={resultArr[0].images}/>
 
     <div class="prod__info flex">
-      <div class="color">
+
+      <Color color={resultArr[0].images}/>
+
+      {/* <div class="color">
         <div class="color__title">
           <span class="color__text">Color:</span><span class="color__span">Blue</span>
         </div>
@@ -141,12 +150,12 @@ return (
             </Link>
           </li>
         </ul>
-      </div>
+      </div> */}
 
-      
+    <Size product={resultArr[0]}/>
 
 
-      <div class="size">
+      {/* <div class="size">
         <div class="size__title">
           <span class="color__text">size:</span><span class="color__span">{btnContent}</span>
         </div>
@@ -167,7 +176,7 @@ return (
         <div class="size__guide">
           <button class="size__guide-btn">Size guide</button>
         </div>
-      </div>
+      </div> */}
 
 
 
@@ -426,13 +435,7 @@ return (
                       {post.oldprice}
                     </div>
                   </div>
-                  <div class="product__rating">
-                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                    <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                    <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-                  </div>
+                    <Rating rating={post.rating}/>
                 </div>
               </div>
             </Link>

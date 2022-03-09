@@ -383,9 +383,23 @@ button {
 .color {
   padding-bottom: 32px;
 }
+.color__item {
+  max-height: 64px;
+  max-width: 64px;
+}
+.color__image {
+  height: 67px;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+.color__image_active {
+  outline: 2px solid #121212;
+}
 .size__btn {
-  width: 40px;
+  width: 100%;
   height: 40px;
+  padding: 10px;
   font-weight: 600;
   font-size: 14px;
   line-height: 13px;
@@ -397,7 +411,7 @@ button {
   padding-right: 16px;
 }
 .size__btn_active {
-  border: 2px solid #121212;
+  outline: 2px solid #121212;
 }
 .size__image-list {
   padding-bottom: 17px!important;

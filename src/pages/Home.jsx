@@ -11,6 +11,7 @@ import './SwiperHome.css';
 
 
 const Home = () => {
+
     return (
 <main className="main">
 

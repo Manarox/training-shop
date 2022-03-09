@@ -1,9 +1,11 @@
 import React from 'react';
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
 import { PRODUCTS } from "../components/products.js";
 import { Rating } from '../components/Rating';
+import classNames from 'classnames';
 import '../components/ProductList.css';
 
 
@@ -24,6 +26,12 @@ const Category = (props) => {
             )
         })
     } 
+
+    const [isFilterOpen, toggleFilter] = useState(false);
+
+    function tooggleFilterMode() {
+        toggleFilter(!isFilterOpen);
+    }
 
     return (
         
@@ -52,10 +60,14 @@ const Category = (props) => {
 
         <section className="filter flex container">
             <div className="filter__wrap">
-                <div className="filter__choice">
-                    <svg className="filter__ico1" width="24" height="24" viewBox="0 0 24 24" fill="red" xmlns="http://www.w3.org/2000/svg">
+                <div className='filter__choice' onClick={tooggleFilterMode}>
+                    <svg className={classNames('filter__ico1', { filter__ico1_active: isFilterOpen })} width="24" height="24" viewBox="0 0 24 24" fill="red" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 4.00004V1.33337M12 4.00004C11.2928 4.00004 10.6145 4.28099 10.1144 4.78109C9.61433 5.28119 9.33337 5.95946 9.33337 6.66671C9.33337 7.37395 9.61433 8.05223 10.1144 8.55232C10.6145 9.05242 11.2928 9.33337 12 9.33337M12 4.00004C12.7073 4.00004 13.3856 4.28099 13.8857 4.78109C14.3858 5.28119 14.6667 5.95946 14.6667 6.66671C14.6667 7.37395 14.3858 8.05223 13.8857 8.55232C13.3856 9.05242 12.7073 9.33337 12 9.33337M12 9.33337V22.6667M4.00004 20C4.70728 20 5.38556 19.7191 5.88566 19.219C6.38576 18.7189 6.66671 18.0406 6.66671 17.3334C6.66671 16.6261 6.38576 15.9479 5.88566 15.4478C5.38556 14.9477 4.70728 14.6667 4.00004 14.6667M4.00004 20C3.2928 20 2.61452 19.7191 2.11442 19.219C1.61433 18.7189 1.33337 18.0406 1.33337 17.3334C1.33337 16.6261 1.61433 15.9479 2.11442 15.4478C2.61452 14.9477 3.2928 14.6667 4.00004 14.6667M4.00004 20V22.6667M4.00004 14.6667V1.33337M20 20C20.7073 20 21.3856 19.7191 21.8857 19.219C22.3858 18.7189 22.6667 18.0406 22.6667 17.3334C22.6667 16.6261 22.3858 15.9479 21.8857 15.4478C21.3856 14.9477 20.7073 14.6667 20 14.6667M20 20C19.2928 20 18.6145 19.7191 18.1144 19.219C17.6143 18.7189 17.3334 18.0406 17.3334 17.3334C17.3334 16.6261 17.6143 15.9479 18.1144 15.4478C18.6145 14.9477 19.2928 14.6667 20 14.6667M20 20V22.6667M20 14.6667V1.33337" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
+                    <svg className={classNames('filter__ico2', { filter__ico2_active: isFilterOpen })} width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L17 17M1 17L17 1L1 17Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
                     <span className="filter__text">Filter</span>
                 </div>
                 <div className="filter__card-form">
@@ -81,6 +93,135 @@ const Category = (props) => {
                 </div>
             </div>
             
+
+        <div className={classNames('filtered', { filtered__visible: isFilterOpen })}>
+            <div className="filtered__block">
+                <span className="filtered__title">
+                    COLOR
+                </span>
+                <ul className="filtered__list flex list-reset">
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div className="filtered__block">
+                <span className="filtered__title">
+                    SIZE
+                </span>
+                <ul className="filtered__list flex list-reset">
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div className="filtered__block">
+                <span className="filtered__title">
+                    BRAND
+                </span>
+                <ul className="filtered__list flex list-reset">
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div className="filtered__block">
+                 <span className="filtered__title">
+                    PRICE
+                </span>
+                <ul className="filtered__list flex list-reset">
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" />
+                            asd
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul className="product__list flex list-reset">
             {arr.map(post => {

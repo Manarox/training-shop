@@ -229,6 +229,57 @@
   transform: rotate(45deg);
   width: 25px;
 }
+/*Filtered*/
+.filtered {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 25px;
+  margin-bottom: 32px;
+  background: #F8F8F8;
+}
+.filtered__visible {
+  display: flex;
+}
+.filtered__title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+  display: block;
+}
+.filtered__label {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 34px;
+  opacity: 0.8;
+}
+.filtered__list {
+  flex-direction: column;
+  min-height: 270px;
+  min-width: 230px;
+  overflow-x: visible;
+  overflow-y: auto;
+  padding-left: 1px;
+  width: 100%;
+}
+.filter__ico2 {
+  display: none;
+  margin-right: 20px;
+  fill: #121212;
+  stroke: #121212;
+  opacity: 0.6;
+}
+.filter__ico2_active {
+  display: block;
+}
+.filter__ico1_active {
+  display: none;
+}
+
 /*bread-bot (товар)*/
 .bread__bot {
   justify-content: space-between;

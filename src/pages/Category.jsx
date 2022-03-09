@@ -67,7 +67,6 @@ const Category = (props) => {
                     <svg className={classNames('filter__ico2', { filter__ico2_active: isFilterOpen })} width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 1L17 17M1 17L17 1L1 17Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-
                     <span className="filter__text">Filter</span>
                 </div>
                 <div className="filter__card-form">
@@ -225,6 +224,7 @@ const Category = (props) => {
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul className="product__list flex list-reset">
             {arr.map(post => {
+                console.log(post)
                 return (
                     
                     <li className="product__item cards-item" data-test-id={`clothes-card-${category}`}>

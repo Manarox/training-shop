@@ -257,15 +257,6 @@
   padding-right: 25px;
 }
 
-
-
-
-
-
-
-
-
-
 /*Prod*/
 button {
   padding: 0;
@@ -277,7 +268,14 @@ button {
   считают, что необходимо оставлять стрелочный вид для кнопок */
   cursor: pointer;
 }
-
+.product__link {
+  font-weight: 500;
+  opacity: 60%;
+}
+.product__link_active {
+  font-weight: 600;
+  opacity: 1;
+}
 .prod__image {
   width: 50%;
   flex-direction: row;

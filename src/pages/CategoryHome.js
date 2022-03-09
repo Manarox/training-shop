@@ -10,7 +10,7 @@ const CategoryHome = (props) => {
     const {category} = props;
     const arr = [];
     // let particulars = '';
-    
+    let i = 0;
     if ({category}.category === 'women') {
         PRODUCTS.women.map(post => {
             return (
@@ -29,8 +29,13 @@ const CategoryHome = (props) => {
 
     const changeButtons = (elem) => {
         setParticulars(elem.target.value);
+        const items = document.querySelectorAll(".product__link");
+        const target = elem.currentTarget;
+        Array.from(items).forEach((item) => {
+            item.classList.remove("product__link_active");
+        });
+        target.classList.add("product__link_active");
     }
-    
     return (
     <>
 
@@ -40,11 +45,14 @@ const CategoryHome = (props) => {
             </h2>
             <ul className="product__nav-list flex list-reset">
 
-                {main_clothes_block_menu.map(({particulars, name}) => (
-                    <li className="product__nav-item product__nav-item_active">
+                {main_clothes_block_menu.map(({particulars, name}) => {
+                    i++;
+                    return (
+                    
+                    <li className="product__nav-item">
                         <button
                         type="button"
-                        className="product__link"
+                        className={"product__link" + (i === 1 ? ' product__link_active' : '')}
                         key={particulars}
                         onClick={changeButtons}
                         value={particulars}
@@ -52,8 +60,10 @@ const CategoryHome = (props) => {
                         >
                             {name}
                         </button>
-                    </li>    
-                ))}
+                    </li>
+                    )
+
+                })}
 
             </ul>
         </div>

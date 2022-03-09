@@ -92,64 +92,15 @@ const Home = () => {
   <div className="grey-line grey-line_margin-big"></div>
 
   <section className="product flex container">
-    <div className="product__nav flex">
-      <h2 className="product__h2">
-        WOMEN’S
-      </h2>
-      <ul className="product__nav-list flex list-reset">
-        <li className="product__nav-item product__nav-item_active">
-          <Link to="/" className="product__link">NEW ARRIVALS</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">SPECIALS</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">BESTSELLERS</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">MOST VIEWED</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">FEATURED PRODUCTS</Link>
-        </li>
-      </ul>
-    </div>
 
     <CategoryHome category={'women'}/>
-    <Link to="/" className="see-all flex see-all__link">
-      See All
-    </Link>
+
   </section>
 
   <section className="product flex container">
-    <div className="product__nav flex">
-      <h2 className="product__h2">
-        MEN’S
-      </h2>
-      <ul className="product__nav-list flex list-reset">
-        <li className="product__nav-item product__nav-item_active">
-          <Link to="/" className="product__link">NEW ARRIVALS</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">SPECIALS</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">BESTSELLERS</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">MOST VIEWED</Link>
-        </li>
-        <li className="product__nav-item">
-          <Link to="/" className="product__link">FEATURED PRODUCTS</Link>
-        </li>
-      </ul>
-    </div>
 
     <CategoryHome category={'men'}/>
     
-    <Link to="/" className="see-all flex see-all__link">
-      See All
-    </Link>
   </section>
 
   <section className="news flex container">

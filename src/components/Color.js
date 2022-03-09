@@ -10,7 +10,7 @@ const Color = (props) => {
 
     let [btnContent, setBtnContent] = useState(result[0].color);
 
-    console.log(result[0].color)
+    // console.log(result[0].color)
 
     useEffect(() => {
         const ite = document.querySelectorAll(".color__image");

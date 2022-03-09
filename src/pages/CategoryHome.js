@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
 import { PRODUCTS } from "../components/products.js";
-import { Rating } from '../components/Rating';
+import { main_clothes_block_menu } from "../components/Buttons.js";
+import { ProductHome } from '../components/ProductHome';
 import '../components/ProductList.css';
 
 const CategoryHome = (props) => {
     const {category} = props;
     const arr = [];
-
+    // let particulars = '';
+    
     if ({category}.category === 'women') {
         PRODUCTS.women.map(post => {
             return (
@@ -21,45 +23,55 @@ const CategoryHome = (props) => {
                 arr.push(post)
             )
         })
-    } 
+    }
+
+    const [particulars, setParticulars] = useState('isNewArrivals');
+
+    const changeButtons = (elem) => {
+        setParticulars(elem.target.value);
+    }
+    
     return (
-        <>
+    <>
+
+        <div className="product__nav flex">
+            <h2 className="product__h2">
+                {category}
+            </h2>
+            <ul className="product__nav-list flex list-reset">
+
+                {main_clothes_block_menu.map(({particulars, name}) => (
+                    <li className="product__nav-item product__nav-item_active">
+                        <button
+                        type="button"
+                        className="product__link"
+                        key={particulars}
+                        onClick={changeButtons}
+                        value={particulars}
+                        data-test-id={`clothes-${category}-${particulars}`}
+                        >
+                            {name}
+                        </button>
+                    </li>    
+                ))}
+
+            </ul>
+        </div>
+
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul class="product__list flex list-reset">
-            {arr.map(post => {
-                return (
-                    <li class="product__item" data-test-id={`clothes-card-${category}`}>
-                        <Link to={`/${category}/${post.id}`}>
-                        <div class="product__img-block">
-                            <img src={"https://training.cleverland.by/shop" + post.images[0]?.url} alt="Product name" class="product__img" />
-                            <div className="product__discount">
-                                {post.discount}
-                            </div>
-                        </div>
-                        <div class="product__about flex">
-                            <div class="product__name">
-                                {post.name}
-                            </div>
-                            <div class="product__info flex">
-                                <div class="product__cost flex">
-                                    <div class="product__price">
-                                        {post.price} $
-                                    </div>
-                                    <div class="product__old-price">
-                                        {post.oldprice}
-                                    </div>
-                                </div>
-                                <Rating rating={post.rating}/>
-                            </div>
-                        </div>
-                        </Link>
-                    </li>
-                );
-            })}
+
+            {arr.map(post => (
+                post.particulars[particulars] === true ? <ProductHome post={post} key={post.id}/> : null
+            ))}    
+
         </ul>
         </div>
-        </>
-        
+
+        <Link to="/" className="see-all flex see-all__link">
+            See All
+        </Link>
+    </>
     )
 }
 

@@ -231,7 +231,13 @@
 }
 /*Filtered*/
 .filtered {
-  display: none;
+
+
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+
+
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
@@ -253,6 +259,10 @@
 }
 .filtered__visible {
   display: flex;
+
+  position: relative;
+  top: 0px;
+  left: 0px;
 }
 .filtered__title {
   font-weight: 600;

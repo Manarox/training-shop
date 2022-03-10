@@ -78,7 +78,7 @@ const CategoryHome = (props) => {
         </ul>
         </div>
 
-        <Link to="/" className="see-all flex see-all__link">
+        <Link to={`${category}`} className="see-all flex see-all__link">
             See All
         </Link>
     </>

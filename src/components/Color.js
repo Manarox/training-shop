@@ -3,10 +3,14 @@ import React, { useEffect, useState } from 'react';
 const Color = (props) => {
     const {color} = props;
 
+    console.log({color}.color)
+
     let result = {color}.color.reduce((accumulator, currentValue) => {
         if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
         return accumulator;
     }, []);
+
+    console.log(result)
 
     let [btnContent, setBtnContent] = useState(result[0].color);
 

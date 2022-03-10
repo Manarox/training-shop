@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
 import { PRODUCTS } from "../components/products.js";
-import { Rating } from '../components/Rating';
+import { ProductHome } from '../components/ProductHome';
 import classNames from 'classnames';
 import '../components/ProductList.css';
 
@@ -12,6 +12,10 @@ import '../components/ProductList.css';
 const Category = (props) => {
     const {category} = useParams();
     const arr = [];
+    let colorResult = [];
+    // let colorFilterResult = [];
+    let sizeResult = [];
+    let brandResult = [];
 
     if ({category}.category === 'women') {
         PRODUCTS.women.map(post => {
@@ -27,10 +31,205 @@ const Category = (props) => {
         })
     } 
 
+    // console.log(arr)
+
     const [isFilterOpen, toggleFilter] = useState(false);
 
     function tooggleFilterMode() {
         toggleFilter(!isFilterOpen);
+    }
+
+    /*Поиск всех уникальных цветов*/
+
+    arr.map(post => (
+        post.images.map(post => (
+            colorResult.push(post.color)
+        ))
+    ))
+    colorResult = Array.from(new Set(colorResult));
+
+    /*Поиск всех уникальных размеров*/
+
+    arr.map(post => (
+        post.sizes.map(post => (
+            sizeResult.push(post)
+        ))
+    ))
+    sizeResult = Array.from(new Set(sizeResult));
+
+    /*Поиск всех уникальных брендов*/
+
+    // console.log(arr)
+    arr.map(post => (
+        brandResult.push(post.brand)
+    ))
+    brandResult = Array.from(new Set(brandResult));
+
+    /*useState для фильтра Color*/
+    const [useColor, setUseColor] = useState([]);
+
+    let selectedColor = (elem) => {
+        let colorFilterResult = [...useColor]
+        const target = elem.currentTarget;
+        if (target.checked) {
+            colorFilterResult.push(elem.target.value)
+        } else {
+            colorFilterResult = colorFilterResult.filter(function(item) { 
+                return item !== elem.target.value
+            })
+        }
+        const items = document.getElementById('filter__chose_color');
+        items.innerText = ""
+        items.innerText = "Color: " + colorFilterResult.join('/')
+        return (
+            setUseColor(colorFilterResult)
+        )
+    }
+    // console.log({useColor})
+
+    /*useState для фильтра Size*/
+    const [useSize, setUseSize] = useState([]);
+
+    let selectedSize = (elem) => {
+        let sizeFilterResult = [...useSize]
+        const target = elem.currentTarget;
+        if (target.checked) {
+            sizeFilterResult.push(elem.target.value)
+        } else {
+            sizeFilterResult = sizeFilterResult.filter(function(item) { 
+                return item !== elem.target.value
+            })
+        }
+        const items = document.getElementById('filter__chose_size');
+        items.innerText = ""
+        items.innerText = "Size: " + sizeFilterResult.join('/')
+        return (
+            setUseSize(sizeFilterResult)
+        )
+    }
+
+    // console.log({useSize})
+
+    /*useState для фильтра Brand*/
+    const [useBrand, setUseBrand] = useState([]);
+
+    let selectedBrand = (elem) => {
+        let brandFilterResult = [...useBrand]
+        const target = elem.currentTarget;
+        if (target.checked) {
+            brandFilterResult.push(elem.target.value)
+        } else {
+            brandFilterResult = brandFilterResult.filter(function(item) { 
+                return item !== elem.target.value
+            })
+        }
+        const items = document.getElementById('filter__chose_brand');
+        items.innerText = ""
+        items.innerText = "Brand: " + brandFilterResult.join('/')
+        return (
+            setUseBrand(brandFilterResult)
+        )
+    }
+
+    // console.log({useBrand})
+
+    /*useState для фильтра Price*/
+    const [usePrice, setUsePrice] = useState([]);
+
+    let selectedPrice = (elem) => {
+        let priceFilterResult = [...usePrice]
+        const target = elem.currentTarget;
+        if (target.checked) {
+            priceFilterResult.push(elem.target.value)
+        } else {
+            priceFilterResult = priceFilterResult.filter(function(item) { 
+                return item !== elem.target.value
+            })
+        }
+        const items = document.getElementById('filter__chose_price');
+        items.innerText = ""
+        items.innerText = "Brand: " + priceFilterResult.join('/')
+        return (
+            setUsePrice(priceFilterResult)
+        )
+    }
+
+    // console.log({usePrice})
+
+    let filterArr = []
+    filterArr.push({useColor})
+    filterArr.push({useSize})
+    filterArr.push({useBrand})
+    filterArr.push({usePrice})
+    console.log(filterArr)
+    console.log(arr)
+
+    
+    function poiskBrand(post) {
+        // console.log(filterArr[2].useBrand)
+        for (var i = 0; i < filterArr[2].useBrand.length; i++) {
+            if (filterArr[2].useBrand[i] === post.post.brand) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function poiskColor(post) {
+        // console.log(filterArr[0].useColor)
+        // console.log(post.post.images)
+        for (var i = 0; i < post.post.images.length; i++) {
+            for (var j = 0; j < filterArr[0].useColor.length; j++) {
+                if (post.post.images[i].color === filterArr[0].useColor[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function poiskSize(post) {
+        for (var i = 0; i < post.post.sizes.length; i++) {
+            for (var j = 0; j < filterArr[1].useSize.length; j++) {
+                if (post.post.sizes[i] === filterArr[1].useSize[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function poiskPrice(post) {
+        for (var i = 0; i < filterArr[3].usePrice.length; i++) {
+            if (filterArr[3].usePrice[i] === "500+") {
+                if (post.post.price >= 500) {
+                    return true;
+                }
+            } else if (filterArr[3].usePrice[i] === "200-500") {
+                if ((post.post.price >= 200) && (post.post.price <= 500)) {
+                    return true;
+                }
+            } else if (filterArr[3].usePrice[i] === "100-200") {
+                if ((post.post.price >= 100) && (post.post.price <= 200)) {
+                    return true;
+                }
+            } else if (filterArr[3].usePrice[i] === "50-100") {
+                if ((post.post.price >= 50) && (post.post.price <= 100)) {
+                    return true;
+                }
+            } else if (filterArr[3].usePrice[i] === "0-50") {
+                if ((post.post.price >= 0) && (post.post.price <= 50)) {
+                    return true;
+                }
+            } 
+        }
+        return false;
+    }
+
+    function renderAll() {
+        if ((filterArr[0].useColor.length === 0) && (filterArr[1].useSize.length === 0) && (filterArr[2].useBrand.length === 0) && (filterArr[3].usePrice.length === 0)) {
+            return true;
+        }
     }
 
     return (
@@ -92,37 +291,22 @@ const Category = (props) => {
                 </div>
             </div>
             
-
         <div className={classNames('filtered', { filtered__visible: isFilterOpen })}>
             <div className="filtered__block">
                 <span className="filtered__title">
                     COLOR
                 </span>
                 <ul className="filtered__list flex list-reset">
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
+                    {colorResult.map((post) => {
+                        return (
+                            <li className="filtered__item">
+                                <label className="filtered__label">
+                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedColor}/>
+                                    {post}
+                                </label>
+                            </li>
+                        )
+                    })}
                 </ul>
             </div>
             <div className="filtered__block">
@@ -130,30 +314,16 @@ const Category = (props) => {
                     SIZE
                 </span>
                 <ul className="filtered__list flex list-reset">
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
+                    {sizeResult.map((post) => {
+                        return (
+                            <li className="filtered__item">
+                                <label className="filtered__label">
+                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedSize}/>
+                                    {post}
+                                </label>
+                            </li>
+                        )
+                    })}
                 </ul>
             </div>
             <div className="filtered__block">
@@ -161,30 +331,16 @@ const Category = (props) => {
                     BRAND
                 </span>
                 <ul className="filtered__list flex list-reset">
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
-                    <li className="filtered__item">
-                        <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
-                        </label>
-                    </li>
+                    {brandResult.map((post) => {
+                        return (
+                            <li className="filtered__item">
+                                <label className="filtered__label">
+                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedBrand}/>
+                                    {post}
+                                </label>
+                            </li>
+                        )
+                    })}
                 </ul>
             </div>
             <div className="filtered__block">
@@ -194,29 +350,45 @@ const Category = (props) => {
                 <ul className="filtered__list flex list-reset">
                     <li className="filtered__item">
                         <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
+                            <input type="checkbox" className="filtered__input" value={"500+"} onClick={selectedPrice}/>
+                            $ 500+
                         </label>
                     </li>
                     <li className="filtered__item">
                         <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
+                            <input type="checkbox" className="filtered__input" value={"200-500"} onClick={selectedPrice}/>
+                            $ 200-500
                         </label>
                     </li>
                     <li className="filtered__item">
                         <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
+                            <input type="checkbox" className="filtered__input" value={"100-200"} onClick={selectedPrice}/>
+                            $ 100-200
                         </label>
                     </li>
                     <li className="filtered__item">
                         <label className="filtered__label">
-                            <input type="checkbox" className="filtered__input" />
-                            asd
+                            <input type="checkbox" className="filtered__input" value={"50-100"} onClick={selectedPrice}/>
+                            $ 50-100
+                        </label>
+                    </li>
+                    <li className="filtered__item">
+                        <label className="filtered__label">
+                            <input type="checkbox" className="filtered__input" value={"0-50"} onClick={selectedPrice}/>
+                            $ 0-50
                         </label>
                     </li>
                 </ul>
+            </div>
+            <div className="filter__chose">
+                <div className="filter__chose_color" id="filter__chose_color">
+                </div>
+                <div className="filter__chose_size" id="filter__chose_size">
+                </div>
+                <div className="filter__chose_brand" id="filter__chose_brand">
+                </div>
+                <div className="filter__chose_price" id="filter__chose_price">
+                </div>
             </div>
         </div>
 
@@ -224,37 +396,20 @@ const Category = (props) => {
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul className="product__list flex list-reset">
             {arr.map(post => {
-                console.log(post)
+                // console.log({post}.post)
+                
+                poiskBrand({post})
+                poiskColor({post})
+                poiskSize({post})
+                poiskPrice({post})
+
                 return (
-                    
-                    <li className="product__item cards-item" data-test-id={`clothes-card-${category}`}>
-                        <Link key={post.id} to={`/${category}/${post.id}`}>
-                            <div className="product__img-block">
-                                <img src={"https://training.cleverland.by/shop" + post.images[0]?.url} alt="Product name" class="product__img" />
-                                <div className="product__discount">
-                                    {post.discount}
-                                </div>
-                            </div>
-                            <div className="product__about flex">
-                                <div className="product__name">
-                                    {post.name}
-                                </div>
-                                <div className="product__info flex">
-                                    <div className="product__cost flex">
-                                        <div className="product__price">
-                                            {post.price} $
-                                        </div>
-                                        <div className="product__old-price">
-                                            {post.oldprice}
-                                        </div>
-                                    </div>
-                                    <Rating rating={post.rating}/>
-                                </div>
-                            </div>
-                        </Link>
-                    </li>
-                );
-            })}
+                    // poiskBrand({post}) === true ? <ProductHome post={post} key={post.id}/> : null
+                    renderAll() === true ? <ProductHome post={post} key={post.id}/> : 
+                        ((poiskBrand({post}) === true) || (poiskColor({post}) === true) || (poiskSize({post}) === true) || (poiskPrice({post}) === true) ? <ProductHome post={post} key={post.id}/> : null)
+                    // <ProductHome post={post} key={post.id}/>
+                )
+            })}  
         </ul>
         </div>
         </section>

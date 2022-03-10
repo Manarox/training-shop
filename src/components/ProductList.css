@@ -234,7 +234,7 @@
   display: none;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   padding: 25px;
   margin-bottom: 32px;
@@ -259,7 +259,7 @@
 }
 .filtered__list {
   flex-direction: column;
-  min-height: 270px;
+  max-height: 270px;
   min-width: 230px;
   overflow-x: visible;
   overflow-y: auto;
@@ -279,7 +279,19 @@
 .filter__ico1_active {
   display: none;
 }
-
+.filter__chose {
+  background: #F8F8F8;
+  width: 100%;
+  min-height: 20px;
+  padding-top: 20px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 34px;
+  opacity: 0.8;
+}
+.filter__chise_color:empty {
+	display: none;
+}
 /*bread-bot (товар)*/
 .bread__bot {
   justify-content: space-between;

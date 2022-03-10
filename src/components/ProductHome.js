@@ -4,7 +4,6 @@ import { Rating } from '../components/Rating';
 
 const ProductHome = (props) => {
     const {post} = props;
-    console.log({post}.post.category)
 
     return (
         <>

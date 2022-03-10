@@ -377,8 +377,8 @@ const Category = (props) => {
                     </ul>
                 </div>
             </div>
-            
-        <div className={classNames('filtered', { filtered__visible: isFilterOpen })} data-test-id={`filters-${category}`}>
+        {isFilterOpen === true ?     
+        <div className='filtered' data-test-id={`filters-${category}`}>
             <div className="filtered__block">
                 <span className="filtered__title">
                     COLOR
@@ -468,7 +468,9 @@ const Category = (props) => {
                 </ul>
             </div>
         </div>
-        <div className={classNames('filter__chose', { filtered__visible: isFilterOpen })} id="filter__chose">
+        : null}
+        {isFilterOpen === true ? 
+        <div className="filter__chose" id="filter__chose">
             <div className="filter__chose_count" id="filter__chose_count">
                 {countProd} Filtered products
             </div>
@@ -481,6 +483,7 @@ const Category = (props) => {
             <div className="filter__chose_block filter__chose_price" id="filter__chose_price">
             </div>
         </div>
+        : null}
         
 
         <div className='clothes' data-test-id={`clothes-${category}`}>

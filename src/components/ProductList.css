@@ -233,9 +233,7 @@
 .filtered {
 
 
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
+  display: flex;
 
 
   flex-wrap: wrap;
@@ -246,7 +244,7 @@
   background: #F8F8F8;
 }
 .filter__chose {
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   background: #F8F8F8;
   width: 100%;

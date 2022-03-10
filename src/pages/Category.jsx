@@ -80,7 +80,13 @@ const Category = (props) => {
         }
         const items = document.getElementById('filter__chose_color');
         items.innerText = ""
-        items.innerText = "Color: " + colorFilterResult.join('/')
+        for (let i = 0; i < colorFilterResult.length; i++) {
+            items.innerText += '   Color: ' + colorFilterResult[i]
+        }
+        
+        if (colorFilterResult.length === 0) {
+            items.innerText = ""
+        }
         return (
             setUseColor(colorFilterResult)
         )
@@ -102,7 +108,12 @@ const Category = (props) => {
         }
         const items = document.getElementById('filter__chose_size');
         items.innerText = ""
-        items.innerText = "Size: " + sizeFilterResult.join('/')
+        for (let i = 0; i < sizeFilterResult.length; i++) {
+            items.innerText += '   Size: ' + sizeFilterResult[i]
+        }
+        if (sizeFilterResult.length === 0) {
+            items.innerText = ""
+        }
         return (
             setUseSize(sizeFilterResult)
         )
@@ -125,7 +136,14 @@ const Category = (props) => {
         }
         const items = document.getElementById('filter__chose_brand');
         items.innerText = ""
-        items.innerText = "Brand: " + brandFilterResult.join('/')
+ 
+        for (let i = 0; i < brandFilterResult.length; i++) {
+            items.innerText += '   Brand: ' + brandFilterResult[i]
+        }
+
+        if (brandFilterResult.length === 0) {
+            items.innerText = ""
+        }
         return (
             setUseBrand(brandFilterResult)
         )
@@ -148,11 +166,19 @@ const Category = (props) => {
         }
         const items = document.getElementById('filter__chose_price');
         items.innerText = ""
-        items.innerText = "Brand: " + priceFilterResult.join('/')
+        for (let i = 0; i < priceFilterResult.length; i++) {
+            items.innerText += '   Price: ' + priceFilterResult[i]
+        }
+        if (priceFilterResult.length === 0) {
+            items.innerText = ""
+        }
+
         return (
             setUsePrice(priceFilterResult)
         )
     }
+
+   
 
     // console.log({usePrice})
 
@@ -161,10 +187,9 @@ const Category = (props) => {
     filterArr.push({useSize})
     filterArr.push({useBrand})
     filterArr.push({usePrice})
-    console.log(filterArr)
-    console.log(arr)
+    // console.log(filterArr)
+    // console.log(arr)
 
-    
     function poiskBrand(post) {
 
             // console.log(filterArr[2].useBrand)
@@ -249,16 +274,47 @@ const Category = (props) => {
     
         if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === true)) {
             countProd[0] = countProd[0]+1;
+            // countProd.push(1)
+            console.log(countProd)
+            console.log(countProd.length)
+            //const items = document.querySelector(".filter__chose_count");
+            //items.classList.add("filter__chose_count_active");
+            // const items = document.getElementById('filter__chose_count');
+            
+            // // items.innerText = ""
+            // // items.innerText = countProd[0] + "items Found"
+            // console.log(countProd)
+            // if (countProd[0] === null) {
+            //     console.log(countProd)
+            //     items.innerText = ""
+            // }
             return true
         } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === true)) {
-            countProd[0] = countProd[0]+1;
+            //countProd[0] = countProd[0]+1;
+            // const items = document.getElementById('filter__chose_count');
+            // items.innerText = ""
+            // items.innerText = countProd[0] + "items Found"
+            // if (countProd[0] === 0) {
+            //     items.innerText = ""
+            // }
             return true
         } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === true)) {
-            countProd[0] = countProd[0]+1;
+            //countProd[0] = countProd[0]+1;
+            // const items = document.getElementById('filter__chose_count');
+            // items.innerText = ""
+            // items.innerText = countProd[0] + "items Found"
+            // if (countProd[0] === 0) {
+            //     items.innerText = ""
+            // }
             return true
         } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === true)) {
-            countProd[0] = countProd[0]+1;
-            console.log(countProd)
+            //countProd[0] = countProd[0]+1;
+            // const items = document.getElementById('filter__chose_count');
+            // items.innerText = ""
+            // items.innerText = countProd[0] + "items Found"
+            // if (countProd[0] === 0) {
+            //     items.innerText = ""
+            // }
             return true
         }
     }
@@ -290,11 +346,11 @@ const Category = (props) => {
 
         <section className="filter flex container">
             <div className="filter__wrap">
-                <div className='filter__choice' onClick={tooggleFilterMode}>
+                <div className='filter__choice' onClick={tooggleFilterMode} data-test-id="filter-button">
                     <svg className={classNames('filter__ico1', { filter__ico1_active: isFilterOpen })} width="24" height="24" viewBox="0 0 24 24" fill="red" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 4.00004V1.33337M12 4.00004C11.2928 4.00004 10.6145 4.28099 10.1144 4.78109C9.61433 5.28119 9.33337 5.95946 9.33337 6.66671C9.33337 7.37395 9.61433 8.05223 10.1144 8.55232C10.6145 9.05242 11.2928 9.33337 12 9.33337M12 4.00004C12.7073 4.00004 13.3856 4.28099 13.8857 4.78109C14.3858 5.28119 14.6667 5.95946 14.6667 6.66671C14.6667 7.37395 14.3858 8.05223 13.8857 8.55232C13.3856 9.05242 12.7073 9.33337 12 9.33337M12 9.33337V22.6667M4.00004 20C4.70728 20 5.38556 19.7191 5.88566 19.219C6.38576 18.7189 6.66671 18.0406 6.66671 17.3334C6.66671 16.6261 6.38576 15.9479 5.88566 15.4478C5.38556 14.9477 4.70728 14.6667 4.00004 14.6667M4.00004 20C3.2928 20 2.61452 19.7191 2.11442 19.219C1.61433 18.7189 1.33337 18.0406 1.33337 17.3334C1.33337 16.6261 1.61433 15.9479 2.11442 15.4478C2.61452 14.9477 3.2928 14.6667 4.00004 14.6667M4.00004 20V22.6667M4.00004 14.6667V1.33337M20 20C20.7073 20 21.3856 19.7191 21.8857 19.219C22.3858 18.7189 22.6667 18.0406 22.6667 17.3334C22.6667 16.6261 22.3858 15.9479 21.8857 15.4478C21.3856 14.9477 20.7073 14.6667 20 14.6667M20 20C19.2928 20 18.6145 19.7191 18.1144 19.219C17.6143 18.7189 17.3334 18.0406 17.3334 17.3334C17.3334 16.6261 17.6143 15.9479 18.1144 15.4478C18.6145 14.9477 19.2928 14.6667 20 14.6667M20 20V22.6667M20 14.6667V1.33337" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <svg className={classNames('filter__ico2', { filter__ico2_active: isFilterOpen })} width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg className={classNames('filter__ico22', { filter__ico2_active: isFilterOpen })} width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 1L17 17M1 17L17 1L1 17Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span className="filter__text">Filter</span>
@@ -322,17 +378,17 @@ const Category = (props) => {
                 </div>
             </div>
             
-        <div className={classNames('filtered', { filtered__visible: isFilterOpen })}>
+        <div className={classNames('filtered', { filtered__visible: isFilterOpen })} data-test-id={`filters-${category}`}>
             <div className="filtered__block">
                 <span className="filtered__title">
                     COLOR
                 </span>
-                <ul className="filtered__list flex list-reset">
+                <ul className="filtered__list flex list-reset" data-test-id="filters-color">
                     {colorResult.map((post) => {
                         return (
                             <li className="filtered__item">
                                 <label className="filtered__label">
-                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedColor}/>
+                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedColor} data-test-id={`filter-color-${post}`}/>
                                     {post}
                                 </label>
                             </li>
@@ -344,12 +400,12 @@ const Category = (props) => {
                 <span className="filtered__title">
                     SIZE
                 </span>
-                <ul className="filtered__list flex list-reset">
+                <ul className="filtered__list flex list-reset" data-test-id="filters-size">
                     {sizeResult.map((post) => {
                         return (
                             <li className="filtered__item">
                                 <label className="filtered__label">
-                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedSize}/>
+                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedSize} data-test-id={`filter-size-${post}`}/>
                                     {post}
                                 </label>
                             </li>
@@ -361,12 +417,12 @@ const Category = (props) => {
                 <span className="filtered__title">
                     BRAND
                 </span>
-                <ul className="filtered__list flex list-reset">
+                <ul className="filtered__list flex list-reset" data-test-id="filters-brand">
                     {brandResult.map((post) => {
                         return (
                             <li className="filtered__item">
                                 <label className="filtered__label">
-                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedBrand}/>
+                                    <input type="checkbox" className="filtered__input" value={post} onClick={selectedBrand} data-test-id={`filter-brand-${post}`}/>
                                     {post}
                                 </label>
                             </li>
@@ -411,18 +467,21 @@ const Category = (props) => {
                     </li>
                 </ul>
             </div>
-            <div className="filter__chose">{countProd}
-                <div className="filter__chose_color" id="filter__chose_color">
-                </div>
-                <div className="filter__chose_size" id="filter__chose_size">
-                </div>
-                <div className="filter__chose_brand" id="filter__chose_brand">
-                </div>
-                <div className="filter__chose_price" id="filter__chose_price">
-                </div>
+        </div>
+        <div className={classNames('filter__chose', { filtered__visible: isFilterOpen })} id="filter__chose">
+            <div className="filter__chose_count" id="filter__chose_count">
+                {countProd} Filtered products
+            </div>
+            <div className="filter__chose_block filter__chose_color" id="filter__chose_color">
+            </div>
+            <div className="filter__chose_block filter__chose_size" id="filter__chose_size">
+            </div>
+            <div className="filter__chose_block filter__chose_brand" id="filter__chose_brand">
+            </div>
+            <div className="filter__chose_block filter__chose_price" id="filter__chose_price">
             </div>
         </div>
-
+        
 
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul className="product__list flex list-reset">
@@ -437,6 +496,7 @@ const Category = (props) => {
                 // poiskColor({post})
                 // poiskSize({post})
                 // poiskPrice({post})
+                               
 
                 return (
                     // poiskBrand({post}) === true ? <ProductHome post={post} key={post.id}/> : null

@@ -273,7 +273,7 @@
 .filtered__label {
   position: relative;
   display: inline-block;
-  width: 124px;
+  width: 100%;
   padding-left: 20px;
   padding-bottom: 15px;
   color: #a9a9a9;

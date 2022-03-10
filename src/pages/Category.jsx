@@ -31,7 +31,10 @@ const Category = (props) => {
         })
     } 
 
-    // console.log(arr)
+    console.log({category})
+
+
+
 
     const [isFilterOpen, toggleFilter] = useState(false);
 
@@ -91,6 +94,7 @@ const Category = (props) => {
             setUseColor(colorFilterResult)
         )
     }
+
     // console.log({useColor})
 
     /*useState для фильтра Size*/

@@ -166,12 +166,14 @@ const Category = (props) => {
 
     
     function poiskBrand(post) {
-        // console.log(filterArr[2].useBrand)
-        for (var i = 0; i < filterArr[2].useBrand.length; i++) {
-            if (filterArr[2].useBrand[i] === post.post.brand) {
-                return true;
+
+            // console.log(filterArr[2].useBrand)
+            for (var i = 0; i < filterArr[2].useBrand.length; i++) {
+                if (filterArr[2].useBrand[i] === post.post.brand) {
+                    return true;
+                }
             }
-        }
+
         return false;
     }
 
@@ -198,7 +200,7 @@ const Category = (props) => {
         }
         return false;
     }
-
+    
     function poiskPrice(post) {
         for (var i = 0; i < filterArr[3].usePrice.length; i++) {
             if (filterArr[3].usePrice[i] === "500+") {
@@ -229,6 +231,35 @@ const Category = (props) => {
     function renderAll() {
         if ((filterArr[0].useColor.length === 0) && (filterArr[1].useSize.length === 0) && (filterArr[2].useBrand.length === 0) && (filterArr[3].usePrice.length === 0)) {
             return true;
+        }
+    }
+
+    let countProd = [0]
+
+    function Rezultat(post) {
+        if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === false)) {
+            return false
+        } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === false)) {
+            return false
+        } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === false)) {
+            return false
+        } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === false)) {
+            return false
+        }
+    
+        if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === true)) {
+            countProd[0] = countProd[0]+1;
+            return true
+        } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === true)) {
+            countProd[0] = countProd[0]+1;
+            return true
+        } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === true)) {
+            countProd[0] = countProd[0]+1;
+            return true
+        } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === true)) {
+            countProd[0] = countProd[0]+1;
+            console.log(countProd)
+            return true
         }
     }
 
@@ -380,7 +411,7 @@ const Category = (props) => {
                     </li>
                 </ul>
             </div>
-            <div className="filter__chose">
+            <div className="filter__chose">{countProd}
                 <div className="filter__chose_color" id="filter__chose_color">
                 </div>
                 <div className="filter__chose_size" id="filter__chose_size">
@@ -396,18 +427,25 @@ const Category = (props) => {
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul className="product__list flex list-reset">
             {arr.map(post => {
-                // console.log({post}.post)
-                
-                poiskBrand({post})
-                poiskColor({post})
-                poiskSize({post})
-                poiskPrice({post})
+                // // console.log({post}.post)
+                // // function renderAllFilter () {
+                // //     if ((filterArr[2].useBrand.length > 0) && (poiskBrand({post}) === true)) {
+                // //         return true
+                // //     }
+                // // }
+                // poiskBrand({post})
+                // poiskColor({post})
+                // poiskSize({post})
+                // poiskPrice({post})
 
                 return (
                     // poiskBrand({post}) === true ? <ProductHome post={post} key={post.id}/> : null
                     renderAll() === true ? <ProductHome post={post} key={post.id}/> : 
-                        ((poiskBrand({post}) === true) || (poiskColor({post}) === true) || (poiskSize({post}) === true) || (poiskPrice({post}) === true) ? <ProductHome post={post} key={post.id}/> : null)
-                    // <ProductHome post={post} key={post.id}/>
+                        (
+                            (Rezultat({post}) === true)
+                        ?
+                        <ProductHome post={post} key={post.id}/>
+                        : null)
                 )
             })}  
         </ul>

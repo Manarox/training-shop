@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from "react";
+import { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
@@ -38,7 +39,7 @@ const Category = (props) => {
 
     const [isFilterOpen, toggleFilter] = useState(false);
 
-    function tooggleFilterMode() {
+     function tooggleFilterMode() {
         toggleFilter(!isFilterOpen);
     }
 
@@ -322,6 +323,16 @@ const Category = (props) => {
             return true
         }
     }
+
+    useEffect(() => {
+        
+
+        toggleFilter(false);
+        setUseColor([]);
+        setUseSize([]);
+        setUseBrand([]);
+        setUsePrice([]);
+    }, [category]);
 
     return (
         

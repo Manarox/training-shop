@@ -16,10 +16,11 @@ const Color = (props) => {
 
     // console.log(result[0].color)
 
+    
     useEffect(() => {
         const ite = document.querySelectorAll(".color__image");
         ite[0].classList.add("color__image_active");
-      }, []);
+      },)
 
     function colorChose(e) {
         const items = document.querySelectorAll(".color__image");
@@ -28,8 +29,10 @@ const Color = (props) => {
             item.classList.remove("color__image_active");
         });
         target.classList.add("color__image_active");
-        setBtnContent((btnContent = e.currentTarget.id))
+        setBtnContent((e.currentTarget.id))
     }
+
+
 
     return (
         <>

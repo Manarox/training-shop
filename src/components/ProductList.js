@@ -50,6 +50,10 @@ const ProductList = () => {
     return number.id === id.id;
   });
 
+
+
+
+
   // console.log(resultArr[0])
   // console.log(resultArr)
 
@@ -68,8 +72,6 @@ const ProductList = () => {
   // const btnName = (e) =>
   // setBtnContent((btnContent = e.currentTarget.textContent));
 
- 
-  // console.log(useTitle);
 return (
 
 <div className="page-product" data-test-id={`product-page-${category}`}>

@@ -9,16 +9,19 @@ import '../components/ProductList.css';
 const CategoryHome = (props) => {
     const {category} = props;
     const arr = [];
+    let categor = ''
     // let particulars = '';
     let i = 0;
     if ({category}.category === 'women') {
         PRODUCTS.women.map(post => {
+            categor = 'women'
             return (
                 arr.push(post)
             )
         })
     } else if ({category}.category === 'men') {
         PRODUCTS.men.map(post => {
+            categor = 'men'
             return (
                 arr.push(post)
             )
@@ -29,12 +32,22 @@ const CategoryHome = (props) => {
 
     const changeButtons = (elem) => {
         setParticulars(elem.target.value);
-        const items = document.querySelectorAll(".product__link");
-        const target = elem.currentTarget;
-        Array.from(items).forEach((item) => {
-            item.classList.remove("product__link_active");
-        });
-        target.classList.add("product__link_active");
+        if (categor === 'women') {
+            const items = document.querySelectorAll(".product__link_women");
+            const target = elem.currentTarget;
+            Array.from(items).forEach((item) => {
+                item.classList.remove("product__link_active");
+            });
+            target.classList.add("product__link_active");
+        }
+        if (categor === 'men') {
+            const items = document.querySelectorAll(".product__link_men");
+            const target = elem.currentTarget;
+            Array.from(items).forEach((item) => {
+                item.classList.remove("product__link_active");
+            });
+            target.classList.add("product__link_active");
+        }
     }
     return (
     <>
@@ -52,7 +65,7 @@ const CategoryHome = (props) => {
                     <li className="product__nav-item">
                         <button
                         type="button"
-                        className={"product__link" + (i === 1 ? ' product__link_active' : '')}
+                        className={`product__link product__link_${categor}` + (i === 1 ? ' product__link_active' : '')}
                         key={particulars}
                         onClick={changeButtons}
                         value={particulars}

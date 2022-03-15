@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react';
 
 const Color = (props) => {
-    const {color} = props;
+    // const {color} = props;
+    const {res} = props;
 
-    console.log({color}.color)
+    console.log({res}.res[0].color)
 
-    let result = {color}.color.reduce((accumulator, currentValue) => {
-        if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
-        return accumulator;
-    }, []);
+    // let result = {color}.color.reduce((accumulator, currentValue) => {
+    //     if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
+    //     return accumulator;
+    // }, []);
+    
+    // let targetColor = {res}.res[0].color
 
-    console.log(result)
+    const [colorr, setColor] = useState({res}.res[0].color);
 
-    const [colorr, setColor] = useState(result[0].color);
-    let targetColor = result[0].color
+    // console.log(result[0].color)
 
     const changeImage = (e) => {
         setColor(e.currentTarget.id);
     };
 
     useEffect(() => {
-        setColor(targetColor);
-    }, [targetColor]);
+        setColor({res}.res[0].color);
+    }, [res]);
 
 
     return (
@@ -33,7 +35,7 @@ const Color = (props) => {
 
             <ul class="color__image-list flex list-reset">
 
-                {result.map((post) => {
+                {{res}.res.map((post) => {
                     return (
 
                     <li class="color__item">

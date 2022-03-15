@@ -46,7 +46,13 @@ const ProductList = () => {
   var resultArr = arr.filter(function(number) {
     return number.id === id.id;
   });
+  console.log(resultArr[0].images)
 
+  let result = resultArr[0].images.reduce((accumulator, currentValue) => {
+    if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
+    return accumulator;
+  }, []);
+  console.log(result)
 
 return (
 
@@ -96,11 +102,12 @@ return (
 
     <section class="prod flex container">
 
+    {/* <Slider images={resultArr[0].images}/> */}
     <Slider images={resultArr[0].images}/>
 
     <div class="prod__info flex">
 
-      <Color color={resultArr[0].images}/>
+      <Color color={resultArr[0].images} res={result}/>
 
       <Size product={resultArr[0]}/>
 

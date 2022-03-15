@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 const Size = (props) => {
     const {product} = props;
-
     
-    console.log({product}.product.id)
+    // console.log({product}.product.id)
+    // const targetSize = {product}.product.sizes[0]
+    // // let targetId = {product}.product.id
+    // console.log({product}.product)
 
-    const targetSize = {product}.product.sizes[0]
-     
-    console.log({product}.product)
-    const [sizee, setSize] = useState(targetSize);
+    const [sizee, setSize] = useState({product}.product.sizes[0]);
     console.log({sizee})
 
     const changeSize = (e) => {
@@ -17,8 +16,8 @@ const Size = (props) => {
       };
     
     useEffect(() => {
-        setSize(targetSize);
-    }, [targetSize]);
+        setSize({product}.product.sizes[0]);
+    }, [product]);
 
 
     return (

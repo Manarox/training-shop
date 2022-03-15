@@ -12,37 +12,16 @@ const Color = (props) => {
 
     console.log(result)
 
-    // let [btnContent, setBtnContent] = useState(result[0].color);
-
-    // // console.log(result[0].color)
-
-    
-    // useEffect(() => {
-    //     const ite = document.querySelectorAll(".color__image");
-    //     ite[0].classList.add("color__image_active");
-    //   },)
-
-    // function colorChose(e) {
-    //     const items = document.querySelectorAll(".color__image");
-    //     const target = e.currentTarget;
-    //     Array.from(items).forEach((item) => {
-    //         item.classList.remove("color__image_active");
-    //     });
-    //     target.classList.add("color__image_active");
-    //     setBtnContent((e.currentTarget.id))
-    // }
-
     const [colorr, setColor] = useState(result[0].color);
-    let gfgfgf = result[0].color
+    let targetColor = result[0].color
 
     const changeImage = (e) => {
-
         setColor(e.currentTarget.id);
     };
 
     useEffect(() => {
-        setColor(gfgfgf);
-    }, [gfgfgf]);
+        setColor(targetColor);
+    }, [targetColor]);
 
 
     return (

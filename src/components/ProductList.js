@@ -24,9 +24,6 @@ import "swiper/css/thumbs";
 import { FreeMode, Navigation } from "swiper";
 
 const ProductList = () => {
-  // const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  
-
   const id = useParams();
   const {category} = useParams();
   const arr = [];
@@ -50,27 +47,6 @@ const ProductList = () => {
     return number.id === id.id;
   });
 
-
-
-
-
-  // console.log(resultArr[0])
-  // console.log(resultArr)
-
-  // let [btnContent, setBtnContent] = useState(resultArr[0].sizes[0]);
-
-  // function tooggleMenuMode(e) {
-  //   const items = document.querySelectorAll(".size__btn");
-  //   const target = e.currentTarget;
-  //   Array.from(items).forEach((item) => {
-  //     item.classList.remove("size__btn_active");
-  //   });
-  //   target.classList.add("size__btn_active");
-  //   setBtnContent((btnContent = e.currentTarget.textContent))
-  // }
-  
-  // const btnName = (e) =>
-  // setBtnContent((btnContent = e.currentTarget.textContent));
 
 return (
 
@@ -126,62 +102,7 @@ return (
 
       <Color color={resultArr[0].images}/>
 
-      {/* <div class="color">
-        <div class="color__title">
-          <span class="color__text">Color:</span><span class="color__span">Blue</span>
-        </div>
-        <ul class="color__image-list flex list-reset">
-          <li class="color__item">
-            <Link to="/" className="color__img-href">
-              <img src={process.env.PUBLIC_URL + "/images/img-1.jpg"} alt="Rating product" />
-            </Link>
-          </li>
-          <li class="color__item">
-            <Link to="/" className="color__img-href">
-              <img src={process.env.PUBLIC_URL + "/images/img-2.jpg"} alt="Rating product" />
-            </Link>
-          </li>
-          <li class="color__item">
-            <Link to="/" className="color__img-href">
-              <img src={process.env.PUBLIC_URL + "/images/img-3.jpg"} alt="Rating product" />
-            </Link>
-          </li>
-          <li class="color__item">
-            <Link to="/" className="color__img-href">
-              <img src={process.env.PUBLIC_URL + "/images/img-4.jpg"} alt="Rating product" />
-            </Link>
-          </li>
-        </ul>
-      </div> */}
-
-    <Size product={resultArr[0]}/>
-
-
-      {/* <div class="size">
-        <div class="size__title">
-          <span class="color__text">size:</span><span class="color__span">{btnContent}</span>
-        </div>
-        <ul class="size__image-list flex list-reset">
-          <li class="size__item">
-            <button className={classNames('size__btn')} onClick={tooggleMenuMode}>XS</button>
-          </li>
-          <li class="size__item">
-            <button class="size__btn" onClick={tooggleMenuMode}>S</button>
-          </li>
-          <li class="size__item">
-            <button class="size__btn" onClick={tooggleMenuMode}>M</button>
-          </li>
-          <li class="size__item">
-            <button class="size__btn" onClick={tooggleMenuMode}>L</button>
-          </li>
-        </ul>
-        <div class="size__guide">
-          <button class="size__guide-btn">Size guide</button>
-        </div>
-      </div> */}
-
-
-
+      <Size product={resultArr[0]}/>
 
       <div class="strip"></div>
       <div class="actions">
@@ -309,44 +230,6 @@ return (
         
         <Review reviews={resultArr[0].reviews}/>
 
-        {/* <div class="reviews__item">
-          <div class="reviews__fio">
-            <div class="reviews__name">
-              Oleh Chabanov
-            </div>
-            <div class="reviews__rating_small">
-              <div class="product__rating">
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-              </div>
-            </div>
-          </div>
-          <div class="reviews__descr">
-            On the other hand, we denounce with righteous indignation and like men who are so beguiled and demoralized by the charms of pleasure of the moment
-          </div>
-        </div>
-        <div class="reviews__item">
-          <div class="reviews__fio">
-            <div class="reviews__name">
-              ShAmAn design
-            </div>
-            <div class="reviews__rating_small">
-              <div class="product__rating">
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star.png"} alt="Rating product" />
-                <img src={process.env.PUBLIC_URL + "/images/i-star-empty.png"} alt="Rating product" />
-              </div>
-            </div>
-          </div>
-          <div class="reviews__descr">
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-          </div>
-        </div> */}
       </div>
       <div class="strip"></div>
     </div>

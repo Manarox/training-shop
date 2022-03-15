@@ -3,33 +3,23 @@ import React, { useEffect, useState } from 'react';
 const Size = (props) => {
     const {product} = props;
 
-    // let [btnContent, setBtnContent] = useState({product}.product.sizes[0]);
+    
+    console.log({product}.product.id)
 
-    // useEffect(() => {
-    //     const ite = document.querySelectorAll(".size__btn");
-    //     ite[0].classList.add("size__btn_active");
-    //   }, []);
+    const targetSize = {product}.product.sizes[0]
+    let targetId = {product}.product.id
+    
+    console.log({product}.product)
+    const [sizee, setSize] = useState(targetSize);
+    console.log({sizee})
 
-    // function sizeChose(e) {
-    //     const items = document.querySelectorAll(".size__btn");
-    //     const target = e.currentTarget;
-    //     Array.from(items).forEach((item) => {
-    //         item.classList.remove("size__btn_active");
-    //     });
-    //     target.classList.add("size__btn_active");
-    //     setBtnContent((btnContent = e.currentTarget.textContent))
-    // }
-    // console.log(`arr`, {product}.product.sizes)
-
-    const [sizee, setSize] = useState({product}.product.sizes[0]);
     const changeSize = (e) => {
-        setSize(e.target.value);
+        setSize(e.currentTarget.id);
       };
-    let gfgfgf = {product}.product.sizes[0]
-
+    
     useEffect(() => {
-        setSize(gfgfgf);
-    }, [gfgfgf]);
+        setSize(targetSize);
+    }, [targetId]);
 
 
     return (
@@ -44,7 +34,7 @@ const Size = (props) => {
                     return (
 
                         <li className="size__item">
-                            <button value={post} className={post === sizee ? 'size__btn size__btn_active' : 'size__btn'} onClick={(e) => changeSize(e)}>{post}</button>
+                            <button className={post === sizee ? 'size__btn size__btn_active' : 'size__btn'} onClick={(e) => changeSize(e)} id={post}>{post}</button>
                         </li>
 
                     )

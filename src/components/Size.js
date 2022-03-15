@@ -7,8 +7,7 @@ const Size = (props) => {
     console.log({product}.product.id)
 
     const targetSize = {product}.product.sizes[0]
-    let targetId = {product}.product.id
-    
+     
     console.log({product}.product)
     const [sizee, setSize] = useState(targetSize);
     console.log({sizee})

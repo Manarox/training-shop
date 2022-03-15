@@ -19,7 +19,7 @@ const Size = (props) => {
     
     useEffect(() => {
         setSize(targetSize);
-    }, [targetId]);
+    }, [targetSize]);
 
 
     return (

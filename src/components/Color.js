@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
 
 const Color = (props) => {
-    // const {color} = props;
     const {res} = props;
+
+    const [colorr, setColor] = useState({res}.res[0].color);
+    const [colorr_url, setColorUrl] = useState({res}.res[0].url);
 
     console.log({res}.res[0].color)
 
-    // let result = {color}.color.reduce((accumulator, currentValue) => {
-    //     if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
-    //     return accumulator;
-    // }, []);
-    
-    // let targetColor = {res}.res[0].color
-
-    const [colorr, setColor] = useState({res}.res[0].color);
-
-    // console.log(result[0].color)
-
     const changeImage = (e) => {
         setColor(e.currentTarget.id);
+        setColorUrl(e.currentTarget.alt);
     };
 
     useEffect(() => {
         setColor({res}.res[0].color);
+        setColorUrl({res}.res[0].url);
     }, [res]);
 
+    let arrColorUrl = []
+    arrColorUrl.color = {colorr}.colorr
+    arrColorUrl.url = {colorr_url}.colorr_url
+
+    console.log({res}.res)
 
     return (
         <>
@@ -39,7 +37,7 @@ const Color = (props) => {
                     return (
 
                     <li class="color__item">
-                        <img src={"https://training.cleverland.by/shop" + post.url} className={colorr === post.color ? 'color__image color__image_active' : 'color__image'} alt="Rating product" onClick={(e) => changeImage(e)} id={post.color}/>
+                        <img src={"https://training.cleverland.by/shop" + post.url} className={colorr === post.color ? 'color__image color__image_active' : 'color__image'} alt={post.url} onClick={(e) => changeImage(e)} id={post.color} value={post.url}/>
                     </li>
 
                     )

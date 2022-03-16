@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/Home.css';
@@ -12,7 +12,7 @@ import { Unique } from '../components/Unique';
 import { Slider } from '../components/Slider';
 import { Review } from '../components/Review';
 import { Size } from '../components/Size';
-import { Color } from '../components/Color';
+//import { Color } from '../components/Color';
 // import classNames from 'classnames';
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,8 +22,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation } from "swiper";
+//import { store } from '../redux/Store';
+import { useDispatch } from "react-redux";
+
 
 const ProductList = () => {
+  // store.dispatch(changeName)
+  // store.dispatch(changeSecondName)
+  // console.log(initialState)
+  const dispatch = useDispatch();
+
+  // console.log(store.getState())
+
   const id = useParams();
   const {category} = useParams();
   const arr = [];
@@ -46,13 +56,47 @@ const ProductList = () => {
   var resultArr = arr.filter(function(number) {
     return number.id === id.id;
   });
-  console.log(resultArr[0].images)
+  //console.log(resultArr[0].images)
 
   let result = resultArr[0].images.reduce((accumulator, currentValue) => {
     if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
     return accumulator;
   }, []);
+  //console.log(result)
+
+
+  //Функция цвета//////////////////////////////////////////////////
+  const [colorr, setColor] = useState(result[0].color);
+  const [colorr_url, setColorUrl] = useState(result[0].url);
+
   console.log(result)
+  console.log(id.id)
+  const changeImage = (e) => {
+      setColor(e.currentTarget.id);
+      setColorUrl(e.currentTarget.alt);
+  };
+
+  useEffect(() => {
+      setColor(result[0].color);
+      setColorUrl(result[0].url);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id.id]);
+
+  let arrColorUrl = []
+  arrColorUrl.color = {colorr}.colorr
+  arrColorUrl.url = {colorr_url}.colorr_url
+  //Конец функции цвета////////////////////////////////////////////
+
+  const ACTION_ADD_PRODUCT = 'actionAddProduct'
+  const actionAddProduct = {
+    type: ACTION_ADD_PRODUCT,
+    payload: arrColorUrl
+  }
+
+
+
+
+
 
 return (
 
@@ -102,13 +146,29 @@ return (
 
     <section class="prod flex container">
 
-    {/* <Slider images={resultArr[0].images}/> */}
     <Slider images={resultArr[0].images}/>
 
     <div class="prod__info flex">
+      <div class="color">
+          <div class="color__title">
+              <span class="color__text">Color:</span><span class="color__span">{colorr}</span>
+          </div>
 
-      <Color color={resultArr[0].images} res={result}/>
+          <ul class="color__image-list flex list-reset">
 
+              {result.map((post) => {
+                  return (
+
+                  <li class="color__item">
+                      <img src={"https://training.cleverland.by/shop" + post.url} className={colorr === post.color ? 'color__image color__image_active' : 'color__image'} alt={post.url} onClick={(e) => changeImage(e)} id={post.color} value={post.url}/>
+                  </li>
+
+                  )
+              })}
+
+          </ul>
+
+      </div>
       <Size product={resultArr[0]}/>
 
       <div class="strip"></div>
@@ -117,7 +177,7 @@ return (
           {resultArr[0].price}$
         </div>
         <div class="actions__add">
-          <button class="add-to-card">Add to card</button>
+          <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card</button>
         </div>
         <div class="actions__like">
           <button class="action__btn">
@@ -344,5 +404,5 @@ return (
   </div>
   )
 }
-    
+
 export {ProductList}

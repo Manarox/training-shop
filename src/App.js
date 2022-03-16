@@ -6,10 +6,12 @@ import { Category } from './pages/Category';
 import { ProductList } from './components/ProductList';
 import { Layout } from './components/Layout';
 
+
 function App() {
+
+  
   return (
-    
-      <Routes>
+    <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/:category" element={<Category />} />
@@ -17,8 +19,8 @@ function App() {
           <Route path="*" element={<Home />} />
           <Route path="/" element={<Home />} />
         </Route>
-      </Routes>
-    
+    </Routes>
+   
   );
 }
 

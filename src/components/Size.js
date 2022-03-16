@@ -9,7 +9,7 @@ const Size = (props) => {
     // console.log({product}.product)
 
     const [sizee, setSize] = useState({product}.product.sizes[0]);
-    console.log({sizee})
+    //console.log({sizee})
 
     const changeSize = (e) => {
         setSize(e.currentTarget.id);

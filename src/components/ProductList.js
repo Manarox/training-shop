@@ -142,7 +142,9 @@ const ProductList = () => {
     arrColorUrl.url = {colorr_url}.colorr_url
     arrColorUrl.size = {sizee}.sizee
     arrColorUrl.price = resultArr[0].price
+    arrColorUrl.oldprice = resultArr[0].price
     arrColorUrl.name = resultArr[0].name
+    arrColorUrl.counter = 1
     arrColorUrl.id = resultArr[0].id
     return arrColorUrl
   }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from "react";
 import classNames from 'classnames';
 //import { store } from '../redux/Store';
-
+import { ItemCart } from '../components/ItemCart';
 //import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -33,7 +33,7 @@ const Header = () => {
     }
 
     const productInCart = useSelector(state => state.basket)
-    //const dispatch = useDispatch();
+    const totalPrice = +(productInCart.reduce((allPrice, post) => allPrice + +post.price, 0)).toFixed(2);
 
     console.log(productInCart)
 
@@ -181,7 +181,7 @@ const Header = () => {
     <div className={classNames('basket__wrapp', { visible_basket_wrapp: isBasketOpen })} onClick={tooggleBasketMode}></div>
 
       <section className={classNames('basket', { visible_basket: isBasketOpen })}>
-          <div className={classNames('basket__container', { visible_basket__container: isBasketOpen })}>
+          <div className={classNames('basket__container', { visible_basket__container: isBasketOpen })} data-test-id="cart">
             <div className="basket__top">
               <div className="basket__top__one">
                 <span className="basket__top__title">SHOPPING CART</span>
@@ -200,38 +200,7 @@ const Header = () => {
             <div className="basket__products">
                 {
                 productInCart.length > 0 ?
-                productInCart.map((post) => {
-                    return (
-                      <>
-                    <div className="prod-basket">
-                    <div className="prod-basket__img">
-                      <img src={"https://training.cleverland.by/shop" + post.url} className="prod-basket__img-prod" alt={post.url} id={post.color} value={post.url}/>
-                    </div>
-                    <div className="prod-basket__desc">
-                      <div className="prod-basket__info">
-                        <span class="prod-basket__info__name">{post.name}</span>
-                        <span class="prod-basket__info__size">{post.color}, {post.size}</span>
-                      </div>
-                      <div className="prod-basket__price-info">
-                        <div className="prod-basket__counter">
-                          <button data-test-id="counter__minus">-</button>
-                          <span>1</span>
-                          <button data-test-id="counter__plus">+</button>
-                        </div>
-                        <div className="prod-basket__price">
-                          $ {post.price}
-                        </div>
-                        <div className="prod-basket__del">
-                          <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 5H17M16 5L15.133 17.142C15.0971 17.6466 14.8713 18.1188 14.5011 18.4636C14.1309 18.8083 13.6439 19 13.138 19H4.862C4.35614 19 3.86907 18.8083 3.49889 18.4636C3.1287 18.1188 2.90292 17.6466 2.867 17.142L2 5H16ZM7 9V15V9ZM11 9V15V9ZM12 5V2C12 1.73478 11.8946 1.48043 11.7071 1.29289C11.5196 1.10536 11.2652 1 11 1H7C6.73478 1 6.48043 1.10536 6.29289 1.29289C6.10536 1.48043 6 1.73478 6 2V5H12Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-                    </>
-                    )
-                })
+                productInCart.map((post, i) => (<ItemCart product={post} key={i} />))
                 : <span className='empty__basket'>Sorry, your cart is empty</span>
                 }
                 
@@ -244,7 +213,7 @@ const Header = () => {
               <>
               <div className="basket__bottom__info">
                 <span class="basket__bottom__total">Total</span>
-                <span class="basket__bottom__price">$ 134</span>
+                <span class="basket__bottom__price">$ {totalPrice}</span>
               </div>
 
               <div className="basket__bottom__btns">

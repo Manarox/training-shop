@@ -26,6 +26,44 @@ let initialState = {
             console.log(state)
             return { ...state};
 
+        case 'actionAddCounter':
+            //console.log(state.basket)
+            let newArr2 = state.basket
+            newArr2.forEach(order => {
+                if (
+                    order.id === action.payload.id
+                    && order.color === action.payload.color
+                    && order.size === action.payload.size
+                ) {
+                    if (order.counter >= 1) {
+                        order.counter = order.counter + 1;
+                        order.price = +(order.price + order.oldprice).toFixed(2);
+                    }
+                }
+            })
+            state.basket = newArr2.slice()
+            //console.log(state)
+            return { ...state};
+        
+        case 'actionDelCounter':
+            //console.log(state.basket)
+            let newArr3 = state.basket
+            newArr3.forEach(order => {
+                if (
+                    order.id === action.payload.id
+                    && order.color === action.payload.color
+                    && order.size === action.payload.size
+                ) {
+                    if (order.counter > 1) {
+                        order.counter = order.counter - 1;
+                        order.price = +(order.price - order.oldprice).toFixed(2);
+                    }
+                }
+            })
+            state.basket = newArr3.slice()
+            //console.log(state)
+            return { ...state};
+
         default:
             return state
         }
@@ -34,7 +72,7 @@ let initialState = {
   
   const store = createStore(rootReducer)
 //   store.dispatch(actionChangeSecondName)
-  console.log({store})
+  //console.log({store})
   console.log(store.getState())
 
 export {store};

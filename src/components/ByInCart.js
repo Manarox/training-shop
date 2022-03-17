@@ -1,5 +1,5 @@
 import React from 'react';
-import { store } from '../redux/Store';
+//import { store } from '../redux/Store';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -7,7 +7,7 @@ const ByInCart = (props) => {
     const {productitem} = props;
     const dispatch = useDispatch();
 
-    console.log(productitem.size)
+    //console.log(productitem.size)
 
     const ACTION_ADD_PRODUCT = 'actionAddProduct'
     const actionAddProduct = {
@@ -21,8 +21,8 @@ const ByInCart = (props) => {
         payload: productitem
     }
 
-    let basketItems = store.getState()
-    console.log(basketItems)
+    //let basketItems = store.getState()
+    //console.log(basketItems)
 
     // const isFind = function () {
     // //dispatch(actionAddProduct)
@@ -63,7 +63,7 @@ const ByInCart = (props) => {
     return (
         <span>
         
-            <button class="add-to-card" onClick={changeCart}>{isFind() === true ? <div>REMOVE TO CARD</div> : <div>ADD TO CARD</div>}</button>
+            <button class="add-to-card" onClick={changeCart} data-test-id="add-cart-button">{isFind() === true ? <div>REMOVE TO CARD</div> : <div>ADD TO CARD</div>}</button>
         
         </span>
     )

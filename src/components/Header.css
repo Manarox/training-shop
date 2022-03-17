@@ -372,6 +372,9 @@ html {
     border: none;
     color: #f8f8f8;   
 }
+.basket__bottom__btn_white {
+    background: #f8f8f8;
+}
 .basket__products {
     flex-grow: 1;
     padding: 20px;
@@ -657,6 +660,9 @@ html {
 
     }
     @media (max-width: 597px) {
+        .visible_basket__container {
+            width: 100%;
+        }
         .news__item_card1 {
             margin-bottom: 20px;
         }

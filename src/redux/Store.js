@@ -6,15 +6,26 @@ let initialState = {
   }
   
   const rootReducer = (state = initialState, action) => {
-    console.log(state)
-    console.log(action)
+    // console.log(state)
+    // console.log(action)
     switch (action.type) {
-        case 'ACTION_CHANGE_FIRST_NAME':
-            return { ...state, firstName: action.payload};
+        case 'actionDelProduct':
+            console.log(state)
+                state.basket = state.basket.filter((item) => 
+                item.id !== action.payload.id || item.color !== action.payload.color || item.size !== action.payload.size
+            )
+            console.log(state)
+            return { ...state};
+
         case 'actionAddProduct':
-            state.basket.push(action.payload)
-            console.log(state.basket)
-            return { ...state, quantity: state.basket.length };
+            let newArr = state.basket
+            newArr.push(action.payload)
+            // newArr.push(action.payload)
+            // state.basket = state.basket.push(action.payload)
+            state.basket = newArr.slice()
+            console.log(state)
+            return { ...state};
+
         default:
             return state
         }

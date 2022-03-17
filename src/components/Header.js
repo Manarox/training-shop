@@ -2,12 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import classNames from 'classnames';
+//import { store } from '../redux/Store';
+
+//import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 let num = 0;
+let click = 0;
 
 const Header = () => {
-    const [isMenuOpen, toggleMenu] = useState(false);
 
+    const [isMenuOpen, toggleMenu] = useState(false);
     function tooggleMenuMode() {
         toggleMenu(!isMenuOpen);
         document.body.style.overflow = 'hidden';
@@ -16,6 +21,21 @@ const Header = () => {
           document.body.style.overflow = 'inherit';
         }
     }
+
+    const [isBasketOpen, toggleBasket] = useState(false);
+    function tooggleBasketMode() {
+        toggleBasket(!isBasketOpen);
+        document.body.style.overflow = 'hidden';
+        click++;
+        if (click%2 === 0) {
+          document.body.style.overflow = 'inherit';
+        }
+    }
+
+    const productInCart = useSelector(state => state.basket)
+    //const dispatch = useDispatch();
+
+    console.log(productInCart)
 
     return (
     <>
@@ -109,19 +129,24 @@ const Header = () => {
                 </svg>
               </Link>
             </li>
-            <li className="menu__icon-item">
-              <Link to="/" className="menu__icon-link">
-                <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+
+            <li className="menu__icon-item menu__icon-item_relative">
+              {productInCart.length > 0 ? <span className="basket-btn__kol">{productInCart.length}</span> : null}
+
+              <button type="button" className={classNames('button-cart', { visible: isBasketOpen })} onClick={tooggleBasketMode} data-test-id='cart-button'>
+
+              <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M13 9V5C13 3.93913 12.5786 2.92172 11.8284 2.17157C11.0783 1.42143 10.0609 1 9 1C7.93913 1 6.92172 1.42143 6.17157 2.17157C5.42143 2.92172 5 3.93913 5 5V9H13ZM2 7H16L17 19H1L2 7Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </Link>
+              </svg>
+
+              </button>
             </li>
+
+
           </ul>
         </div>
-        {/* <span
-          className={classNames('burger-menu-btn', { visible: isMenuOpen })}
-          onClick={tooggleMenuMode} data-test-id='burger-menu-btn'>
-        </span> */}
+
         <button type="button" className={classNames('burger-menu-btn_b', { visible: isMenuOpen })}
           onClick={tooggleMenuMode} data-test-id='burger-menu-btn'>
           <div class="line1"></div>
@@ -130,11 +155,11 @@ const Header = () => {
         </button>
         
       </section>
+
       <div className={classNames('burger-menu__wrapp', { visible_menu: isMenuOpen })}
         onClick={tooggleMenuMode}></div>
 
-      <div className={classNames('burger-menu', { visible_menu: isMenuOpen })}
-        onClick={tooggleMenuMode}>
+      <div className={classNames('burger-menu', { visible_menu: isMenuOpen })} onClick={tooggleMenuMode}>
         <div className="burger-menu__block" data-test-id='burger-menu'> 
           <ul className="burger-menu__list flex list-reset">
             <li className="burger-menu__item"><Link className="menu-item burger-item" to="/" data-test-id={`menu-link-about`}>About Us</Link></li>
@@ -147,9 +172,99 @@ const Header = () => {
           </ul>
         </div>
       </div>
+
+
       <div className="grey-line"></div>
       </div>
     </header>
+
+    <div className={classNames('basket__wrapp', { visible_basket_wrapp: isBasketOpen })} onClick={tooggleBasketMode}></div>
+
+      <section className={classNames('basket', { visible_basket: isBasketOpen })}>
+          <div className={classNames('basket__container', { visible_basket__container: isBasketOpen })}>
+            <div className="basket__top">
+              <div className="basket__top__one">
+                <span className="basket__top__title">SHOPPING CART</span>
+                <button className="basket__top__close" onClick={tooggleBasketMode}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+              <div className="basket__top__two">
+                <button class="basket__top_btn basket__top_btn_activ">Item in Cart</button>
+                <button class="basket__top_btn">/ Delivery Info</button>
+                <button class="basket__top_btn">/ Payment</button>
+              </div>
+            </div>
+            <div className="basket__products">
+                {
+                productInCart.length > 0 ?
+                productInCart.map((post) => {
+                    return (
+                      <>
+                    <div className="prod-basket">
+                    <div className="prod-basket__img">
+                      <img src={"https://training.cleverland.by/shop" + post.url} className="prod-basket__img-prod" alt={post.url} id={post.color} value={post.url}/>
+                    </div>
+                    <div className="prod-basket__desc">
+                      <div className="prod-basket__info">
+                        <span class="prod-basket__info__name">{post.name}</span>
+                        <span class="prod-basket__info__size">{post.color}, {post.size}</span>
+                      </div>
+                      <div className="prod-basket__price-info">
+                        <div className="prod-basket__counter">
+                          <button data-test-id="counter__minus">-</button>
+                          <span>1</span>
+                          <button data-test-id="counter__plus">+</button>
+                        </div>
+                        <div className="prod-basket__price">
+                          $ {post.price}
+                        </div>
+                        <div className="prod-basket__del">
+                          <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 5H17M16 5L15.133 17.142C15.0971 17.6466 14.8713 18.1188 14.5011 18.4636C14.1309 18.8083 13.6439 19 13.138 19H4.862C4.35614 19 3.86907 18.8083 3.49889 18.4636C3.1287 18.1188 2.90292 17.6466 2.867 17.142L2 5H16ZM7 9V15V9ZM11 9V15V9ZM12 5V2C12 1.73478 11.8946 1.48043 11.7071 1.29289C11.5196 1.10536 11.2652 1 11 1H7C6.73478 1 6.48043 1.10536 6.29289 1.29289C6.10536 1.48043 6 1.73478 6 2V5H12Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    </>
+                    )
+                })
+                : <span className='empty__basket'>Sorry, your cart is empty</span>
+                }
+                
+
+
+            </div>
+            <div className="basket__bottom">
+              {
+              productInCart.length > 0 ?
+              <>
+              <div className="basket__bottom__info">
+                <span class="basket__bottom__total">Total</span>
+                <span class="basket__bottom__price">$ 134</span>
+              </div>
+
+              <div className="basket__bottom__btns">
+                <button class="basket__bottom__btn basket__bottom__btn_black">FURTHER</button>
+              </div>
+
+              <div className="basket__bottom__btns">
+                <button class="basket__bottom__btn basket__bottom__btn_white" onClick={tooggleBasketMode}>VIEW CART</button>
+              </div>
+              </>
+              :
+              <>
+              <div className="basket__bottom__btns">
+                <button class="basket__bottom__btn basket__bottom__btn_black" onClick={tooggleBasketMode}>BACK TO SHOPPING</button>
+              </div>
+              </>
+              }
+            </div>
+          </div>
+      </section>
     </>
 
   )

@@ -11,7 +11,8 @@ import { Rating } from '../components/Rating';
 import { Unique } from '../components/Unique';
 import { Slider } from '../components/Slider';
 import { Review } from '../components/Review';
-import { Size } from '../components/Size';
+//import { Size } from '../components/Size';
+import { ByInCart } from '../components/ByInCart';
 //import { Color } from '../components/Color';
 // import classNames from 'classnames';
 
@@ -23,14 +24,16 @@ import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation } from "swiper";
 //import { store } from '../redux/Store';
-import { useDispatch } from "react-redux";
+//import { useDispatch } from "react-redux";
+//import { useSelector } from "react-redux";
 
 
 const ProductList = () => {
   // store.dispatch(changeName)
   // store.dispatch(changeSecondName)
   // console.log(initialState)
-  const dispatch = useDispatch();
+
+  // const dispatch = useDispatch();
 
   // console.log(store.getState())
 
@@ -69,8 +72,6 @@ const ProductList = () => {
   const [colorr, setColor] = useState(result[0].color);
   const [colorr_url, setColorUrl] = useState(result[0].url);
 
-  console.log(result)
-  console.log(id.id)
   const changeImage = (e) => {
       setColor(e.currentTarget.id);
       setColorUrl(e.currentTarget.alt);
@@ -81,23 +82,84 @@ const ProductList = () => {
       setColorUrl(result[0].url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id.id]);
-
-  let arrColorUrl = []
-  arrColorUrl.color = {colorr}.colorr
-  arrColorUrl.url = {colorr_url}.colorr_url
   //Конец функции цвета////////////////////////////////////////////
+  //Функция размера////////////////////////////////////////////////
+  const [sizee, setSize] = useState(resultArr[0].sizes[0]);
 
-  const ACTION_ADD_PRODUCT = 'actionAddProduct'
-  const actionAddProduct = {
-    type: ACTION_ADD_PRODUCT,
-    payload: arrColorUrl
+  const changeSize = (e) => {
+      setSize(e.currentTarget.id);
+    };
+
+  useEffect(() => {
+      setSize(resultArr[0].sizes[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id.id]);
+
+  //Конец функции размера////////////////////////////////////////////
+  
+  // let [find, setFind] = useState(false);
+
+ 
+
+  // const isFind = function () {
+  //   //dispatch(actionAddProduct)
+
+  //   return basketItems.basket.some(function(el) {
+  //     if (el.color === {colorr}.colorr) {
+  //       return true
+  //     }
+  //     else {
+  //       return false
+  //     }
+  //   }); 
+  // };
+
+//   useEffect(() => {
+//     setFind(isFind());
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [isFind()]);
+  
+
+
+  
+  // console.log(isFind())
+
+
+
+  // const ACTION_ADD_PRODUCT = 'actionAddProduct'
+  // const actionAddProduct = {
+  //   type: ACTION_ADD_PRODUCT,
+  //   payload: arrColorUrl
+  // }
+
+
+  /////////Сборка продукта/////////
+
+
+  const productItem = function () {
+    let arrColorUrl = []
+    arrColorUrl.color = {colorr}.colorr
+    arrColorUrl.url = {colorr_url}.colorr_url
+    arrColorUrl.size = {sizee}.sizee
+    arrColorUrl.price = resultArr[0].price
+    arrColorUrl.name = resultArr[0].name
+    arrColorUrl.id = resultArr[0].id
+    return arrColorUrl
   }
+  productItem()
+  console.log(productItem())
 
+  // let arrColorUrl = []
+  // arrColorUrl.color = {colorr}.colorr
+  // arrColorUrl.url = {colorr_url}.colorr_url
+  // arrColorUrl.price = resultArr[0].price
 
-
-
-
-
+  // let basketItems = store.getState()
+  // console.log(basketItems.basket)
+  // console.log({colorr}.colorr)
+  // console.log(basketItems.basket.length)
+  console.log(resultArr[0].sizes) //Это {product}.product.sizes} по которому рендер map
+  console.log(resultArr[0].sizes[0]) // Это {product}.product.sizes[0] первый цвет
 return (
 
 <div className="page-product" data-test-id={`product-page-${category}`}>
@@ -169,7 +231,36 @@ return (
           </ul>
 
       </div>
-      <Size product={resultArr[0]}/>
+      {/* <Size product={resultArr[0]}/> */}
+
+
+
+
+      <div class="size">
+          <div class="size__title">
+              <span class="color__text">size:</span><span class="color__span">{sizee}</span>
+          </div>
+          <ul class="size__image-list flex list-reset">
+
+              {resultArr[0].sizes.map((post) => {
+                  return (
+
+                      <li className="size__item">
+                          <button className={post === sizee ? 'size__btn size__btn_active' : 'size__btn'} onClick={(e) => changeSize(e)} id={post}>{post}</button>
+                      </li>
+
+                  )
+              })}
+
+          </ul>
+
+          <div class="size__guide">
+              <button className="size__guide-btn">Size guide</button>
+          </div>
+      </div>
+
+
+
 
       <div class="strip"></div>
       <div class="actions">
@@ -177,7 +268,14 @@ return (
           {resultArr[0].price}$
         </div>
         <div class="actions__add">
-          <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card</button>
+          <ByInCart productitem={productItem()}/>
+
+          {/* <button class="add-to-card" onClick={() => isFind()} id={colorr}>Add to card</button> */}
+
+          {/* {find === true ? <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card Удалить</button>
+          : <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card Добавить {colorr}</button>
+          } */}
+          {/* <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card</button> */}
         </div>
         <div class="actions__like">
           <button class="action__btn">

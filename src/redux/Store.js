@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore , applyMiddleware, compose } from 'redux';
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENTION_COMPOSE__ || compose;
 
 let initialState = {
     quantity: 0,
@@ -70,7 +71,7 @@ let initialState = {
    }
 
   
-  const store = createStore(rootReducer)
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware()))
 //   store.dispatch(actionChangeSecondName)
   //console.log({store})
   console.log(store.getState())

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import './ProductList.css';
 import '../pages/SwiperHome.css';
 // import Data from "../pages/data.json";
-import { PRODUCTS } from "../components/products.js";
+// import { PRODUCTS } from "../components/products.js";
 import { Rating } from '../components/Rating';
 import { Unique } from '../components/Unique';
 import { Slider } from '../components/Slider';
@@ -23,6 +23,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation } from "swiper";
+import { useSelector } from "react-redux";
 //import { store } from '../redux/Store';
 //import { useDispatch } from "react-redux";
 //import { useSelector } from "react-redux";
@@ -40,16 +41,19 @@ const ProductList = () => {
   const id = useParams();
   const {category} = useParams();
   const arr = [];
+
+  const productsLoad = useSelector(state => state.loadReducer.products)
+  //console.log(productsLoad)
   
   if ({category}.category === 'women') {
-    PRODUCTS.women.map(post => {
+    productsLoad.women.map(post => {
       return (
         arr.push(post)
       )
     })
 
   } else if ({category}.category === 'men') {
-      PRODUCTS.men.map(post => {
+      productsLoad.men.map(post => {
         return (
           arr.push(post)
         );
@@ -136,7 +140,7 @@ const ProductList = () => {
   /////////Сборка продукта/////////
 
 
-  const productItem = function () {
+  // const productItem = function () {
     let arrColorUrl = []
     arrColorUrl.color = {colorr}.colorr
     arrColorUrl.url = {colorr_url}.colorr_url
@@ -146,10 +150,10 @@ const ProductList = () => {
     arrColorUrl.name = resultArr[0].name
     arrColorUrl.counter = 1
     arrColorUrl.id = resultArr[0].id
-    return arrColorUrl
-  }
-  productItem()
-  console.log(productItem())
+  //   return arrColorUrl
+  // }
+  // productItem()
+  // console.log(productItem())
 
   // let arrColorUrl = []
   // arrColorUrl.color = {colorr}.colorr
@@ -270,7 +274,7 @@ return (
           {resultArr[0].price}$
         </div>
         <div class="actions__add">
-          <ByInCart productitem={productItem()}/>
+          <ByInCart productitem={arrColorUrl}/>
 
           {/* <button class="add-to-card" onClick={() => isFind()} id={colorr}>Add to card</button> */}
 

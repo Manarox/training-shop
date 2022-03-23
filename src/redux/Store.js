@@ -1,78 +1,21 @@
-import { createStore } from 'redux';
+import { compose, applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+//import thunk from 'redux-thunk';
+import rootReducer from './rootReducer';
+import rootSaga from './saga';
 
-let initialState = {
-    quantity: 0,
-    basket: []
-  }
-  
-  const rootReducer = (state = initialState, action) => {
-    // console.log(state)
-    // console.log(action)
-    switch (action.type) {
-        case 'actionDelProduct':
-            console.log(state)
-                state.basket = state.basket.filter((item) => 
-                item.id !== action.payload.id || item.color !== action.payload.color || item.size !== action.payload.size
-            )
-            console.log(state)
-            return { ...state};
+//import { composeWithDevTools } from 'redux-devtools-extension';
 
-        case 'actionAddProduct':
-            let newArr = state.basket
-            newArr.push(action.payload)
-            // newArr.push(action.payload)
-            // state.basket = state.basket.push(action.payload)
-            state.basket = newArr.slice()
-            console.log(state)
-            return { ...state};
+const sagaMiddleware = createSagaMiddleware();
 
-        case 'actionAddCounter':
-            //console.log(state.basket)
-            let newArr2 = state.basket
-            newArr2.forEach(order => {
-                if (
-                    order.id === action.payload.id
-                    && order.color === action.payload.color
-                    && order.size === action.payload.size
-                ) {
-                    if (order.counter >= 1) {
-                        order.counter = order.counter + 1;
-                        order.price = +(order.price + order.oldprice).toFixed(2);
-                    }
-                }
-            })
-            state.basket = newArr2.slice()
-            //console.log(state)
-            return { ...state};
-        
-        case 'actionDelCounter':
-            //console.log(state.basket)
-            let newArr3 = state.basket
-            newArr3.forEach(order => {
-                if (
-                    order.id === action.payload.id
-                    && order.color === action.payload.color
-                    && order.size === action.payload.size
-                ) {
-                    if (order.counter > 1) {
-                        order.counter = order.counter - 1;
-                        order.price = +(order.price - order.oldprice).toFixed(2);
-                    }
-                }
-            })
-            state.basket = newArr3.slice()
-            //console.log(state)
-            return { ...state};
-
-        default:
-            return state
-        }
-   }
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+//const composeEnhancers = composeWithDevTools({});
 
   
-const store = createStore(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENTION__ && window.__REDUX_DEVTOOLS_EXTENTION__())
-//   store.dispatch(actionChangeSecondName)
-  //console.log({store})
-  console.log(store.getState())
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
 
-export {store};
+
+console.log(store.getState())
+sagaMiddleware.run(rootSaga);
+
+export default store;

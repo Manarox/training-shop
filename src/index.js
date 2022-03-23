@@ -1,20 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter} from 'react-router-dom';
+//import { HashRouter} from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { store } from './redux/Store';
-
+import store from './redux/Store';
 import { Provider } from 'react-redux';
 
-
+//const store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(thunk)))
 ReactDOM.render(
-  <HashRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </HashRouter>,
+  <React.StrictMode>
+    
+      <Router>
+        <Provider store={store}>
+            <App />
+        </Provider>
+      </Router>
+    
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

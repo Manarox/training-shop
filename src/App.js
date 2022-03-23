@@ -5,6 +5,8 @@ import { Home } from './pages/Home';
 import { Category } from './pages/Category';
 import { ProductList } from './components/ProductList';
 import { Layout } from './components/Layout';
+// import store from './redux/Store';
+// import { Provider } from 'react-redux';
 
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Route>
     </Routes>
-   
+  
   );
 }
 

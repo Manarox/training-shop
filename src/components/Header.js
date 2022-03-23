@@ -7,8 +7,8 @@ import { ItemCart } from '../components/ItemCart';
 //import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-let num = 0;
-let click = 0;
+// let num = 0;
+// let click = 0;
 
 const Header = () => {
 
@@ -16,8 +16,11 @@ const Header = () => {
     function tooggleMenuMode() {
         toggleMenu(!isMenuOpen);
         document.body.style.overflow = 'hidden';
-        num++;
-        if (num%2 === 0) {
+        //num++;
+        // if (num%2 === 0) {
+        //   document.body.style.overflow = 'inherit';
+        // }
+        if (!isMenuOpen === false) {
           document.body.style.overflow = 'inherit';
         }
     }
@@ -26,13 +29,17 @@ const Header = () => {
     function tooggleBasketMode() {
         toggleBasket(!isBasketOpen);
         document.body.style.overflow = 'hidden';
-        click++;
-        if (click%2 === 0) {
+        //click++;
+        // if (click%2 === 0) {
+        //   document.body.style.overflow = 'inherit';
+        // }
+        if (!isBasketOpen === false) {
           document.body.style.overflow = 'inherit';
         }
     }
 
-    const productInCart = useSelector(state => state.basket)
+    const productInCart = useSelector(state => state.basketReducer.basket)
+    //const productInCart = useSelector(state => state.basket) было без combineReducers
     const totalPrice = +(productInCart.reduce((allPrice, post) => allPrice + +post.price, 0)).toFixed(2);
 
     console.log(productInCart)

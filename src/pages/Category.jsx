@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
-import { PRODUCTS } from "../components/products.js";
+//import { PRODUCTS } from "../components/products.js";
 import { ProductHome } from '../components/ProductHome';
 import classNames from 'classnames';
 import '../components/ProductList.css';
+import { useSelector } from "react-redux";
 
 
 const Category = (props) => {
@@ -18,14 +19,18 @@ const Category = (props) => {
     let sizeResult = [];
     let brandResult = [];
 
+    //console.log(PRODUCTS)
+    const productsLoad = useSelector(state => state.loadReducer.products)
+    console.log(productsLoad)
+
     if ({category}.category === 'women') {
-        PRODUCTS.women.map(post => {
+        productsLoad.women.map(post => {
             return (
                 arr.push(post)
             )
         })
     } else if ({category}.category === 'men') {
-        PRODUCTS.men.map(post => {
+        productsLoad.men.map(post => {
             return (
                 arr.push(post)
             )
@@ -280,8 +285,6 @@ const Category = (props) => {
         if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === true)) {
             countProd[0] = countProd[0]+1;
             // countProd.push(1)
-            console.log(countProd)
-            console.log(countProd.length)
             //const items = document.querySelector(".filter__chose_count");
             //items.classList.add("filter__chose_count_active");
             // const items = document.getElementById('filter__chose_count');
@@ -295,7 +298,7 @@ const Category = (props) => {
             // }
             return true
         } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === true)) {
-            //countProd[0] = countProd[0]+1;
+            countProd[0] = countProd[0]+1;
             // const items = document.getElementById('filter__chose_count');
             // items.innerText = ""
             // items.innerText = countProd[0] + "items Found"
@@ -304,7 +307,7 @@ const Category = (props) => {
             // }
             return true
         } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === true)) {
-            //countProd[0] = countProd[0]+1;
+            countProd[0] = countProd[0]+1;
             // const items = document.getElementById('filter__chose_count');
             // items.innerText = ""
             // items.innerText = countProd[0] + "items Found"
@@ -313,7 +316,7 @@ const Category = (props) => {
             // }
             return true
         } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === true)) {
-            //countProd[0] = countProd[0]+1;
+            countProd[0] = countProd[0]+1;
             // const items = document.getElementById('filter__chose_count');
             // items.innerText = ""
             // items.innerText = countProd[0] + "items Found"
@@ -487,7 +490,7 @@ const Category = (props) => {
         {isFilterOpen === true ? 
         <div className="filter__chose" id="filter__chose">
             <div className="filter__chose_count" id="filter__chose_count">
-                {countProd} Filtered products
+                {countProd} Filtered products 
             </div>
             <div className="filter__chose_block filter__chose_color" id="filter__chose_color">
             </div>

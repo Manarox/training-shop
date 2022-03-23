@@ -444,8 +444,24 @@ html {
     width: 50%;
 }
 
-
-
+/*Получение данных*/
+.warning {
+    display: flex;
+    justify-content: center;
+    background: #fff2f0;
+    padding: 20px;
+    margin-top: 20px;
+    outline: solid 2px #ffdfdb;
+    font-weight: 600;
+}
+.loader {
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px;
+}
+.loader__img {
+    max-width: 300px;
+}
 
 
 

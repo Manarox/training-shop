@@ -9,7 +9,7 @@ import { ProductHome } from '../components/ProductHome';
 import classNames from 'classnames';
 import '../components/ProductList.css';
 import { useSelector } from "react-redux";
-
+import Loading from '../components/Loading';
 
 const Category = (props) => {
     const {category} = useParams();
@@ -270,7 +270,7 @@ const Category = (props) => {
     }
 
     let countProd = [0]
-
+    
     function Rezultat(post) {
         if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === false)) {
             return false
@@ -284,7 +284,6 @@ const Category = (props) => {
     
         if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === true)) {
             countProd[0] = countProd[0]+1;
-            // countProd.push(1)
             //const items = document.querySelector(".filter__chose_count");
             //items.classList.add("filter__chose_count_active");
             // const items = document.getElementById('filter__chose_count');
@@ -317,7 +316,7 @@ const Category = (props) => {
             return true
         } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === true)) {
             countProd[0] = countProd[0]+1;
-            // const items = document.getElementById('filter__chose_count');
+             // const items = document.getElementById('filter__chose_count');
             // items.innerText = ""
             // items.innerText = countProd[0] + "items Found"
             // if (countProd[0] === 0) {
@@ -337,6 +336,9 @@ const Category = (props) => {
         setUsePrice([]);
     }, [category]);
 
+    console.log(countProd)
+
+    const {isLoading} = useSelector((state) => state.loadReducer);
     return (
         
         <>
@@ -490,7 +492,7 @@ const Category = (props) => {
         {isFilterOpen === true ? 
         <div className="filter__chose" id="filter__chose">
             <div className="filter__chose_count" id="filter__chose_count">
-                {countProd} Filtered products 
+                {countProd} Filtered products
             </div>
             <div className="filter__chose_block filter__chose_color" id="filter__chose_color">
             </div>
@@ -506,6 +508,7 @@ const Category = (props) => {
 
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul className="product__list flex list-reset">
+            {isLoading ? <Loading /> : null}
             {arr.map(post => {
                 // // console.log({post}.post)
                 // // function renderAllFilter () {

@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { ItemCart } from '../components/ItemCart';
 //import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import Error from '../components/Error';
 
 // let num = 0;
 // let click = 0;
@@ -43,6 +44,8 @@ const Header = () => {
     const totalPrice = +(productInCart.reduce((allPrice, post) => allPrice + +post.price, 0)).toFixed(2);
 
     console.log(productInCart)
+
+    const { isError } = useSelector((state) => state.loadReducer);
 
     return (
     <>
@@ -184,6 +187,8 @@ const Header = () => {
       <div className="grey-line"></div>
       </div>
     </header>
+
+    {isError ? <Error /> : null}
 
     <div className={classNames('basket__wrapp', { visible_basket_wrapp: isBasketOpen })} onClick={tooggleBasketMode}></div>
 

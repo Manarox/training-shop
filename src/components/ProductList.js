@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import './ProductList.css';
 import '../pages/SwiperHome.css';
 // import Data from "../pages/data.json";
-// import { PRODUCTS } from "../components/products.js";
+//import { PRODUCTS } from "../components/products.js";
 import { Rating } from '../components/Rating';
 import { Unique } from '../components/Unique';
 import { Slider } from '../components/Slider';
@@ -24,26 +24,21 @@ import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation } from "swiper";
 import { useSelector } from "react-redux";
+//import Loading from '../components/Loading';
 //import { store } from '../redux/Store';
 //import { useDispatch } from "react-redux";
 //import { useSelector } from "react-redux";
 
 
 const ProductList = () => {
-  // store.dispatch(changeName)
-  // store.dispatch(changeSecondName)
-  // console.log(initialState)
 
-  // const dispatch = useDispatch();
-
-  // console.log(store.getState())
 
   const id = useParams();
   const {category} = useParams();
   const arr = [];
 
   const productsLoad = useSelector(state => state.loadReducer.products)
-  //console.log(productsLoad)
+  console.log(productsLoad)
   
   if ({category}.category === 'women') {
     productsLoad.women.map(post => {
@@ -53,24 +48,52 @@ const ProductList = () => {
     })
 
   } else if ({category}.category === 'men') {
-      productsLoad.men.map(post => {
+    productsLoad.men.map(post => {
         return (
           arr.push(post)
         );
       })
   }
 
-  var resultArr = arr.filter(function(number) {
-    return number.id === id.id;
-  });
+  // let resultArr = 
+  //   [
+  //     {
+  //       images: {
+  //         color: 'color',
+  //         url: 'url',
+  //       },
+  //       sizes: ['sizes'],
+  //       price: 'price',
+  //       name: 'name',
+  //       id: id.id,
+  //       reviews: [{}],
+  //       category: 'category'
+  //     }
+  //   ]
+  // let result = 
+  // [
+  //   {
+  //     color: 'color',
+  //     url: 'url',
+  //   }
+  // ]
+  
   //console.log(resultArr[0].images)
+  //console.log(resultArr[0].sizes[0])
+  //if (arr.length > 0) {
+    var resultArr = arr.filter(function(number) {
+      return number.id === id.id;
+  });
+  //}
+  
 
-  let result = resultArr[0].images.reduce((accumulator, currentValue) => {
-    if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
-    return accumulator;
-  }, []);
-  //console.log(result)
+  //if (arr.length > 0) {
+    let result = resultArr[0].images.reduce((accumulator, currentValue) => {
+      if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
+      return accumulator;
+    }, []);
 
+  //}
 
   //Функция цвета//////////////////////////////////////////////////
   const [colorr, setColor] = useState(result[0].color);
@@ -99,44 +122,6 @@ const ProductList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id.id]);
 
-  //Конец функции размера////////////////////////////////////////////
-  
-  // let [find, setFind] = useState(false);
-
- 
-
-  // const isFind = function () {
-  //   //dispatch(actionAddProduct)
-
-  //   return basketItems.basket.some(function(el) {
-  //     if (el.color === {colorr}.colorr) {
-  //       return true
-  //     }
-  //     else {
-  //       return false
-  //     }
-  //   }); 
-  // };
-
-//   useEffect(() => {
-//     setFind(isFind());
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, [isFind()]);
-  
-
-
-  
-  // console.log(isFind())
-
-
-
-  // const ACTION_ADD_PRODUCT = 'actionAddProduct'
-  // const actionAddProduct = {
-  //   type: ACTION_ADD_PRODUCT,
-  //   payload: arrColorUrl
-  // }
-
-
   /////////Сборка продукта/////////
 
 
@@ -155,17 +140,11 @@ const ProductList = () => {
   // productItem()
   // console.log(productItem())
 
-  // let arrColorUrl = []
-  // arrColorUrl.color = {colorr}.colorr
-  // arrColorUrl.url = {colorr_url}.colorr_url
-  // arrColorUrl.price = resultArr[0].price
-
-  // let basketItems = store.getState()
-  // console.log(basketItems.basket)
-  // console.log({colorr}.colorr)
-  // console.log(basketItems.basket.length)
   console.log(resultArr[0].sizes) //Это {product}.product.sizes} по которому рендер map
   console.log(resultArr[0].sizes[0]) // Это {product}.product.sizes[0] первый цвет
+
+//const {isLoading} = useSelector((state) => state.loadReducer);
+
 return (
 
 <div className="page-product" data-test-id={`product-page-${category}`}>
@@ -213,6 +192,7 @@ return (
     </div>
 
     <section class="prod flex container">
+      {/* {isLoading ? <Loading /> : null} */}
 
     <Slider images={resultArr[0].images}/>
 

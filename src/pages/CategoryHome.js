@@ -6,10 +6,11 @@ import { main_clothes_block_menu } from "../components/Buttons.js";
 import { ProductHome } from '../components/ProductHome';
 import '../components/ProductList.css';
 import { useSelector } from "react-redux";
+import Loading from '../components/Loading';
 
 const CategoryHome = (props) => {
     const {category} = props;
-    const arr = [];
+    const arr = []; 
     let categor = ''
     // let particulars = '';
 
@@ -56,6 +57,9 @@ const CategoryHome = (props) => {
             target.classList.add("product__link_active");
         }
     }
+
+    const {isLoading} = useSelector((state) => state.loadReducer);
+
     return (
     <>
 
@@ -90,7 +94,7 @@ const CategoryHome = (props) => {
 
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul class="product__list flex list-reset">
-
+        {isLoading ? <Loading /> : null}
             {arr.map(post => (
                 post.particulars[particulars] === true ? <ProductHome post={post} key={post.id}/> : null
             ))}    

@@ -6,7 +6,7 @@ const defaultState = {
     isLoading: false,
     isError: false,
 };
-console.log(defaultState)
+//console.log(defaultState)
 
 const loadReducer = (state = defaultState, action) => {
 switch (action.type) {
@@ -16,7 +16,7 @@ switch (action.type) {
     }
 
     case 'LOAD_DATA_SUCCESS': {
-        console.log(state.isLoading)
+        //console.log(state.isLoading)
         state.isLoading = false
         state.products = action.payload
         return { ...state }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import Error from './components/Error';
 import { useDispatch } from "react-redux";
 import Loading from './components/Loading';
-import {newFunction} from './redux/saga';
+//import {newFunction} from './redux/saga';
 
 
 

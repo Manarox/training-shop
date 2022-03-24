@@ -26,9 +26,9 @@ function App() {
   useEffect(() => {
     dispatch({ type: 'LOADPROD' });  
   // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [isLoading]);
+}, []);
   
-  //console.log(data)
+  //console.log(data)  
 
 //   useEffect(() => {
 //     dispatch(newFunction(isLoading));  

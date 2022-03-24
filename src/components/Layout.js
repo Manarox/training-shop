@@ -8,12 +8,14 @@ import './Footer.css';
 const Layout = () => {
     return (
         <>
+        <div data-test-id='app'>
         <Header />
 
         <Outlet />
 
         <Footer />
-        </>
+        </div>
+        </>        
     )
 }
 

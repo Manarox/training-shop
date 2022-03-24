@@ -15,7 +15,7 @@ const Home = () => {
     return (
 <main className="main">
 
-  <div className='app' data-test-id='app'>
+  <div className='app'>
     <section className="banners flex container">
       <ul className="banners__list flex list-reset">
         <Swiper navigation={true} modules={[Navigation]} className="mySwiper" data-test-id='main-slider'>

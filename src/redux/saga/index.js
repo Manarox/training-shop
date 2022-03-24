@@ -1,10 +1,11 @@
 import { call, put } from 'redux-saga/effects';
 
-console.log('sd')
+//console.log('sd')
 
 function* loadProducts() {
   const request = yield call(fetch, 'https://training.cleverland.by/shop/products');
   const data = yield call([request, request.json]);
+  //console.log(data)
   return data;
 }
 

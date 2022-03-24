@@ -16,6 +16,7 @@ function App() {
   // console.log(isLoading)
   // const {isError} = useSelector((state) => state.loadReducer);
   // console.log(isError)
+  //console.log('f')
   const { isLoading, isError } = useSelector((state) => state.loadReducer);
 
   return (

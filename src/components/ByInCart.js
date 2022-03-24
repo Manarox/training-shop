@@ -7,7 +7,7 @@ const ByInCart = (props) => {
     const productitem = props.productitem;
     const dispatch = useDispatch();
 
-    console.log(props.productitem)
+    //console.log(props.productitem)
 
     const ACTION_ADD_PRODUCT = 'actionAddProduct'
     const actionAddProduct = {
@@ -36,8 +36,8 @@ const ByInCart = (props) => {
     // });
     // };
     const productInCart = useSelector(state => state.basketReducer.basket)
-    const productInCart22 = useSelector(state => state.loadReducer)
-    console.log(productInCart22)
+    //const productInCart22 = useSelector(state => state.loadReducer)
+    //console.log(productInCart22)
     // const productInCart = useSelector(state => state.basket) было без combineReducers
     const isFind = function () {
         

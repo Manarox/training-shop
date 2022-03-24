@@ -43,7 +43,7 @@ const Header = () => {
     //const productInCart = useSelector(state => state.basket) было без combineReducers
     const totalPrice = +(productInCart.reduce((allPrice, post) => allPrice + +post.price, 0)).toFixed(2);
 
-    console.log(productInCart)
+    //console.log(productInCart)
 
     const { isError } = useSelector((state) => state.loadReducer);
 

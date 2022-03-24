@@ -1,7 +1,7 @@
 let initialState = {
     basket: [],
 }
-console.log(initialState)
+//console.log(initialState)
 
 const basketReducer = (state = initialState, action) => {
 // console.log(state)

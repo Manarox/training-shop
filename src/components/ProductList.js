@@ -38,7 +38,7 @@ const ProductList = () => {
   const arr = [];
 
   const productsLoad = useSelector(state => state.loadReducer.products)
-  console.log(productsLoad)
+  //console.log(productsLoad)
   
   if ({category}.category === 'women') {
     productsLoad.women.map(post => {
@@ -140,8 +140,8 @@ const ProductList = () => {
   // productItem()
   // console.log(productItem())
 
-  console.log(resultArr[0].sizes) //Это {product}.product.sizes} по которому рендер map
-  console.log(resultArr[0].sizes[0]) // Это {product}.product.sizes[0] первый цвет
+  //console.log(resultArr[0].sizes) //Это {product}.product.sizes} по которому рендер map
+  //console.log(resultArr[0].sizes[0]) // Это {product}.product.sizes[0] первый цвет
 
 //const {isLoading} = useSelector((state) => state.loadReducer);
 

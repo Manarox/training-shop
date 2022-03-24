@@ -1,9 +1,11 @@
+//import {loadDataError} from './saga';
+
 const defaultState = {
     products: {
         men: [],
         women: [],
     },
-    isLoading: false,
+    isLoading: true,
     isError: false,
 };
 //console.log(defaultState)
@@ -17,7 +19,7 @@ switch (action.type) {
     }
 
     case 'LOAD_DATA_SUCCESS': {
-        //console.log(state)
+        //loadDataError()
         //console.log(state.isLoading)
         //state.isLoading = false
         //state.products = action.payload

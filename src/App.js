@@ -1,24 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Category } from './pages/Category';
 import { ProductList } from './components/ProductList';
 import { Layout } from './components/Layout';
-// import store from './redux/Store';
-// import { Provider } from 'react-redux';
 import { useSelector } from 'react-redux';
 import Error from './components/Error';
+import { useDispatch } from "react-redux";
 import Loading from './components/Loading';
+import {newFunction} from './redux/saga';
+
+
 
 function App() {
-  // const {isLoading} = useSelector((state) => state.loadReducer);
-  // console.log(isLoading)
-  // const {isError} = useSelector((state) => state.loadReducer);
-  // console.log(isError)
-  //console.log('f')
+  console.log('s')
+  const dispatch = useDispatch();
+  
+  // dispatch({ type: 'LOAD' });
+
+  // const [colorr, setColor] = useState(result[0].color);
+
   const { isLoading, isError } = useSelector((state) => state.loadReducer);
 
+  useEffect(() => {
+    dispatch({ type: 'LOADPROD' });  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [isLoading]);
+  
+  //console.log(data)
+
+//   useEffect(() => {
+//     dispatch(newFunction(isLoading));  
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [isLoading]);
+
+
+
+
+  // dispatch(loadDataSuccess())
+  
+  //const { isLoading, isError } = useSelector((state) => state.loadReducer);
   return (
     <Routes>
         <Route path="/" element={<Layout />}>

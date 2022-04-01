@@ -446,111 +446,116 @@ return (
     </div>
   </section>
 
-  <div className={classNames('review__wrapp', { visible_review_wrapp: isReviewOpen })} onClick={tooggleReviewMode}></div>
 
-  <div className={classNames('reviewform', { visible_review: isReviewOpen })} >
-    <div className="reviewform__wrap" data-test-id="review-modal">
+    
+
+    <div className={classNames('review__wrapp', { visible_review_wrapp: isReviewOpen })} onClick={tooggleReviewMode}></div>
+
+    {isReviewOpen === true ? 
+
+    <div className={classNames('reviewform', { visible_review: isReviewOpen })} >
+      <div className="reviewform__wrap" data-test-id="review-modal">
 
 
 
-      <form className="reviewform__form" name="form" onSubmit={formik.handleSubmit}>
+        <form className="reviewform__form" name="form" onSubmit={formik.handleSubmit}>
 
-        <button className="reviewform__close" onClick={tooggleReviewMode}>
+          <button className="reviewform__close" onClick={tooggleReviewMode}>
 
-          <svg width="20" height="20" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+            <svg width="20" height="20" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
 
-        </button>
+          </button>
 
-        <div className="reviewform__title">
-          <h2 className="reviewform__title__h2">Write a review</h2>
-        </div>
+          <div className="reviewform__title">
+            <h2 className="reviewform__title__h2">Write a review</h2>
+          </div>
 
-        <div className="reviewform__raiting">
-          <Rating rating={raitingForm} onClickRating={changeRaitingForm}/>
-        </div>
+          <div className="reviewform__raiting">
+            <Rating rating={raitingForm} onClickRating={changeRaitingForm}/>
+          </div>
 
-        <div className="reviewform__name">
-          <input
-            className="reviewform__input"
-            data-test-id="review-name-field"
+          <div className="reviewform__name">
+            <input
+              className="reviewform__input"
+              data-test-id="review-name-field"
 
-            type="text"
-            name="name"
-            placeholder="Имя"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            // value={}
-            // onChange={}
-          />
-          <span className="formik__error">{formik.errors.name}</span>
-        </div>
+              type="text"
+              name="name"
+              placeholder="Имя"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              // value={}
+              // onChange={}
+            />
+            <span className="formik__error">{formik.errors.name}</span>
+          </div>
 
-        <div className="reviewform__rev">
-          <textarea
-            className="reviewform__rextarea"
-            data-test-id="review-text-field"
-            
-            placeholder="Комментарий"
-            name="text"
-            rows="10"
-            cols="30"
-            value={formik.values.text}
-            onChange={formik.handleChange}
-            // value={}
-            // onChange={}
-          >
-          </textarea>
-          <span className="formik__error">{formik.errors.text}</span>
+          <div className="reviewform__rev">
+            <textarea
+              className="reviewform__rextarea"
+              data-test-id="review-text-field"
+              
+              placeholder="Комментарий"
+              name="text"
+              rows="10"
+              cols="30"
+              value={formik.values.text}
+              onChange={formik.handleChange}
+              // value={}
+              // onChange={}
+            >
+            </textarea>
+            <span className="formik__error">{formik.errors.text}</span>
 
-          {/* {formik.errors.comment ? <div className="error">{formik.errors.comment}</div> : null} */}
-        </div>
-        <div className="reviewform__send">
+            {/* {formik.errors.comment ? <div className="error">{formik.errors.comment}</div> : null} */}
+          </div>
+          <div className="reviewform__send">
 
-          {/* {
-            (formik.isValid === true && formik.values.name.length === 0 && formik.values.text.length === 0) || (formik.isValid === false) ?
-              <button  className="reviewform__btn" type="submit" disabled>Send1</button> :
-              null
-          }
+            {/* {
+              (formik.isValid === true && formik.values.name.length === 0 && formik.values.text.length === 0) || (formik.isValid === false) ?
+                <button  className="reviewform__btn" type="submit" disabled>Send1</button> :
+                null
+            }
 
-          {
-            formik.isValid === true && formik.values.name.length > 0 && formik.values.text.length > 0 ?
+            {
+              formik.isValid === true && formik.values.name.length > 0 && formik.values.text.length > 0 ?
 
-              isLoading ? 
-                <button  className="reviewform__btn" type="submit"><img className="loader__img_btn" src={loader} alt="loader" /> Send2</button>
+                isLoading ? 
+                  <button  className="reviewform__btn" type="submit"><img className="loader__img_btn" src={loader} alt="loader" /> Send2</button>
+                  :
+                  <button  className="reviewform__btn" type="submit">Send3</button>
                 :
-                <button  className="reviewform__btn" type="submit">Send3</button>
-              :
 
-              null
-          } */}
+                null
+            } */}
 
-          {reviewLoad.isLoading ? (
-              <button className="reviewform__btn" type="submit" data-test-id="review-submit-button" disabled>
-                <span className="loaderSpiner"></span>
-                Send
-              </button>
-          ) : (
-              <button
-                className="reviewform__btn"
-                data-test-id="review-submit-button"
-                type="submit"
-                disabled={!(formik.values.name && formik.values.text) ? true : false}>
-                Send
-              </button>
-          )}
+            {reviewLoad.isLoading ? (
+                <button className="reviewform__btn" type="submit" data-test-id="review-submit-button" disabled>
+                  <span className="loaderSpiner"></span>
+                  Send
+                </button>
+            ) : (
+                <button
+                  className="reviewform__btn"
+                  data-test-id="review-submit-button"
+                  type="submit"
+                  disabled={!(formik.values.name && formik.values.text) ? true : false}>
+                  Send
+                </button>
+            )}
 
-          {isError ? <span className="error-email success-email_review">Ошибка при отправке отзыва</span> : null}
-          {isLoadingSuccess ? <span className="success-email success-email_review">Отзыв отправлен успешно</span> : null}
+            {isError ? <span className="error-email success-email_review">Ошибка при отправке отзыва</span> : null}
+            {isLoadingSuccess ? <span className="success-email success-email_review">Отзыв отправлен успешно</span> : null}
 
-        </div>
-      </form>
-
-
-
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+
+    : null}
+
     
 <section class="related flex container">
     <div class="related__top">

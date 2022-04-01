@@ -449,11 +449,11 @@ return (
   <div className={classNames('review__wrapp', { visible_review_wrapp: isReviewOpen })} onClick={tooggleReviewMode}></div>
 
   <div className={classNames('reviewform', { visible_review: isReviewOpen })} >
-    <div className="reviewform__wrap" >
+    <div className="reviewform__wrap" data-test-id="review-modal">
 
 
 
-      <form className="reviewform__form" name="form" onSubmit={formik.handleSubmit} data-test-id="review-modal">
+      <form className="reviewform__form" name="form" onSubmit={formik.handleSubmit}>
 
         <button className="reviewform__close" onClick={tooggleReviewMode}>
 

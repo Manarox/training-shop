@@ -722,9 +722,9 @@ button {
   height: 100%;
 }
 .reviewform {
-  display: none;
-  flex-direction: column;
   
+  flex-direction: column;
+  position: fixed;
   background-color: white;
   top: calc(50% - 250px);
   right: calc(50% - 180px);

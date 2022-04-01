@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import loader from '../components/Loading.gif';
+//import loader from '../components/Loading.gif';
 
 const Footer = () => {
     const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const Footer = () => {
     const dataURL = useParams();
     console.log(dataURL.id)
     console.log(dataURL.category)
-
+ 
     useEffect(() => {
       formik.values.mail = []
       formik.errors.mail = []

@@ -448,8 +448,8 @@ return (
 
   <div className={classNames('review__wrapp', { visible_review_wrapp: isReviewOpen })} onClick={tooggleReviewMode}></div>
 
-  <div className={classNames('reviewform', { visible_review: isReviewOpen })} data-test-id="review-modal">
-    <div className="reviewform__wrap">
+  <div className={classNames('reviewform', { visible_review: isReviewOpen })} >
+    <div className="reviewform__wrap" data-test-id="review-modal">
 
 
 

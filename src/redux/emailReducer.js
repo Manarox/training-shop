@@ -25,7 +25,7 @@ switch (action.type) {
         //state.isLoading = true
         console.log(action.payload)
         //return { ...state };
-        return { ...state, isLoading: false, isLoadingSuccess: true};
+        return { ...state, isLoading: false, isLoadingSuccess: true, isError: false};
     }
     case 'SEND_EMAIL__ERROR': {
         //state.isLoading = true
@@ -50,7 +50,7 @@ switch (action.type) {
         //state.isLoading = true
         console.log(action.payload)
         //return { ...state };
-        return { ...state, isLoadingFoot: false, isLoadingSuccessFoot: true};
+        return { ...state, isLoadingFoot: false, isLoadingSuccessFoot: true, isErrorFoot: false};
     }
     case 'FOOTER_SEND_EMAIL__ERROR': {
         //state.isLoading = true

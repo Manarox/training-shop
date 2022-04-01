@@ -21,7 +21,7 @@ switch (action.type) {
         //state.isLoading = true
         console.log(action.payload)
         //return { ...state };
-        return { ...state, isDataProd: action.payload, isLoading: false, isLoadingSuccess: true};
+        return { ...state, isDataProd: action.payload, isLoading: false, isLoadingSuccess: true, isError: false};
     }
     case 'SEND_REVIEW_ERROR': {
         //state.isLoading = true

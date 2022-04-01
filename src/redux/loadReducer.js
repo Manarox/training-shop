@@ -8,7 +8,7 @@ const defaultState = {
     isLoading: true,
     isError: false,
 };
-//console.log(defaultState)
+console.log(defaultState)
 
 const loadReducer = (state = defaultState, action) => {
 switch (action.type) {

@@ -15,11 +15,12 @@
   }
   .form-footer__input {
     background: #414141;
+    color: white;
     border: 0px;
     width: 400px;
     height: 32px;
     padding: 7px 16px;
-    margin-right: 36px;
+    margin-right: 20px;
   }
   .form-footer__input::placeholder {
     color: #FFFFFF;
@@ -29,7 +30,7 @@
     line-height: 18px;
   }
   .form-footer__button {
-    padding: 7px 24px;
+    padding: 7px 40px;
     font-weight: 600;
     font-size: 12px;
     line-height: 18px;
@@ -38,6 +39,7 @@
     background: #121212;
     color: #fff;
     border: 1px solid #FFF;
+    position: relative;
   }
 
 /*footer*/

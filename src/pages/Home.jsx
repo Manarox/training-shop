@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -8,11 +8,61 @@ import { CategoryHome } from '../pages/CategoryHome';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import './SwiperHome.css';
-
+import { useFormik } from 'formik';
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+import loader from '../components/Loading.gif';
+import { useParams } from "react-router-dom";
 
 const Home = () => {
+  const dispatch = useDispatch();
 
-    return (
+  const dataURL = useParams();
+
+  useEffect(() => {
+    formik.values.mail = []
+    formik.errors.mail = []
+
+    dispatch({ type: 'SEND_EMAIL_NULL' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ dataURL.id, dataURL.category ]);
+
+
+  const formik = useFormik({
+    initialValues: {
+      mail: [],
+    },
+    onSubmit: (values) => {
+      console.log('Данные почты: ');
+      dispatch({ type: 'SEND_EMAIL', payload: formik.values.mail})
+      dispatch({ type: 'SEND_EMAIL_SAGA', payload: formik.values.mail})
+      formik.resetForm();
+    },
+    validate: (values) => {
+      let error = {};
+      if (!values.mail) {
+        error.mail = 'Введите почту';
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.mail))
+        error.mail = 'Исправте формат почты';
+      //   else {
+      //   error.ok = true
+      // }
+      return error;
+      
+    },
+  });
+  console.log(formik)
+  console.log(formik.isValid)
+  console.log(formik.values.mail.length)
+
+  
+  const { isLoading, isError, isLoadingSuccess } = useSelector((state) => state.emailReducer);
+  console.log({ isLoading })
+
+  // if (isLoadingSuccess) {
+  //   formik.values.mail = []
+  // }
+  return (
 <main className="main">
 
   <div className='app'>
@@ -132,10 +182,74 @@ const Home = () => {
         <div className="subscrib__title">
           And <span className="ad__item_span">Get 10% Off</span>
         </div>
-        <form action="https://jsonplaceholder.typicode.com/posts" className="form flex" method="post" name="form">
+        {/* <form action="https://jsonplaceholder.typicode.com/posts" className="form flex" method="post" name="form">
           <input name="amail" type="text" className="form__input" placeholder="Enter your email"/>
           <button type="submit" name="submit" className="form__button">Subscribe</button>
+        </form> */}
+
+
+        <form className="form flex" name="form" onSubmit={formik.handleSubmit}>
+          <input
+          className="form__input"
+
+          id="mail"
+          type="text"
+          name="mail"
+          placeholder="Enter your email"
+          value={formik.values.mail}
+          onChange={formik.handleChange}
+          data-test-id="main-subscribe-mail-field"
+
+          />
+          <span className="formik__error">{formik.errors.mail}</span>
+
+          {isError ? <span className="error-email">Ошибка при отправке почты</span> : null}
+          {isLoadingSuccess ? <span className="success-email">Почта отправлена успешно</span> : null}
+
+          {
+            (formik.isValid === true && formik.values.mail.length === 0) || (formik.isValid === false) ?
+              <button type="submit" name="submit" className="form__button" data-test-id="main-subscribe-mail-button" disabled>Subscribe</button> :
+              null
+          }
+
+          {
+            formik.isValid === true && formik.values.mail.length > 0 ?
+
+              isLoading ? 
+                <button type="submit" name="submit" className="form__button" data-test-id="main-subscribe-mail-button"><img className="loader__img_btn" src={loader} alt="loader" /> Subscribe</button>
+                :
+                <button type="submit" name="submit" className="form__button" data-test-id="main-subscribe-mail-button">Subscribe</button>
+              :
+
+              null
+          }
+
+          
+          
+
+
+          {/* {isLoading ? <button type="submit" name="submit" className="form__button"><img className="loader__img_btn" src={loader} alt="loader" /> Subscribe</button> :
+            <button type="submit" name="submit" className="form__button">Subscribe</button>
+          } */}
+
+          {/* {
+            formik.errors.ok === true ? <button type="submit" name="submit" className="form__button">Subscribe1</button> : null
+          }
+
+          {
+            formik.errors.mail === undefined && formik.errors.ok !== true ? <button type="submit" name="submit" className="form__button" disabled>Subscribe2</button> : null
+          }
+
+          {
+            formik.errors.mail !== undefined && formik.errors.ok !== true ? <button type="submit" name="submit" className="form__button" disabled>Subscribe3</button> : null
+          } */}
+
+          {/* <button type="submit" name="submit" className="form__button">Subscribe</button> */}
+          
+          
         </form>
+
+
       </div>
       <div className="subscrib-bg"></div>
       <div className="subscrib-bg-man"></div>

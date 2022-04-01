@@ -1,7 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
+import loader from '../components/Loading.gif';
 
 const Footer = () => {
+    const dispatch = useDispatch();
+
+    const dataURL = useParams();
+    console.log(dataURL.id)
+    console.log(dataURL.category)
+
+    useEffect(() => {
+      formik.values.mail = []
+      formik.errors.mail = []
+
+      dispatch({ type: 'FOOTER_DATA_NULL' });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ dataURL.id, dataURL.category ]);
+
+    const formik = useFormik({
+      initialValues: {
+        mail: [],
+      },
+      onSubmit: (values) => {
+        console.log('Данные почты: ');
+        dispatch({ type: 'FOOTER_SEND_EMAIL', payload: formik.values.mail})
+        dispatch({ type: 'FOOTER_SEND_EMAIL_SAGA', payload: formik.values.mail})
+        formik.resetForm();
+      },
+      validate: (values) => {
+        let error = {};
+        if (!values.mail) {
+          error.mail = 'Введите почту';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.mail))
+          error.mail = 'Исправте формат почты';
+        //   else {
+        //   error.ok = true
+        // }
+        return error;
+        
+      },
+    });
+    const { isLoadingFoot, isErrorFoot, isLoadingSuccessFoot } = useSelector((state) => state.emailReducer);
+    //console.log({ isLoadingFoot, isErrorFoot }) 
+    // if (isLoadingSuccessFoot) {
+    //   formik.values.mail = []
+    // }
+    console.log((formik.values.mail))
+    console.log(!(formik.values.mail))
     return (
     <>
     <footer>
@@ -10,13 +59,77 @@ const Footer = () => {
       <section className="black-line black-line_footer container">
         <div className="black-line__left flex">
           <div className="black-line__item flex">
-            <Link to="/" className="black-line__text black-line__text_footer">BE IN TOUCH WITH US:</Link>
+            BE IN TOUCH WITH US:
           </div>
           <div className="black-line__item flex">
-            <form action="https://jsonplaceholder.typicode.com/posts" className="form-footer" method="post" name="form">
+
+            {/* <form className="form-footer" method="post" name="form">
               <input name="amail" type="text" className="form-footer__input" placeholder="Enter your email" />
               <button type="submit" name="submit" className="form-footer__button">Join Us</button>
+            </form> */}
+
+            <form className="form-footer" name="form" onSubmit={formik.handleSubmit}>
+              <input
+              className="form-footer__input"
+              
+              type="text"
+              name="mail"
+              placeholder="Enter your email"
+              value={formik.values.mail}
+              onChange={formik.handleChange}
+              data-test-id="footer-mail-field"
+
+              />
+              <span className="formik__error formik__error_footer">{formik.errors.mail}</span>
+
+              {isErrorFoot ? <span className="error-email error-email_footer">Ошибка при отправке почты</span> : null}
+              {isLoadingSuccessFoot ? <span className="success-email success-email_footer">Почта отправлена успешно</span> : null}
+
+              {/* {
+              (formik.isValid === true && formik.values.mail.length === 0) || (formik.isValid === false) ?
+                <button type="submit" name="submit" className="form-footer__button" data-test-id="footer-subscribe-mail-button" disabled>Join Us</button>
+                :
+                null
+              }
+
+              {
+              formik.isValid === true && formik.values.mail.length > 0 ?
+
+                isLoadingFoot ? 
+                  <button type="submit" name="submit" className="form-footer__button" data-test-id="footer-subscribe-mail-button"><img className="loader__img_btn loader__img_btn_footer" src={loader} alt="loader" /> Join Us</button>
+                  :
+                  <button type="submit" name="submit" className="form-footer__button" data-test-id="footer-subscribe-mail-button">Join Us</button>
+                :
+
+              null
+              } */}
+
+            {isLoadingFoot ? (
+                <button
+                  className="form-footer__button"
+                  type="submit"
+                  name="submit"
+                  data-test-id="footer-subscribe-mail-button"
+                  disabled
+                >
+                  <span className="loaderSpiner loaderSpiner_footer"></span>
+                  Join Us
+                </button>
+            ) : (
+                <button
+                  className="form-footer__button"
+                  data-test-id="footer-subscribe-mail-button"
+                  type="submit"
+                  name="submit"
+                  disabled={(formik.isValid === true && formik.values.mail.length === 0) || (formik.isValid === false) ? true : false}
+                >
+                  Join Us
+                </button>
+            )}
+
             </form>
+
+
           </div>
 
         </div>

@@ -24,6 +24,10 @@ import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation } from "swiper";
 import { useSelector } from "react-redux";
+import classNames from 'classnames';
+import { useFormik } from 'formik';
+import { useDispatch } from "react-redux";
+//import loader from '../components/Loading.gif';
 //import Loading from '../components/Loading';
 //import { store } from '../redux/Store';
 //import { useDispatch } from "react-redux";
@@ -31,14 +35,15 @@ import { useSelector } from "react-redux";
 
 
 const ProductList = () => {
-
-
   const id = useParams();
   const {category} = useParams();
   const arr = [];
+  const dispatch = useDispatch();
+ 
+  const reviewLoad = useSelector((state) => state.reviewReducer);
 
   const productsLoad = useSelector(state => state.loadReducer.products)
-  //console.log(productsLoad)
+  console.log(productsLoad)
   
   if ({category}.category === 'women') {
     productsLoad.women.map(post => {
@@ -54,38 +59,10 @@ const ProductList = () => {
         );
       })
   }
-
-  // let resultArr = 
-  //   [
-  //     {
-  //       images: {
-  //         color: 'color',
-  //         url: 'url',
-  //       },
-  //       sizes: ['sizes'],
-  //       price: 'price',
-  //       name: 'name',
-  //       id: id.id,
-  //       reviews: [{}],
-  //       category: 'category'
-  //     }
-  //   ]
-  // let result = 
-  // [
-  //   {
-  //     color: 'color',
-  //     url: 'url',
-  //   }
-  // ]
   
-  //console.log(resultArr[0].images)
-  //console.log(resultArr[0].sizes[0])
-  //if (arr.length > 0) {
-    var resultArr = arr.filter(function(number) {
+  var resultArr = arr.filter(function(number) {
       return number.id === id.id;
   });
-  //}
-  
 
   //if (arr.length > 0) {
     let result = resultArr[0].images.reduce((accumulator, currentValue) => {
@@ -138,12 +115,94 @@ const ProductList = () => {
   //   return arrColorUrl
   // }
   // productItem()
-  // console.log(productItem())
 
-  //console.log(resultArr[0].sizes) //Это {product}.product.sizes} по которому рендер map
-  //console.log(resultArr[0].sizes[0]) // Это {product}.product.sizes[0] первый цвет
+  const [isReviewOpen, toggleReview] = useState(false);
+  function tooggleReviewMode() {
+    toggleReview(!isReviewOpen);
+    document.body.style.overflow = 'hidden';
+    if (!isReviewOpen === false) {
+      document.body.style.overflow = 'inherit';
+    }
+    // formik.values.name = []
+    // formik.values.text = []
+    dispatch({ type: 'SEND_REVIEW_NULL' });
+    formik.errors.name = []
+    formik.errors.text = []
+    setRaitingForm(1);
+  }
 
-//const {isLoading} = useSelector((state) => state.loadReducer);
+  let [raitingForm, setRaitingForm] = useState(1);
+
+  console.log(raitingForm)
+
+  const changeRaitingForm = (e) => {
+    //star = e.target.alt;
+    setRaitingForm(e.currentTarget.id);
+    //return star;
+  };
+
+  const initialValues = {
+    id: resultArr[0].id,
+    name: "",
+    text: "",
+  }
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit: (values) => {
+      formik.values.rating = Number(raitingForm);
+      console.log(raitingForm);
+      dispatch({ type: 'SEND_REVIEW', payload: formik.values})
+      dispatch({ type: 'SEND_REVIEW_SAGA', payload: formik.values})
+      formik.resetForm(); //стерает все данные из полей
+      // toggleReview(false);
+      // document.body.style.overflow = 'inherit'
+    },
+    validate: (values) => {
+      let error = {};
+      if (!values.name) {
+        error.name = 'Введите имя';
+      }
+      if (!values.text) {
+        error.text = 'Введите отзыв';
+      }
+       
+      return error;
+    },
+  });
+
+  useEffect(() => {
+    if (reviewLoad.isDataProd) {
+      dispatch({ type: 'LOADPROD' });
+      toggleReview(false);
+      document.body.style.overflow = 'inherit'
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reviewLoad.isDataProd, dispatch]);
+  // useEffect(() => {
+  //   if (reviewLoad.isDataProd) {
+  //     document.location.reload();
+  //   }
+  // }, [reviewLoad]);
+
+  const { isError, isLoadingSuccess } = useSelector((state) => state.reviewReducer);
+  //const { isDataProd } = useSelector((state) => state.reviewReducer);
+  //console.log({ isDataProd }.isDataProd.reviews)
+  //console.log(resultArr[0].reviews)
+
+  // if (isLoadingSuccess) {
+  //   // toggleReview(!isReviewOpen);
+  //   dispatch({ type: 'LOADPROD' })
+  // }
+  
+  // if (isLoadingSuccess) {
+  //   toggleReview(!isReviewOpen);
+  //   dispatch({ type: 'LOADPROD' })    
+  // }
+ 
+  console.log(raitingForm)
+
+
 
 return (
 
@@ -369,8 +428,9 @@ return (
               {resultArr[0].reviews.length} Reviews
             </div>
           </div>
-          <div class="reviews__write">
-            <button class="reviews__btn">
+          <div className={classNames('reviews__write', { visible_basket_wrapp: isReviewOpen })}  onClick={tooggleReviewMode}>
+          
+            <button class="reviews__btn" data-test-id="review-button">
               <svg class="reviews__svg-btn" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 5H15H5ZM5 9H9H5ZM10 17L6 13H3C2.46957 13 1.96086 12.7893 1.58579 12.4142C1.21071 12.0391 1 11.5304 1 11V3C1 2.46957 1.21071 1.96086 1.58579 1.58579C1.96086 1.21071 2.46957 1 3 1H17C17.5304 1 18.0391 1.21071 18.4142 1.58579C18.7893 1.96086 19 2.46957 19 3V11C19 11.5304 18.7893 12.0391 18.4142 12.4142C18.0391 12.7893 17.5304 13 17 13H14L10 17Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -378,13 +438,119 @@ return (
             </button>
           </div>
         </div>
-        
+
         <Review reviews={resultArr[0].reviews}/>
 
       </div>
       <div class="strip"></div>
     </div>
   </section>
+
+  <div className={classNames('review__wrapp', { visible_review_wrapp: isReviewOpen })} onClick={tooggleReviewMode}></div>
+
+  <div className={classNames('reviewform', { visible_review: isReviewOpen })} data-test-id="review-modal">
+    <div className="reviewform__wrap">
+
+
+
+      <form className="reviewform__form" name="form" onSubmit={formik.handleSubmit}>
+
+        <button className="reviewform__close" onClick={tooggleReviewMode}>
+
+          <svg width="20" height="20" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </button>
+
+        <div className="reviewform__title">
+          <h2 className="reviewform__title__h2">Write a review</h2>
+        </div>
+
+        <div className="reviewform__raiting">
+          <Rating rating={raitingForm} onClickRating={changeRaitingForm}/>
+        </div>
+
+        <div className="reviewform__name">
+          <input
+            className="reviewform__input"
+            data-test-id="review-name-field"
+
+            type="text"
+            name="name"
+            placeholder="Имя"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            // value={}
+            // onChange={}
+          />
+          <span className="formik__error">{formik.errors.name}</span>
+        </div>
+
+        <div className="reviewform__rev">
+          <textarea
+            className="reviewform__rextarea"
+            data-test-id="review-text-field"
+            
+            placeholder="Комментарий"
+            name="text"
+            rows="10"
+            cols="30"
+            value={formik.values.text}
+            onChange={formik.handleChange}
+            // value={}
+            // onChange={}
+          >
+          </textarea>
+          <span className="formik__error">{formik.errors.text}</span>
+
+          {/* {formik.errors.comment ? <div className="error">{formik.errors.comment}</div> : null} */}
+        </div>
+        <div className="reviewform__send">
+
+          {/* {
+            (formik.isValid === true && formik.values.name.length === 0 && formik.values.text.length === 0) || (formik.isValid === false) ?
+              <button  className="reviewform__btn" type="submit" disabled>Send1</button> :
+              null
+          }
+
+          {
+            formik.isValid === true && formik.values.name.length > 0 && formik.values.text.length > 0 ?
+
+              isLoading ? 
+                <button  className="reviewform__btn" type="submit"><img className="loader__img_btn" src={loader} alt="loader" /> Send2</button>
+                :
+                <button  className="reviewform__btn" type="submit">Send3</button>
+              :
+
+              null
+          } */}
+
+          {reviewLoad.isLoading ? (
+              <button className="reviewform__btn" type="submit" data-test-id="review-submit-button" disabled>
+                <span className="loaderSpiner"></span>
+                Send
+              </button>
+          ) : (
+              <button
+                className="reviewform__btn"
+                data-test-id="review-submit-button"
+                type="submit"
+                disabled={!(formik.values.name && formik.values.text) ? true : false}>
+                Send
+              </button>
+          )}
+
+          {isError ? <span className="error-email success-email_review">Ошибка при отправке отзыва</span> : null}
+          {isLoadingSuccess ? <span className="success-email success-email_review">Отзыв отправлен успешно</span> : null}
+
+        </div>
+      </form>
+
+
+
+    </div>
+  </div>
     
 <section class="related flex container">
     <div class="related__top">

@@ -236,7 +236,7 @@
     font-weight: 500;
     font-size: 16px;
     line-height: 18px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   .form__input::placeholder {
     opacity: 0.4;
@@ -252,7 +252,26 @@
     opacity: 0.9;
     color: #FFFFFF;
     text-transform: uppercase;
+    position: relative;
+    cursor: pointer;
   }
+  .form__button:disabled {
+    color: #6e6464;
+    opacity: .7;
+  }
+  .loader__img_btn {
+    width: 44px;
+    position: absolute;
+    left: 35px;
+    top: 7px;
+  }
+  .loader__img_btn_footer {
+    width: 26px;
+    left: 28px;
+    top: 3px;
+  }
+
+
   .subscrib-bg {
     position: absolute;
     left: 42px;
@@ -273,6 +292,51 @@
     background-position: bottom 10px right 87px;
     background-repeat: no-repeat;
   }
+  .formik__error {
+    color: red;
+    font-size: 14px;
+    text-align: left;
+    margin: 10px 0 20px 0;
+    display: block;
+  }
+  .formik__error:empty {
+    display: none;
+  }
+  .formik__error_footer {
+    padding-right: 20px;
+  }
+  .error-email {
+    padding-bottom: 20px;
+    color: red;
+    font-size: 14px;
+    text-align: center;
+  }
+  .success-email_review {
+    padding-bottom: 0;
+    display: block;
+    padding-top: 15px;
+  }
+  .success-email {
+    padding-bottom: 20px;
+    color: green;
+    font-size: 14px;
+    text-align: center;
+  }
+  .success-email_review {
+    padding-bottom: 0;
+    display: block;
+    padding-top: 15px;
+  }
+  .error-email_footer {
+    font-size: 12px;
+    padding-right: 20px;
+  }
+  .success-email_footer {
+    font-size: 12px;
+    padding-right: 20px;
+  }
+
+  
   /*latest*/
   .latest {
     flex-direction: column;

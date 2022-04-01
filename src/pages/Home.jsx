@@ -36,7 +36,7 @@ const Home = () => {
       console.log('Данные почты: ');
       dispatch({ type: 'SEND_EMAIL', payload: formik.values.mail})
       dispatch({ type: 'SEND_EMAIL_SAGA', payload: formik.values.mail})
-      formik.resetForm();
+      //formik.resetForm();
     },
     validate: (values) => {
       let error = {};
@@ -57,6 +57,15 @@ const Home = () => {
 
   
   const { isLoading, isError, isLoadingSuccess } = useSelector((state) => state.emailReducer);
+
+  const emailLoad = useSelector((state) => state.emailReducer);
+  useEffect(() => {
+    if (emailLoad.isLoadingSuccess) {
+      formik.resetForm();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [emailLoad.isLoadingSuccess]);
+
   console.log({ isLoading })
 
   // if (isLoadingSuccess) {
@@ -198,6 +207,7 @@ const Home = () => {
           placeholder="Enter your email"
           value={formik.values.mail}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           data-test-id="main-subscribe-mail-field"
 
           />

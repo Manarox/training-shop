@@ -29,7 +29,7 @@ const Footer = () => {
         console.log('Данные почты: ');
         dispatch({ type: 'FOOTER_SEND_EMAIL', payload: formik.values.mail})
         dispatch({ type: 'FOOTER_SEND_EMAIL_SAGA', payload: formik.values.mail})
-        formik.resetForm();
+        //formik.resetForm();
       },
       validate: (values) => {
         let error = {};
@@ -45,10 +45,17 @@ const Footer = () => {
       },
     });
     const { isLoadingFoot, isErrorFoot, isLoadingSuccessFoot } = useSelector((state) => state.emailReducer);
-    //console.log({ isLoadingFoot, isErrorFoot }) 
-    // if (isLoadingSuccessFoot) {
-    //   formik.values.mail = []
-    // }
+    
+
+    const emailLoad = useSelector((state) => state.emailReducer);
+    useEffect(() => {
+      if (emailLoad.isLoadingSuccessFoot) {
+        formik.resetForm();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [emailLoad.isLoadingSuccessFoot ]);
+
+
     console.log((formik.values.mail))
     console.log(!(formik.values.mail))
     return (
@@ -77,6 +84,7 @@ const Footer = () => {
               placeholder="Enter your email"
               value={formik.values.mail}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               data-test-id="footer-mail-field"
 
               />

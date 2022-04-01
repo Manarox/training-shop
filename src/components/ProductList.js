@@ -149,12 +149,13 @@ const ProductList = () => {
 
   const formik = useFormik({
     initialValues,
+    
     onSubmit: (values) => {
       formik.values.rating = Number(raitingForm);
       console.log(raitingForm);
       dispatch({ type: 'SEND_REVIEW', payload: formik.values})
       dispatch({ type: 'SEND_REVIEW_SAGA', payload: formik.values})
-      formik.resetForm(); //стерает все данные из полей
+      //formik.resetForm(); //стерает все данные из полей
       // toggleReview(false);
       // document.body.style.overflow = 'inherit'
     },
@@ -186,21 +187,8 @@ const ProductList = () => {
   // }, [reviewLoad]);
 
   const { isError, isLoadingSuccess } = useSelector((state) => state.reviewReducer);
-  //const { isDataProd } = useSelector((state) => state.reviewReducer);
-  //console.log({ isDataProd }.isDataProd.reviews)
-  //console.log(resultArr[0].reviews)
 
-  // if (isLoadingSuccess) {
-  //   // toggleReview(!isReviewOpen);
-  //   dispatch({ type: 'LOADPROD' })
-  // }
-  
-  // if (isLoadingSuccess) {
-  //   toggleReview(!isReviewOpen);
-  //   dispatch({ type: 'LOADPROD' })    
-  // }
- 
-  console.log(raitingForm)
+  console.log(formik)
 
 
 
@@ -486,6 +474,7 @@ return (
               placeholder="Имя"
               value={formik.values.name}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               // value={}
               // onChange={}
             />
@@ -503,6 +492,7 @@ return (
               cols="30"
               value={formik.values.text}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               // value={}
               // onChange={}
             >

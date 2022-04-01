@@ -722,7 +722,7 @@ button {
   height: 100%;
 }
 .reviewform {
-  
+  display: none;
   flex-direction: column;
   position: fixed;
   background-color: white;

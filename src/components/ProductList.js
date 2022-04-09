@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react';
-// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/Home.css';
 import { useParams } from "react-router-dom";
 import './ProductList.css';
 import '../pages/SwiperHome.css';
-// import Data from "../pages/data.json";
-//import { PRODUCTS } from "../components/products.js";
 import { Rating } from '../components/Rating';
 import { Unique } from '../components/Unique';
 import { Slider } from '../components/Slider';
 import { Review } from '../components/Review';
-//import { Size } from '../components/Size';
 import { ByInCart } from '../components/ByInCart';
-//import { Color } from '../components/Color';
-// import classNames from 'classnames';
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -27,23 +20,14 @@ import { useSelector } from "react-redux";
 import classNames from 'classnames';
 import { useFormik } from 'formik';
 import { useDispatch } from "react-redux";
-//import loader from '../components/Loading.gif';
-//import Loading from '../components/Loading';
-//import { store } from '../redux/Store';
-//import { useDispatch } from "react-redux";
-//import { useSelector } from "react-redux";
-
 
 const ProductList = () => {
   const id = useParams();
   const {category} = useParams();
   const arr = [];
   const dispatch = useDispatch();
- 
   const reviewLoad = useSelector((state) => state.reviewReducer);
-
   const productsLoad = useSelector(state => state.loadReducer.products)
-  console.log(productsLoad)
   
   if ({category}.category === 'women') {
     productsLoad.women.map(post => {
@@ -64,13 +48,10 @@ const ProductList = () => {
       return number.id === id.id;
   });
 
-  //if (arr.length > 0) {
-    let result = resultArr[0].images.reduce((accumulator, currentValue) => {
-      if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
-      return accumulator;
-    }, []);
-
-  //}
+  let result = resultArr[0].images.reduce((accumulator, currentValue) => {
+    if (accumulator.every(item => !(item.color === currentValue.color))) accumulator.push(currentValue);
+    return accumulator;
+  }, []);
 
   //Функция цвета//////////////////////////////////////////////////
   const [colorr, setColor] = useState(result[0].color);
@@ -100,9 +81,6 @@ const ProductList = () => {
   }, [id.id]);
 
   /////////Сборка продукта/////////
-
-
-  // const productItem = function () {
     let arrColorUrl = []
     arrColorUrl.color = {colorr}.colorr
     arrColorUrl.url = {colorr_url}.colorr_url
@@ -112,33 +90,27 @@ const ProductList = () => {
     arrColorUrl.name = resultArr[0].name
     arrColorUrl.counter = 1
     arrColorUrl.id = resultArr[0].id
-  //   return arrColorUrl
-  // }
-  // productItem()
 
   const [isReviewOpen, toggleReview] = useState(false);
+
   function tooggleReviewMode() {
     toggleReview(!isReviewOpen);
     document.body.style.overflow = 'hidden';
     if (!isReviewOpen === false) {
       document.body.style.overflow = 'inherit';
     }
-    // formik.values.name = []
-    // formik.values.text = []
     dispatch({ type: 'SEND_REVIEW_NULL' });
     formik.errors.name = []
     formik.errors.text = []
+    formik.values.name = []
+    formik.values.text = []
     setRaitingForm(1);
   }
 
   let [raitingForm, setRaitingForm] = useState(1);
 
-  console.log(raitingForm)
-
   const changeRaitingForm = (e) => {
-    //star = e.target.alt;
     setRaitingForm(e.currentTarget.id);
-    //return star;
   };
 
   const initialValues = {
@@ -152,12 +124,8 @@ const ProductList = () => {
     
     onSubmit: (values) => {
       formik.values.rating = Number(raitingForm);
-      console.log(raitingForm);
       dispatch({ type: 'SEND_REVIEW', payload: formik.values})
       dispatch({ type: 'SEND_REVIEW_SAGA', payload: formik.values})
-      //formik.resetForm(); //стерает все данные из полей
-      // toggleReview(false);
-      // document.body.style.overflow = 'inherit'
     },
     validate: (values) => {
       let error = {};
@@ -180,17 +148,8 @@ const ProductList = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reviewLoad.isDataProd, dispatch]);
-  // useEffect(() => {
-  //   if (reviewLoad.isDataProd) {
-  //     document.location.reload();
-  //   }
-  // }, [reviewLoad]);
 
   const { isError, isLoadingSuccess } = useSelector((state) => state.reviewReducer);
-
-  console.log(formik)
-
-
 
 return (
 
@@ -239,7 +198,6 @@ return (
     </div>
 
     <section class="prod flex container">
-      {/* {isLoading ? <Loading /> : null} */}
 
     <Slider images={resultArr[0].images}/>
 
@@ -264,10 +222,6 @@ return (
           </ul>
 
       </div>
-      {/* <Size product={resultArr[0]}/> */}
-
-
-
 
       <div class="size">
           <div class="size__title">
@@ -404,7 +358,6 @@ return (
       </div>
       <div class="strip"></div>
 
-
       <div class="reviews">
         <div class="reviews__title">
           REVIEWS
@@ -434,17 +387,12 @@ return (
     </div>
   </section>
 
-
-    
-
     <div className={classNames('review__wrapp', { visible_review_wrapp: isReviewOpen })} onClick={tooggleReviewMode}></div>
 
     {isReviewOpen === true ? 
 
     <div className={classNames('reviewform', { visible_review: isReviewOpen })} >
       <div className="reviewform__wrap" data-test-id="review-modal">
-
-
 
         <form className="reviewform__form" name="form" onSubmit={formik.handleSubmit}>
 
@@ -468,15 +416,12 @@ return (
             <input
               className="reviewform__input"
               data-test-id="review-name-field"
-
               type="text"
               name="name"
               placeholder="Имя"
               value={formik.values.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              // value={}
-              // onChange={}
             />
             <span className="formik__error">{formik.errors.name}</span>
           </div>
@@ -499,27 +444,8 @@ return (
             </textarea>
             <span className="formik__error">{formik.errors.text}</span>
 
-            {/* {formik.errors.comment ? <div className="error">{formik.errors.comment}</div> : null} */}
           </div>
           <div className="reviewform__send">
-
-            {/* {
-              (formik.isValid === true && formik.values.name.length === 0 && formik.values.text.length === 0) || (formik.isValid === false) ?
-                <button  className="reviewform__btn" type="submit" disabled>Send1</button> :
-                null
-            }
-
-            {
-              formik.isValid === true && formik.values.name.length > 0 && formik.values.text.length > 0 ?
-
-                isLoading ? 
-                  <button  className="reviewform__btn" type="submit"><img className="loader__img_btn" src={loader} alt="loader" /> Send2</button>
-                  :
-                  <button  className="reviewform__btn" type="submit">Send3</button>
-                :
-
-                null
-            } */}
 
             {reviewLoad.isLoading ? (
                 <button className="reviewform__btn" type="submit" data-test-id="review-submit-button" disabled>
@@ -546,7 +472,6 @@ return (
 
     : null}
 
-    
 <section class="related flex container">
     <div class="related__top">
       <div class="related__title">

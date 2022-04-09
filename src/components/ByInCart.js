@@ -1,13 +1,10 @@
 import React from 'react';
-//import { store } from '../redux/Store';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const ByInCart = (props) => {
     const productitem = props.productitem;
     const dispatch = useDispatch();
-
-    //console.log(props.productitem)
 
     const ACTION_ADD_PRODUCT = 'actionAddProduct'
     const actionAddProduct = {
@@ -21,26 +18,8 @@ const ByInCart = (props) => {
         payload: productitem
     }
 
-    //let basketItems = store.getState()
-    //console.log(basketItems)
-
-    // const isFind = function () {
-    // //dispatch(actionAddProduct)
-    // return basketItems.basket.some(function(el) {
-    //     if (el.color === productitem.color) {
-    //         return true
-    //     }
-    //     else {
-    //         return false
-    //     }
-    // });
-    // };
     const productInCart = useSelector(state => state.basketReducer.basket)
-    //const productInCart22 = useSelector(state => state.loadReducer)
-    //console.log(productInCart22)
-    // const productInCart = useSelector(state => state.basket) было без combineReducers
     const isFind = function () {
-        
         const isProguctInCart = productInCart.some(product => (
             product.id === productitem.id &&
             product.color === productitem.color &&
@@ -48,16 +27,11 @@ const ByInCart = (props) => {
         ))
         return isProguctInCart
     }
-    // console.log(isFind())
-    // console.log(isProguctInCart)
-    // console.log(productInCart)
-    // const productInCart = useSelector(state => state.basket);
-    const changeCart = (e) => {
-        
-        const gaga = isFind()
 
-        if (gaga === false) {
-            console.log(productitem)
+    const changeCart = (e) => {
+        const searchF = isFind()
+
+        if (searchF === false) {
             dispatch(actionAddProduct)
             //dispatch({ type: 'actionAddProduct', payload: productitem });
         } 
@@ -73,6 +47,6 @@ const ByInCart = (props) => {
         </span>
     )
 
-
 }
+
 export {ByInCart}

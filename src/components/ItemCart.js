@@ -1,7 +1,5 @@
 import React from 'react';
-//import { store } from '../redux/Store';
 import { useDispatch } from "react-redux";
-//import { useSelector } from "react-redux";
 
 const ItemCart = (props) => {
     const product = props.product;
@@ -33,8 +31,6 @@ const ItemCart = (props) => {
         dispatch(actionDelProduct);
     }
 
-    console.log(product.url)
-
     return (
             <>
             <div className="prod-basket" data-test-id="cart-card">
@@ -65,7 +61,6 @@ const ItemCart = (props) => {
             </div>
             </>
     )
-
 
 }
 export {ItemCart}

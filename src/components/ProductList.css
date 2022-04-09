@@ -176,6 +176,7 @@
 .filter__choice {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .filter__form-list {
   align-items: center;

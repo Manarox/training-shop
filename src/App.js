@@ -9,18 +9,9 @@ import { useSelector } from 'react-redux';
 import Error from './components/Error';
 import { useDispatch } from "react-redux";
 import Loading from './components/Loading';
-//import {newFunction} from './redux/saga';
-
-
 
 function App() {
-  console.log('s')
   const dispatch = useDispatch();
-  
-  // dispatch({ type: 'LOAD' });
-
-  // const [colorr, setColor] = useState(result[0].color);
-
   const { isLoading, isError } = useSelector((state) => state.loadReducer);
 
   useEffect(() => {
@@ -28,19 +19,6 @@ function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
   
-  //console.log(data)  
-
-//   useEffect(() => {
-//     dispatch(newFunction(isLoading));  
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, [isLoading]);
-
-
-
-
-  // dispatch(loadDataSuccess())
-  
-  //const { isLoading, isError } = useSelector((state) => state.loadReducer);
   return (
     <Routes>
         <Route path="/" element={<Layout />}>
@@ -54,6 +32,5 @@ function App() {
   
   );
 }
-
 
 export default App;

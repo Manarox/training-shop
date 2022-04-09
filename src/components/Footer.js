@@ -4,14 +4,10 @@ import { useFormik } from 'formik';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-//import loader from '../components/Loading.gif';
 
 const Footer = () => {
     const dispatch = useDispatch();
-
     const dataURL = useParams();
-    console.log(dataURL.id)
-    console.log(dataURL.category)
  
     useEffect(() => {
       formik.values.mail = []
@@ -26,7 +22,6 @@ const Footer = () => {
         mail: [],
       },
       onSubmit: (values) => {
-        console.log('Данные почты: ');
         dispatch({ type: 'FOOTER_SEND_EMAIL', payload: formik.values.mail})
         dispatch({ type: 'FOOTER_SEND_EMAIL_SAGA', payload: formik.values.mail})
         //formik.resetForm();
@@ -37,15 +32,10 @@ const Footer = () => {
           error.mail = 'Введите почту';
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.mail))
           error.mail = 'Исправте формат почты';
-        //   else {
-        //   error.ok = true
-        // }
         return error;
-        
       },
     });
     const { isLoadingFoot, isErrorFoot, isLoadingSuccessFoot } = useSelector((state) => state.emailReducer);
-    
 
     const emailLoad = useSelector((state) => state.emailReducer);
     useEffect(() => {
@@ -55,9 +45,6 @@ const Footer = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [emailLoad.isLoadingSuccessFoot ]);
 
-
-    console.log((formik.values.mail))
-    console.log(!(formik.values.mail))
     return (
     <>
     <footer>
@@ -69,11 +56,6 @@ const Footer = () => {
             BE IN TOUCH WITH US:
           </div>
           <div className="black-line__item flex">
-
-            {/* <form className="form-footer" method="post" name="form">
-              <input name="amail" type="text" className="form-footer__input" placeholder="Enter your email" />
-              <button type="submit" name="submit" className="form-footer__button">Join Us</button>
-            </form> */}
 
             <form className="form-footer" name="form" onSubmit={formik.handleSubmit}>
               <input
@@ -92,25 +74,6 @@ const Footer = () => {
 
               {isErrorFoot ? <span className="error-email error-email_footer">Ошибка при отправке почты</span> : null}
               {isLoadingSuccessFoot ? <span className="success-email success-email_footer">Почта отправлена успешно</span> : null}
-
-              {/* {
-              (formik.isValid === true && formik.values.mail.length === 0) || (formik.isValid === false) ?
-                <button type="submit" name="submit" className="form-footer__button" data-test-id="footer-subscribe-mail-button" disabled>Join Us</button>
-                :
-                null
-              }
-
-              {
-              formik.isValid === true && formik.values.mail.length > 0 ?
-
-                isLoadingFoot ? 
-                  <button type="submit" name="submit" className="form-footer__button" data-test-id="footer-subscribe-mail-button"><img className="loader__img_btn loader__img_btn_footer" src={loader} alt="loader" /> Join Us</button>
-                  :
-                  <button type="submit" name="submit" className="form-footer__button" data-test-id="footer-subscribe-mail-button">Join Us</button>
-                :
-
-              null
-              } */}
 
             {isLoadingFoot ? (
                 <button
@@ -136,7 +99,6 @@ const Footer = () => {
             )}
 
             </form>
-
 
           </div>
 

@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-// import Data from "./data.json";
-//import { PRODUCTS } from "../components/products.js";
 import { ProductHome } from '../components/ProductHome';
 import classNames from 'classnames';
 import '../components/ProductList.css';
@@ -15,13 +13,10 @@ const Category = (props) => {
     const {category} = useParams();
     const arr = [];
     let colorResult = [];
-    // let colorFilterResult = [];
     let sizeResult = [];
     let brandResult = [];
 
-    //console.log(PRODUCTS)
     const productsLoad = useSelector(state => state.loadReducer.products)
-    console.log(productsLoad)
 
     if ({category}.category === 'women') {
         productsLoad.women.map(post => {
@@ -36,11 +31,6 @@ const Category = (props) => {
             )
         })
     } 
-
-    console.log({category})
-
-
-
 
     const [isFilterOpen, toggleFilter] = useState(false);
 
@@ -66,268 +56,215 @@ const Category = (props) => {
     ))
     sizeResult = Array.from(new Set(sizeResult));
 
-    /*Поиск всех уникальных брендов*/
-
-    // console.log(arr)
     arr.map(post => (
         brandResult.push(post.brand)
     ))
     brandResult = Array.from(new Set(brandResult));
 
-    /*useState для фильтра Color*/
     const [useColor, setUseColor] = useState([]);
 
     let selectedColor = (elem) => {
-        let colorFilterResult = [...useColor]
-        const target = elem.currentTarget;
-        if (target.checked) {
-            colorFilterResult.push(elem.target.value)
-        } else {
-            colorFilterResult = colorFilterResult.filter(function(item) { 
-                return item !== elem.target.value
-            })
-        }
-        const items = document.getElementById('filter__chose_color');
+    let colorFilterResult = [...useColor]
+    const target = elem.currentTarget;
+    if (target.checked) {
+        colorFilterResult.push(elem.target.value)
+    } else {
+        colorFilterResult = colorFilterResult.filter(function(item) { 
+            return item !== elem.target.value
+        })
+    }
+    const items = document.getElementById('filter__chose_color');
+    items.innerText = ""
+    for (let i = 0; i < colorFilterResult.length; i++) {
+        items.innerText += '   Color: ' + colorFilterResult[i]
+    }
+    
+    if (colorFilterResult.length === 0) {
         items.innerText = ""
-        for (let i = 0; i < colorFilterResult.length; i++) {
-            items.innerText += '   Color: ' + colorFilterResult[i]
-        }
-        
-        if (colorFilterResult.length === 0) {
-            items.innerText = ""
-        }
-        return (
-            setUseColor(colorFilterResult)
-        )
+    }
+    return (
+        setUseColor(colorFilterResult)
+    )
     }
 
-    // console.log({useColor})
-
-    /*useState для фильтра Size*/
     const [useSize, setUseSize] = useState([]);
 
     let selectedSize = (elem) => {
-        let sizeFilterResult = [...useSize]
-        const target = elem.currentTarget;
-        if (target.checked) {
-            sizeFilterResult.push(elem.target.value)
-        } else {
-            sizeFilterResult = sizeFilterResult.filter(function(item) { 
-                return item !== elem.target.value
-            })
-        }
-        const items = document.getElementById('filter__chose_size');
+    let sizeFilterResult = [...useSize]
+    const target = elem.currentTarget;
+    if (target.checked) {
+        sizeFilterResult.push(elem.target.value)
+    } else {
+        sizeFilterResult = sizeFilterResult.filter(function(item) { 
+            return item !== elem.target.value
+        })
+    }
+    const items = document.getElementById('filter__chose_size');
+    items.innerText = ""
+    for (let i = 0; i < sizeFilterResult.length; i++) {
+        items.innerText += '   Size: ' + sizeFilterResult[i]
+    }
+    if (sizeFilterResult.length === 0) {
         items.innerText = ""
-        for (let i = 0; i < sizeFilterResult.length; i++) {
-            items.innerText += '   Size: ' + sizeFilterResult[i]
-        }
-        if (sizeFilterResult.length === 0) {
-            items.innerText = ""
-        }
-        return (
-            setUseSize(sizeFilterResult)
-        )
+    }
+    return (
+        setUseSize(sizeFilterResult)
+    )
     }
 
-    // console.log({useSize})
-
-    /*useState для фильтра Brand*/
     const [useBrand, setUseBrand] = useState([]);
 
     let selectedBrand = (elem) => {
-        let brandFilterResult = [...useBrand]
-        const target = elem.currentTarget;
-        if (target.checked) {
-            brandFilterResult.push(elem.target.value)
-        } else {
-            brandFilterResult = brandFilterResult.filter(function(item) { 
-                return item !== elem.target.value
-            })
-        }
-        const items = document.getElementById('filter__chose_brand');
-        items.innerText = ""
- 
-        for (let i = 0; i < brandFilterResult.length; i++) {
-            items.innerText += '   Brand: ' + brandFilterResult[i]
-        }
+    let brandFilterResult = [...useBrand]
+    const target = elem.currentTarget;
+    if (target.checked) {
+        brandFilterResult.push(elem.target.value)
+    } else {
+        brandFilterResult = brandFilterResult.filter(function(item) { 
+            return item !== elem.target.value
+        })
+    }
+    const items = document.getElementById('filter__chose_brand');
+    items.innerText = ""
 
-        if (brandFilterResult.length === 0) {
-            items.innerText = ""
-        }
-        return (
-            setUseBrand(brandFilterResult)
-        )
+    for (let i = 0; i < brandFilterResult.length; i++) {
+        items.innerText += '   Brand: ' + brandFilterResult[i]
     }
 
-    // console.log({useBrand})
+    if (brandFilterResult.length === 0) {
+        items.innerText = ""
+    }
+    return (
+        setUseBrand(brandFilterResult)
+    )
+    }
 
-    /*useState для фильтра Price*/
     const [usePrice, setUsePrice] = useState([]);
 
     let selectedPrice = (elem) => {
-        let priceFilterResult = [...usePrice]
-        const target = elem.currentTarget;
-        if (target.checked) {
-            priceFilterResult.push(elem.target.value)
-        } else {
-            priceFilterResult = priceFilterResult.filter(function(item) { 
-                return item !== elem.target.value
-            })
-        }
-        const items = document.getElementById('filter__chose_price');
+    let priceFilterResult = [...usePrice]
+    const target = elem.currentTarget;
+    if (target.checked) {
+        priceFilterResult.push(elem.target.value)
+    } else {
+        priceFilterResult = priceFilterResult.filter(function(item) { 
+            return item !== elem.target.value
+        })
+    }
+    const items = document.getElementById('filter__chose_price');
+    items.innerText = ""
+    for (let i = 0; i < priceFilterResult.length; i++) {
+        items.innerText += '   Price: ' + priceFilterResult[i]
+    }
+    if (priceFilterResult.length === 0) {
         items.innerText = ""
-        for (let i = 0; i < priceFilterResult.length; i++) {
-            items.innerText += '   Price: ' + priceFilterResult[i]
-        }
-        if (priceFilterResult.length === 0) {
-            items.innerText = ""
-        }
-
-        return (
-            setUsePrice(priceFilterResult)
-        )
     }
 
-   
-
-    // console.log({usePrice})
+    return (
+        setUsePrice(priceFilterResult)
+    )
+    }
 
     let filterArr = []
     filterArr.push({useColor})
     filterArr.push({useSize})
     filterArr.push({useBrand})
     filterArr.push({usePrice})
-    // console.log(filterArr)
-    // console.log(arr)
 
     function poiskBrand(post) {
+    for (var i = 0; i < filterArr[2].useBrand.length; i++) {
+        if (filterArr[2].useBrand[i] === post.post.brand) {
+            return true;
+        }
+    }
 
-            // console.log(filterArr[2].useBrand)
-            for (var i = 0; i < filterArr[2].useBrand.length; i++) {
-                if (filterArr[2].useBrand[i] === post.post.brand) {
-                    return true;
-                }
-            }
-
-        return false;
+    return false;
     }
 
     function poiskColor(post) {
-        // console.log(filterArr[0].useColor)
-        // console.log(post.post.images)
-        for (var i = 0; i < post.post.images.length; i++) {
-            for (var j = 0; j < filterArr[0].useColor.length; j++) {
-                if (post.post.images[i].color === filterArr[0].useColor[j]) {
-                    return true;
-                }
+    for (var i = 0; i < post.post.images.length; i++) {
+        for (var j = 0; j < filterArr[0].useColor.length; j++) {
+            if (post.post.images[i].color === filterArr[0].useColor[j]) {
+                return true;
             }
         }
-        return false;
+    }
+    return false;
     }
 
     function poiskSize(post) {
-        for (var i = 0; i < post.post.sizes.length; i++) {
-            for (var j = 0; j < filterArr[1].useSize.length; j++) {
-                if (post.post.sizes[i] === filterArr[1].useSize[j]) {
-                    return true;
-                }
+    for (var i = 0; i < post.post.sizes.length; i++) {
+        for (var j = 0; j < filterArr[1].useSize.length; j++) {
+            if (post.post.sizes[i] === filterArr[1].useSize[j]) {
+                return true;
             }
         }
-        return false;
+    }
+    return false;
     }
     
     function poiskPrice(post) {
-        for (var i = 0; i < filterArr[3].usePrice.length; i++) {
-            if (filterArr[3].usePrice[i] === "500+") {
-                if (post.post.price >= 500) {
-                    return true;
-                }
-            } else if (filterArr[3].usePrice[i] === "200-500") {
-                if ((post.post.price >= 200) && (post.post.price <= 500)) {
-                    return true;
-                }
-            } else if (filterArr[3].usePrice[i] === "100-200") {
-                if ((post.post.price >= 100) && (post.post.price <= 200)) {
-                    return true;
-                }
-            } else if (filterArr[3].usePrice[i] === "50-100") {
-                if ((post.post.price >= 50) && (post.post.price <= 100)) {
-                    return true;
-                }
-            } else if (filterArr[3].usePrice[i] === "0-50") {
-                if ((post.post.price >= 0) && (post.post.price <= 50)) {
-                    return true;
-                }
-            } 
-        }
-        return false;
+    for (var i = 0; i < filterArr[3].usePrice.length; i++) {
+        if (filterArr[3].usePrice[i] === "500+") {
+            if (post.post.price >= 500) {
+                return true;
+            }
+        } else if (filterArr[3].usePrice[i] === "200-500") {
+            if ((post.post.price >= 200) && (post.post.price <= 500)) {
+                return true;
+            }
+        } else if (filterArr[3].usePrice[i] === "100-200") {
+            if ((post.post.price >= 100) && (post.post.price <= 200)) {
+                return true;
+            }
+        } else if (filterArr[3].usePrice[i] === "50-100") {
+            if ((post.post.price >= 50) && (post.post.price <= 100)) {
+                return true;
+            }
+        } else if (filterArr[3].usePrice[i] === "0-50") {
+            if ((post.post.price >= 0) && (post.post.price <= 50)) {
+                return true;
+            }
+        } 
+    }
+    return false;
     }
 
     function renderAll() {
-        if ((filterArr[0].useColor.length === 0) && (filterArr[1].useSize.length === 0) && (filterArr[2].useBrand.length === 0) && (filterArr[3].usePrice.length === 0)) {
-            return true;
-        }
+    if ((filterArr[0].useColor.length === 0) && (filterArr[1].useSize.length === 0) && (filterArr[2].useBrand.length === 0) && (filterArr[3].usePrice.length === 0)) {
+        return true;
+    }
     }
 
     let countProd = [0]
     
     function Rezultat(post) {
-        if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === false)) {
-            return false
-        } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === false)) {
-            return false
-        } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === false)) {
-            return false
-        } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === false)) {
-            return false
-        }
-    
-        if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === true)) {
-            countProd[0] = countProd[0]+1;
-            //const items = document.querySelector(".filter__chose_count");
-            //items.classList.add("filter__chose_count_active");
-            // const items = document.getElementById('filter__chose_count');
-            
-            // // items.innerText = ""
-            // // items.innerText = countProd[0] + "items Found"
-            // console.log(countProd)
-            // if (countProd[0] === null) {
-            //     console.log(countProd)
-            //     items.innerText = ""
-            // }
-            return true
-        } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === true)) {
-            countProd[0] = countProd[0]+1;
-            // const items = document.getElementById('filter__chose_count');
-            // items.innerText = ""
-            // items.innerText = countProd[0] + "items Found"
-            // if (countProd[0] === 0) {
-            //     items.innerText = ""
-            // }
-            return true
-        } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === true)) {
-            countProd[0] = countProd[0]+1;
-            // const items = document.getElementById('filter__chose_count');
-            // items.innerText = ""
-            // items.innerText = countProd[0] + "items Found"
-            // if (countProd[0] === 0) {
-            //     items.innerText = ""
-            // }
-            return true
-        } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === true)) {
-            countProd[0] = countProd[0]+1;
-             // const items = document.getElementById('filter__chose_count');
-            // items.innerText = ""
-            // items.innerText = countProd[0] + "items Found"
-            // if (countProd[0] === 0) {
-            //     items.innerText = ""
-            // }
-            return true
-        }
+    if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === false)) {
+        return false
+    } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === false)) {
+        return false
+    } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === false)) {
+        return false
+    } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === false)) {
+        return false
+    }
+
+    if ((filterArr[0].useColor.length > 0) && (poiskColor(post) === true)) {
+        countProd[0] = countProd[0]+1;
+        return true
+    } else if ((filterArr[1].useSize.length > 0) && (poiskSize(post) === true)) {
+        countProd[0] = countProd[0]+1;
+        return true
+    } else if ((filterArr[2].useBrand.length > 0) && (poiskBrand(post) === true)) {
+        countProd[0] = countProd[0]+1;
+        return true
+    } else if ((filterArr[3].usePrice.length > 0) && (poiskPrice(post) === true)) {
+        countProd[0] = countProd[0]+1;
+        return true
+    }
     }
 
     useEffect(() => {
-        
 
         toggleFilter(false);
         setUseColor([]);
@@ -335,8 +272,6 @@ const Category = (props) => {
         setUseBrand([]);
         setUsePrice([]);
     }, [category]);
-
-    console.log(countProd)
 
     const {isLoading} = useSelector((state) => state.loadReducer);
     return (
@@ -505,25 +440,11 @@ const Category = (props) => {
         </div>
         : null}
         
-
         <div className='clothes' data-test-id={`clothes-${category}`}>
         <ul className="product__list flex list-reset">
             {isLoading ? <Loading /> : null}
             {arr.map(post => {
-                // // console.log({post}.post)
-                // // function renderAllFilter () {
-                // //     if ((filterArr[2].useBrand.length > 0) && (poiskBrand({post}) === true)) {
-                // //         return true
-                // //     }
-                // // }
-                // poiskBrand({post})
-                // poiskColor({post})
-                // poiskSize({post})
-                // poiskPrice({post})
-                               
-                
                 return (
-                    // poiskBrand({post}) === true ? <ProductHome post={post} key={post.id}/> : null
                     renderAll() === true ? <ProductHome post={post} key={post.id}/> : 
                         (
                             (Rezultat({post}) === true)

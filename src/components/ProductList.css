@@ -351,8 +351,11 @@ button {
   font: inherit;
   color: inherit;
   background-color: transparent;
-  /* отображаем курсор в виде руки при наведении; некоторые
-  считают, что необходимо оставлять стрелочный вид для кнопок */
+}
+.button-cart {
+  cursor: pointer;
+}
+.basket__top__close {
   cursor: pointer;
 }
 .product__link {
@@ -533,6 +536,7 @@ button {
   line-height: 15px;
   text-transform: uppercase;
   color: #FFFFFF;
+  cursor: pointer;
 }
 .actions__add {
   padding-right: 16px;

@@ -284,6 +284,7 @@ html {
     width: 20px;
     z-index: 3;
     padding-left: 3px;
+    cursor: pointer;
 }
 .basket__wrapp {
     display: none;
@@ -366,6 +367,7 @@ html {
     height: 100%;
     width: 100%;
     font-weight: 700;
+    cursor: pointer;
 }
 .basket__bottom__btn_black {
     background: #121212;
@@ -443,6 +445,116 @@ html {
     text-align: center;
     width: 50%;
 }
+.basket__top_slash {
+    color: #e6e6e6;
+}
+
+/*Доставка*/
+.delivery {
+    flex-grow: 1;
+    padding: 20px;
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+.delivery_activ {
+    display: block;
+}
+.payment {
+    flex-grow: 1;
+    padding: 20px;
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+.payment_activ {
+    display: block;
+}
+
+.delivery__title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.57;
+    margin-bottom: 12px;
+}
+.delivery__chose-list {
+    border-top: 2px solid #f8f8f8;
+    margin-bottom: 32px;
+}
+.delivery__item {
+    border-bottom: 2px solid #f8f8f8;
+    box-sizing: border-box;
+    display: flex;
+    padding: 12px 0;
+}
+
+.delivery__label {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 25px;
+	margin-right: 15px;
+	font-size: 13px;
+}
+.delivery__input[type=radio] {
+	display: none;
+}
+.delivery__label:before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    background-color: white;
+    border: 1px solid #E6E6E6;
+}
+.delivery__item label:before {
+	border-radius: 25px;
+}
+.delivery__input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: #121212;
+    font-size: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1px;
+}
+.deliveryform__name {
+    margin-bottom: 40px;
+}
+.deliveryform__name_small {
+    margin-bottom: 36px;
+}
+.deliveryform__input {
+    background: #f8f8f8;
+    padding: 15px 0 15px 16px;
+    width: 100%;
+    border: none;
+}
+.deliveryform__title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    display: block;
+}
+.deliveryform__input_small {
+    margin-right: 8px;
+}
+.deliveryform__name_postcode {
+    margin-top: 40px;
+}
+
+
+
+
+
+
 
 /*Получение данных*/
 .warning {

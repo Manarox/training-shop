@@ -1,5 +1,5 @@
 //import axios from 'axios';
-//import { call, put, all, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
 // function* sendEmailSub(action) {
 //   const data = {
@@ -24,8 +24,19 @@
 //     yield put({ type: 'FOOTER_SEND_EMAIL__ERROR', payload: e });
 //   }
 // }
+export const LOADING_COUNTRY = 'LOADING_COUNTRY'
+  function* loadingCountry() {
+    try {
+      const request = yield call(fetch, 'https://training.cleverland.by/shop/countries');
+      const data = yield call([request, request.json]);
+      yield put({ type: 'LOAD_COUNTRY_SUCCESS', payload: data });
 
-export default function* delivarySaga() {
-    //yield all([takeLatest('SEND_EMAIL_SAGA', sendEmailSub)]);
-    //yield all([takeLatest('FOOTER_SEND_EMAIL_SAGA', sendEmailSubFooter)]);
-  }
+    } catch (e) {
+      yield put({ type: 'LOAD_COUNTRY_ERROR' });
+    }
+  }     
+
+  export default function* delivarySaga() {
+      yield takeEvery(LOADING_COUNTRY, loadingCountry)
+      //yield all([takeLatest('FOOTER_SEND_EMAIL_SAGA', sendEmailSubFooter)]);
+    }

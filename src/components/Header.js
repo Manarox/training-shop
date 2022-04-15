@@ -11,9 +11,10 @@ import Error from '../components/Error';
 //import Payment from '../components/Payment';
 import { useDispatch } from "react-redux";
 import { useFormik } from 'formik';
+import InputMask from "react-input-mask";
 
-// let num = 0;
-// let click = 0;
+
+let cloneErrorsPostcode = ''
  
 const Header = () => {
     const dispatch = useDispatch();
@@ -39,6 +40,14 @@ const Header = () => {
           document.body.style.overflow = 'inherit';
         }
     }
+    function tooggleBasketModeButton() {
+      toggleBasket(!isBasketOpen);
+      setCheckBoxReset(true)
+      document.body.style.overflow = 'hidden';
+      if (!isBasketOpen === false) {
+        document.body.style.overflow = 'inherit';
+      }
+    }
     //Кнопка закрытия корзины, С ОЧИСТКОЙ STATE
     function tooggleBasketModeReset() {
       toggleBasket(!isBasketOpen);
@@ -48,6 +57,8 @@ const Header = () => {
       }
       //Очищаем данные + в Форме
       formik.resetForm()
+      setCheckBoxReset(false)
+      formik.values.checkboxPolic = false
       dispatch({ type: 'RESET_VALUES' })
     }
     //Кнопка VIEW CART
@@ -60,9 +71,13 @@ const Header = () => {
         }
       } else if (isTypeButtonLoad === 'Delivery Info') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Item in Cart'})
-        dispatch({ type: 'SAVE_FORMIK_ERRORS', payload: 'Item in Cart'})
       } else if (isTypeButtonLoad === 'Payment') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Delivery Info'})
+        //Удаляем ошибки на форме оплаты при переходе на форму доставки
+        delete formik.errors['card']
+        delete formik.errors['cardDate']
+        delete formik.errors['cardCVV']
+        delete formik.errors['cashEmail']
       }
     }
 
@@ -76,10 +91,30 @@ const Header = () => {
     const { isError } = useSelector((state) => state.loadReducer);
 
     //Выбор кнопки
-
     const { isTypeButtonLoad } = useSelector((state) => state.delivaryReducer);
-    console.log(isTypeButtonLoad)
 
+    //Показ и очистка checkbox формы
+    const [checkBoxReset, setCheckBoxReset] = useState(true);
+    //const [agree, setAgree] = useState(false);
+    //const [errorCheckbox, setErrorCheckbox] = useState(false);
+    // const handleSetAgree = () => {
+    //   // )
+    //   setAgree(!agree);
+    //   // if (agree === false) {
+    //   //   formik.errors.checkboxPolic = null;
+    //   // }
+    //   //formik.errors = null
+    //   formik.validateForm()
+    //   // console.log(agree)
+    // };
+    const handleAgree = () => {
+      console.log(formik.errors)
+      console.log(formik)
+      
+      if (formik.isValid !== true) {
+        formik.values.checkboxPolic = false
+      }
+    }
     //Проверяем какая кнопка выбрана и переходим на следующую
     const changeFurtherButton = (e) => {
       if (isTypeButtonLoad === 'Item in Cart') {
@@ -90,26 +125,45 @@ const Header = () => {
     };
     //
     //ФОРМА ДОСТАВКИ
-    //Выбор radio
+    //Выбор radio доставки
     const { isTypeDeliveryLoad } = useSelector((state) => state.delivaryReducer);
 
-    console.log(isTypeDeliveryLoad)
     const changeDeliveryChose = (e) => {
-        dispatch({ type: 'CHANGE_TYPE_DELIVERY_CHOSE', payload: e})
-        //очищаем валидацию в форме если другой пункт и данные
-        formik.errors.postcode = []
+      dispatch({ type: 'CHANGE_TYPE_DELIVERY_CHOSE', payload: e})
 
-        if (formik.values.postcode === '') {
-          formik.values.postcode = '0'
+      if (isTypeDeliveryLoad === "pickup from post offices") {
+        if (formik.errors.postcode !== undefined) {
+          cloneErrorsPostcode = formik.errors.postcode.slice();
+          delete formik.errors['postcode']
+        } else {
+          cloneErrorsPostcode = formik.errors.postcode
         }
-        if (formik.values.postcode === '0') {
-          formik.values.postcode = ""
+      }
+
+      if (isTypeDeliveryLoad === "express delivery") {
+        if (cloneErrorsPostcode !== undefined) {
+          formik.errors.postcode = cloneErrorsPostcode.slice();
         }
- 
+        //cloneExpress = Object.assign({}, formik.errors);
+      }
+
+      if ( e === "store pickup") {
+        //Загрузка данных СТРАНЫ при воборе пункта
+        dispatch({ type: 'LOADING_COUNTRY'})
+      }
     };
+
+    //Выбор radio оплаты
+    const { isTypePaymentLoad } = useSelector((state) => state.delivaryReducer);
+
+    const changePaymentChose = (e) => {
+      dispatch({ type: 'CHANGE_TYPE_PAYMENT_CHOSE', payload: e})
+    }
+
     //Преобразуем итоговый объект с товарами в корзине
     var resultBasket = productInCart.map(obj => ({name: obj.name, size: obj.size, color: obj.color, quantity: obj.counter}));
 
+    //Formik доставки
     const initialValues = {
       products: resultBasket,
       deliveryMethod: "",
@@ -121,6 +175,9 @@ const Header = () => {
       house: "",
       postcode: "",
       apartment: "",
+      country_store: "",
+      storeAddress: "",
+      card: "",
     }
     const formik = useFormik({
       initialValues,
@@ -134,46 +191,110 @@ const Header = () => {
       validate: (values) => {
       let error = {};
   
-      //Валидация phone
-      if (!values.phone) {
+      //Валидация для Доставки
+      if (isTypeButtonLoad === 'Delivery Info') {
+        //Валидация phone
+        //const phoneRegExp = /(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$/;
+        if (!values.phone) {
           error.phone = 'Введите телефон';
-      }
-  
-      //Валидация mail
-      if (!values.email) {
-      error.email = 'Введите почту';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email))
-      error.email = 'Исправте формат почты';
-  
-      //Валидация country
-      if (!values.country) {
-          error.country = 'Введите страну';
-      }
-  
-      //Валидация city
-      if (!values.city) {
-          error.city = 'Введите город';
-      }
-  
-      //Валидация street
-      if (!values.street) {
-          error.street = 'Введите улицу';
-      }
-  
-      //Валидация house
-      if (!values.house) {
-          error.house = 'Введите номер дома';
+          //(!/^(?:\+375)\s?\(?29|25|44|33\)?\s?\d\d(?:\d[\s]\d\d[\s]\d\d|[\s]\d\d[\s]\d\d\d|\d{5})$/i.test(values.phone))
+        } else if (!/(\+375 \(25|29|33|44)\)(\s|)[0-9]{7}/.test(values.phone)) {
+          error.phone = 'Исправте формат номера телефона';
+        }
+        //console.log(formik.values.phone)
+        //Валидация mail
+        if (!values.email) {
+          error.email = 'Введите почту';
+        } else if (!/^[A-Z0-9._%+-]+(@[A-Z0-9.-]{2,63})+\.[A-Z]{2,4}$/i.test(values.email)) {
+          error.email = 'Исправте формат почты';
+        }
+        
+        //Валидация country
+        if (!values.country) {
+            error.country = 'Введите страну';
+        }
+        //Валидация city
+        if (!values.city) {
+            error.city = 'Введите город';
+        }
+        //Валидация street
+        if (!values.street) {
+            error.street = 'Введите улицу';
+        }
+        //Валидация house
+        if (!values.house) {
+            error.house = 'Введите номер дома';
+        }
+        //Валидация postcode
+        if (isTypeDeliveryLoad === 'pickup from post offices') {
+          if (!values.postcode || values.postcode === "BY ______") {
+            error.postcode = 'Введите почтовый код';
+          } 
+          let str = values.postcode.split('_').join('');
+          if (str.length !== 9) {
+            error.postcode = 'Исправте формат почтового кода';
+          }
+        } 
+        //Валидация checkboxPolic
+        if (!values.checkboxPolic) {
+          error.checkboxPolic = 'Вы должны согласиться на обработку личной информации';
+          //setErrorCheckbox(true)
+        }
+        
+        //Валидация country_store
+        if (isTypeDeliveryLoad === 'store pickup') {
+          if (!values.country_store || values.country_store === 'Country') {
+            error.country_store = 'Вы должны выбрать страну';
+            //setErrorCheckbox(true)
+          }
+          if (error.country_store === undefined) {
+            error.storeAddress = 'Вы должны выбрать адрес магазина'
+          }
+        }
+        //formik.errors.country_store === undefined || formik.values.country_store === 'Country'
       }
 
-      //Валидация postcode
-      if (!values.postcode) {
-        error.postcode = 'Введите почтовый код';
-    }
+
+
+      //Валидация для Оплаты
+      if (isTypeButtonLoad === 'Payment') {
+        //Валидация card
+        // if (!values.card) {
+        //   error.card = 'Введите данные карты';
+        // }
+        if (!values.card) {
+          error.card = 'Введите данные карты';
+        } else if (!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card)) {
+          error.card = 'Проверьте правильность введенных данных';
+        }
+        console.log(values.card)
+        //Валидация cardDate
+        if (!values.cardDate) {
+          error.cardDate = 'Введите срок службы карты';
+        }
+        //Валидация cardCVV
+        if (!values.cardCVV) {
+          error.cardCVV = 'Введите код';
+        }
+        // Валидация cashEmail
+        if (!values.cashEmail) {
+        error.cashEmail = 'Введите почту';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.cashEmail))
+        error.cashEmail = 'Исправте формат почты';
+      }
           
       return error;
       },
     });
+    //Выводим СТРАНЫ на страницу
+    const { isLoadingCountry } = useSelector((state) => state.delivaryReducer);
+    isLoadingCountry.map(post => {
+      return (
+        console.log(post.name)
 
+      )
+    })
+    console.log(isLoadingCountry)
     return (
     <>
     <header className="header">
@@ -268,7 +389,7 @@ const Header = () => {
               <li className="menu__icon-item menu__icon-item_relative">
                 {productInCart.length > 0 ? <span className="basket-btn__kol">{productInCart.length}</span> : null}
 
-                <button type="button" className={classNames('button-cart', { visible: isBasketOpen })} onClick={tooggleBasketMode} data-test-id='cart-button'>
+                <button type="button" className={classNames('button-cart', { visible: isBasketOpen })} onClick={tooggleBasketModeButton} data-test-id='cart-button'>
 
                 <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M13 9V5C13 3.93913 12.5786 2.92172 11.8284 2.17157C11.0783 1.42143 10.0609 1 9 1C7.93913 1 6.92172 1.42143 6.17157 2.17157C5.42143 2.92172 5 3.93913 5 5V9H13ZM2 7H16L17 19H1L2 7Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
@@ -333,7 +454,6 @@ const Header = () => {
                 <button
                   className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Delivery Info') })}
                   id="Delivery Info"
-                  
                 >
                   Delivery Info
                 </button>
@@ -371,7 +491,7 @@ const Header = () => {
                           className="delivery__input"
                           type="radio"
                           id="pickup from post offices"
-                          name="btn"
+                          name="btn-delivery"
                           onClick={(e) => changeDeliveryChose(e.target.id)}
                           checked={isTypeDeliveryLoad === 'pickup from post offices' ? 'checked' : null}
                       />
@@ -382,7 +502,7 @@ const Header = () => {
                           className="delivery__input"
                           type="radio"
                           id="express delivery"
-                          name="btn"
+                          name="btn-delivery"
                           onClick={(e) => changeDeliveryChose(e.target.id)}
                           checked={isTypeDeliveryLoad === 'express delivery' ? 'checked' : null}
                       />
@@ -393,7 +513,7 @@ const Header = () => {
                           className="delivery__input"
                           type="radio"
                           id="store pickup"
-                          name="btn"
+                          name="btn-delivery"
                           onClick={(e) => changeDeliveryChose(e.target.id)}
                           checked={isTypeDeliveryLoad === 'store pickup' ? 'checked' : null}
                       />
@@ -405,23 +525,25 @@ const Header = () => {
 
                   <div className="deliveryform__name">
                       <span class="deliveryform__title">Phone</span>
-                      <input
-                          className="deliveryform__input"
+                        <InputMask
+                          mask="+375 (99)9999999"
+                          maskChar="_"
+                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.phone !== undefined)})}
                           id="phone"
                           type="text"
                           name="phone"
-                          placeholder="+375 (__) _______"
+                          placeholder="+375 (__)_______"
                           value={formik.values.phone}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                      />
-                      <span className="formik__error">{formik.errors.phone}</span>
+                        />
+                        <span className="formik__error">{formik.errors.phone}</span>
                   </div>
 
                   <div className="deliveryform__name">
                       <span class="deliveryform__title">E-mail</span>
                       <input
-                          className="deliveryform__input"
+                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.email !== undefined)})}
                           id="email"
                           type="text"
                           name="email"
@@ -432,90 +554,181 @@ const Header = () => {
                       />
                       <span className="formik__error">{formik.errors.email}</span>
                   </div>
+                  {isTypeDeliveryLoad === 'pickup from post offices' || isTypeDeliveryLoad === 'express delivery' ?
+                    <div>
+                      <div className="deliveryform__name deliveryform__name_small">
+                          <span class="deliveryform__title">Adress</span>
+                          <input
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country !== undefined)})}
+                              id="country"
+                              type="text"
+                              name="country"
+                              placeholder="Country"
+                              value={formik.values.country}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                          />
+                          <span className="formik__error">{formik.errors.country}</span>
+                      </div>
 
-                  <div className="deliveryform__name deliveryform__name_small">
-                      <span class="deliveryform__title">Adress</span>
-                      <input
-                          className="deliveryform__input"
-                          id="country"
-                          type="text"
-                          name="country"
-                          placeholder="Country"
-                          value={formik.values.country}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                      />
-                      <span className="formik__error">{formik.errors.country}</span>
+                      <div className="deliveryform__name deliveryform__name_small">
+                          <input
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.city !== undefined)})}
+                              id="city"
+                              type="text"
+                              name="city"
+                              placeholder="City"
+                              value={formik.values.city}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                          />
+                          <span className="formik__error">{formik.errors.city}</span>
+                      </div>
+
+                      <div className="deliveryform__name deliveryform__name_small">
+                          <input
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.street !== undefined)})}
+                              id="street"
+                              type="text"
+                              name="street"
+                              placeholder="Street"
+                              value={formik.values.street}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                          />
+                          <span className="formik__error">{formik.errors.street}</span>
+                      </div>
+
+                      <div className="flex margin_bot">
+                          <input
+                              className={classNames('deliveryform__input deliveryform__input_small', { deliveryform__input_error: (formik.errors.house !== undefined)})}
+                              id="house"
+                              type="text"
+                              name="house"
+                              placeholder="House"
+                              value={formik.values.house}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                          /> 
+
+                          <input
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.apartment !== undefined)})}
+                              id="apartment"
+                              type="text"
+                              name="apartment"
+                              placeholder="Apartment"
+                              value={formik.values.apartment}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                          />
+                      </div>
+                      <span className="formik__error">{formik.errors.house}</span>
+                    </div>
+                    :
+                    null
+                  }
+
+                  {isTypeDeliveryLoad === 'store pickup' ?
+                  <div>
+                    <div className="deliveryform__name deliveryform__name_small">
+                        <span class="deliveryform__title">Adress of store</span>
+                        <input
+                            list="country_store2"
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store !== undefined)})}
+                            id="country_store"
+                            type="text"
+                            name="country_store"
+                            placeholder='Country'
+                            value={formik.values.country_store}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <datalist id="country_store2">
+                        {isTypeDeliveryLoad === 'store pickup' ?
+                          isLoadingCountry.map((post) => {
+                              return (
+                                <option className="deliveryform_option" value={post.name} id={post.id}>{post.name}</option>
+                              )
+                          })
+                          : null
+                        }               
+                        </datalist>
+                        <span className="formik__error">{formik.errors.country_store}</span>
+                    </div>
+
+                    
+                    
+
+
+
+
+
+
+                    <div className="deliveryform__name deliveryform__name_small">
+                        <input
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress !== undefined)})}
+                            id="storeAddress"
+                            type="text"
+                            name="storeAddress"
+                            placeholder="Street adress"
+                            disabled={
+                              formik.values.country_store === "" ?
+                              true 
+                              : (formik.errors.country_store === undefined ? false : true)
+                              }
+                            value={formik.values.storeAddress}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <span className="formik__error">{formik.errors.storeAddress}</span>
+                    </div>
                   </div>
+                  : null
+                  }
 
-                  <div className="deliveryform__name deliveryform__name_small">
-                      <input
-                          className="deliveryform__input"
-                          id="city"
-                          type="text"
-                          name="city"
-                          placeholder="City"
-                          value={formik.values.city}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                      />
-                      <span className="formik__error">{formik.errors.city}</span>
-                  </div>
-
-                  <div className="deliveryform__name deliveryform__name_small">
-                      <input
-                          className="deliveryform__input"
-                          id="street"
-                          type="text"
-                          name="street"
-                          placeholder="Street"
-                          value={formik.values.street}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                      />
-                      <span className="formik__error">{formik.errors.street}</span>
-                  </div>
-
-                  <div className="flex">
-                      <input
-                          className="deliveryform__input deliveryform__input_small"
-                          id="house"
-                          type="text"
-                          name="house"
-                          placeholder="House"
-                          value={formik.values.house}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                      /> 
-
-                      <input
-                          className="deliveryform__input"
-                          id="apartment"
-                          type="text"
-                          name="apartment"
-                          placeholder="Apartment"
-                          value={formik.values.apartment}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                      />
-                  </div>
-                  <span className="formik__error">{formik.errors.house}</span>
                   {isTypeDeliveryLoad === 'pickup from post offices' ?
                       <div className="deliveryform__name deliveryform__name_postcode">
                           <span class="deliveryform__title">Postcode</span>
-                          <input
-                              className="deliveryform__input"
-                              id="postcode"
-                              type="text"
-                              name="postcode"
-                              placeholder="BY ______"
-                              value={formik.values.postcode}
-                              onChange={formik.handleChange}
-                              onBlur={formik.handleBlur}
+                          <InputMask
+                            mask="BY 999999"
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.postcode !== undefined)})}
+                            id="postcode"
+                            type="text"
+                            name="postcode"
+                            placeholder="BY ______"
+                            value={formik.values.postcode}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                           />
                           <span className="formik__error">{formik.errors.postcode}</span>
                       </div>
                       : null
+                  }
+                  {checkBoxReset === true ?
+                  <div>
+                    <div className="deliveryform__checkbox">
+                      <input
+                        className='delivery__input-checkbox'
+                        type="checkbox"
+                        id="checkboxPolic"
+                        name="checkboxPolic"
+                        value={formik.values.checkboxPolic}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        //checked={Object.keys(formik.errors).length !== 0 ? false : true}
+                        //{agree === true ? checked : null}
+                        checked={formik.values.checkboxPolic === true ? true : false}
+                      />
+                      <label
+                        className={classNames('delivery__label-checkbox', { delivery__label_error: (formik.errors.checkboxPolic !== undefined)})}
+                        for="checkboxPolic"
+                      >
+                        I agree to the processing of my personal information
+                      </label>
+                    </div>
+                      <span className="formik__error">{formik.errors.checkboxPolic}</span>
+                  </div>
+                  : null
                   }
               </form>
             </div>
@@ -523,9 +736,126 @@ const Header = () => {
 
             {/* Вывод оплаты */}
             <div className={classNames('payment', { payment_activ: (isTypeButtonLoad === 'Payment') })}>
-                  Оплата
+              <span className="delivery__title">
+                Method of payments
+              </span>
+              <ul className="delivery__chose-list list-reset">
+                  <li className="delivery__item">
+                      <input
+                          className="delivery__input"
+                          type="radio"
+                          id="paypal"
+                          name="btn"
+                          onClick={(e) => changePaymentChose(e.target.id)}
+                          checked={isTypePaymentLoad === 'paypal' ? 'checked' : null}
+                      />
+                      <label className="delivery__label" for="paypal">
+                        <img src={process.env.PUBLIC_URL + "/images/icon-paypal.png"} alt="paypal" />
+                      </label>
+                  </li>
+                  <li className="delivery__item">
+                      <input
+                          className="delivery__input"
+                          type="radio"
+                          id="visa"
+                          name="btn"
+                          onClick={(e) => changePaymentChose(e.target.id)}
+                          checked={isTypePaymentLoad === 'visa' ? 'checked' : null}
+                      />
+                      <label className="delivery__label" for="visa">
+                        <img src={process.env.PUBLIC_URL + "/images/icon-visa.png"} alt="visa" />
+                      </label>
+                  </li>
+                  <li className="delivery__item">
+                      <input
+                          className="delivery__input"
+                          type="radio"
+                          id="mastercard"
+                          name="btn"
+                          onClick={(e) => changePaymentChose(e.target.id)}
+                          checked={isTypePaymentLoad === 'mastercard' ? 'checked' : null}
+                      />
+                      <label className="delivery__label" for="mastercard">
+                        <img src={process.env.PUBLIC_URL + "/images/icon-mastercard.png"} alt="mastercard" />
+                      </label>
+                  </li>
+                  <li className="delivery__item">
+                      <input
+                          className="delivery__input"
+                          type="radio"
+                          id="cash"
+                          name="btn"
+                          onClick={(e) => changePaymentChose(e.target.id)}
+                          checked={isTypePaymentLoad === 'cash' ? 'checked' : null}
+                      />
+                      <label className="delivery__label" for="cash">Cash</label>
+                  </li>
+              </ul>
 
+              <form id='payment-form' className="deliveryform" name="form" onSubmit={formik.handleSubmit}>
+                {/* Проверка на VISA */}
+                {isTypePaymentLoad === 'visa' ?
+                  <div className="deliveryform__wrap">
+                    <div className="deliveryform__name">
+                        <span class="deliveryform__title">Card</span>
+                        <InputMask
+                            mask="9999 9999 9999 9999"
+                            maskChar="_"
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.card !== undefined)})}
+                            id="card"
+                            type="text"
+                            name="card"
+                            placeholder="____ ____ ____ ____"
+                            value={formik.values.card}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <span className="formik__error">{formik.errors.card}</span>
+                    </div>
+
+                    <div className="flex">
+                      <div className="flex deliveryform__block">
+                        <input
+                            className={classNames('deliveryform__input deliveryform__input_small', { deliveryform__input_error: (formik.errors.cardDate !== undefined)})}
+                            id="cardDate"
+                            type="number"
+                            name="cardDate"
+                            placeholder="MM/YY"
+                            value={formik.values.cardDate}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        /> 
+                        <span className="formik__error">{formik.errors.cardDate}</span>
+                      </div>
+                      <div className="flex deliveryform__block">
+                        <input
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cardCVV !== undefined)})}
+                            id="cardCVV"
+                            type="number"
+                            name="cardCVV"
+                            placeholder="CVV"
+                            value={formik.values.cardCVV}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <span className="formik__error">{formik.errors.cardCVV}</span>
+                      </div>
+                    </div>
+                  </div>
+                : null
+              }
+                  
+                  
+
+              </form>
             </div>
+
+            
+            
+
+
+
+
 
             {/* Вывод НИЗ корзины */}
 
@@ -558,6 +888,7 @@ const Header = () => {
                     <button
                       className="basket__bottom__btn basket__bottom__btn_black"
                       type="submit"
+                      onClick={handleAgree}
                       form='delivery-form'
                     >
                       FURTHER

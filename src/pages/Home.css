@@ -299,6 +299,14 @@
     margin: 10px 0 20px 0;
     display: block;
   }
+  .formik__desc {
+    color: #9C9C9C;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 18px;
+    padding-top: 6px;
+    display: block;
+  }
   .formik__error:empty {
     display: none;
   }

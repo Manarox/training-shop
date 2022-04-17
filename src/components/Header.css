@@ -548,12 +548,80 @@ html {
 .dissbled_option {
     font-weight: 800;
 }
+/* Подсказка */
 .deliveryform_option:nth-child(2n) {
-    background-color: white;
-    padding: 15px 0 15px 16px;
+    background-color: #f8f8f8;
+    padding: 15px 14px;
     text-align: left;
     width: 100%;
+    height: 45px;
+    font-size: 14px;
+    color: #9C9C9C;
+    cursor: pointer;
 }
+.deliveryform_option:nth-child(2n+1) {
+    background-color: white;
+    padding: 15px 14px;
+    text-align: left;
+    width: 100%;
+    height: 45px;
+    font-size: 14px;
+    color: #9C9C9C;
+    cursor: pointer;
+}
+.deliveryform_option:hover {
+    outline: 1px solid grey;
+}
+.deliveryform_wrapp {
+    position: relative;
+}
+.deliveryform_block {
+    display: none;
+    border: 2px solid #F8F8F8;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+.deliveryform_block_avtive {
+    display: block;
+}
+.deliveryform_btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 2;
+    background: #f8f8f8;
+    /* display: flex;
+    align-items: center; */
+}
+.arrow_rotate {
+    transform: rotate(180deg);
+}
+
+.password {
+	position: relative;
+}
+.password-control {
+    position: absolute;
+    top: 12px;
+    right: 6px;
+    display: flex;
+    width: 22px;
+    height: 22px;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
 input::-webkit-calendar-picker-indicator {
     opacity: 100;
  }
@@ -660,6 +728,48 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
     padding-left: 1px;
 }
+/*Форма заявки*/
+.application__wrapp {
+    padding: 48px 30px;
+}
+.application {
+    display: none;
+    flex-grow: 1;
+    padding: 20px;
+    height: 100%;
+    overflow: auto;
+}
+.application_activ {
+    display: block;
+}
+.application__title {
+    font-weight: 600;
+    font-size: 26px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.application__title_span {
+    display: block;
+}
+.application__desc {
+    font-weight: 400;
+    line-height: 22px;
+    color: #000;
+    text-align: center;
+}
+.application__desc:not(:last-child) {
+    padding-bottom: 15px;
+}
+.basket__bottom_application {
+    display: none;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+
+
+
 
 
 
@@ -689,7 +799,15 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
-
+.display_none {
+    display: none;
+}
+.display_block {
+    display: block;
+}
+.red {
+    color: red;
+}
 
 /*menu close*/
     @media (max-width: 1110px){

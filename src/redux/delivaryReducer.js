@@ -3,8 +3,13 @@ const defaultState = {
     isTypeDeliveryLoad: 'pickup from post offices',
     isDeliveryInfo: [],
     isLoadingCountry: [],
+    isLoadingCountryError: "",
+    isLoadingStoreAddress: [],
+    isLoadingStoreAddressError: "",
     isTypePaymentLoad: 'visa',
+    isDataRequest: "",
 };
+console.log('delivaryReducer')
  
 const delivaryReducer = (state = defaultState, action) => {
 switch (action.type) {
@@ -21,6 +26,9 @@ switch (action.type) {
         return { ...state,
                 isTypeButtonLoad: 'Item in Cart',
                 isTypeDeliveryLoad: 'pickup from post offices',
+                isLoadingStoreAddress: [],
+                isTypePaymentLoad: 'visa',
+                isDataRequest: "",             
             };
     }
     case 'SEND_DELIVERY_FORM': {
@@ -30,7 +38,22 @@ switch (action.type) {
         return { ...state, isLoadingCountry: action.payload };
     }
     case 'LOAD_COUNTRY_ERROR': {
-        return { ...state, isLoadingCountry: false };
+        return { ...state, isLoadingCountryError: true };
+    }
+
+
+    case 'LOAD_STORE_ADDRESS_SUCCESS': {
+        return { ...state, isLoadingStoreAddress: action.payload };
+    }
+    case 'LOAD_STORE_ADDRESS_ERROR': {
+        return { ...state, isLoadingStoreAddressError: true };
+    }
+
+    case 'LOAD_BASKET_SUCCESS': {
+        return { ...state, isDataRequest: action.payload };
+    }
+    case 'LOAD_BASKET_ERROR': {
+        return { ...state, isDataRequest: "error" };
     }
 
     default:

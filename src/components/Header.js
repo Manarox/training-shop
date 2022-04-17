@@ -48,6 +48,26 @@ const Header = () => {
         document.body.style.overflow = 'inherit';
       }
     }
+
+    //Кнопка закрытия корзины, Очистка товаров
+    function tooggleBasketResetAll() {
+      dispatch({ type: 'RESET_ITEMS_IN_CART' })
+      tooggleBasketModeReset()
+    }
+    //Кнопка перехода к товарам + очисткой данных
+    function tooggleBasketModeViewCartError() {
+      tooggleBasketModeViewCart()
+      //Очищаем данные + в Форме
+      formik.resetForm()
+      //setCheckBoxReset(false)
+      setDeliveryformBtn(true)
+      formik.values.checkboxPolic = false
+      formik.values.country_store = ""
+      formik.values.cardDate = ""
+      formik.values.cardCVV = ""
+      dispatch({ type: 'RESET_VALUES' })
+    }
+
     //Кнопка закрытия корзины, С ОЧИСТКОЙ STATE
     function tooggleBasketModeReset() {
       toggleBasket(!isBasketOpen);
@@ -58,7 +78,11 @@ const Header = () => {
       //Очищаем данные + в Форме
       formik.resetForm()
       setCheckBoxReset(false)
+      setDeliveryformBtn(true)
       formik.values.checkboxPolic = false
+      formik.values.country_store = ""
+      formik.values.cardDate = ""
+      formik.values.cardCVV = ""
       dispatch({ type: 'RESET_VALUES' })
     }
     //Кнопка VIEW CART
@@ -78,6 +102,8 @@ const Header = () => {
         delete formik.errors['cardDate']
         delete formik.errors['cardCVV']
         delete formik.errors['cashEmail']
+      } else if (isTypeButtonLoad === 'Application') {
+        dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
       }
     }
 
@@ -115,13 +141,19 @@ const Header = () => {
         formik.values.checkboxPolic = false
       }
     }
+    const handleSubmitBtn = () => {
+      console.log(formik)
+      formik.handleSubmit()
+    }
     //Проверяем какая кнопка выбрана и переходим на следующую
     const changeFurtherButton = (e) => {
       if (isTypeButtonLoad === 'Item in Cart') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Delivery Info'})
       } else if (isTypeButtonLoad === 'Delivery Info') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
-      }
+      } else if (isTypeButtonLoad === 'Payment') {
+        dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Application'})
+      } 
     };
     //
     //ФОРМА ДОСТАВКИ
@@ -135,9 +167,7 @@ const Header = () => {
         if (formik.errors.postcode !== undefined) {
           cloneErrorsPostcode = formik.errors.postcode.slice();
           delete formik.errors['postcode']
-        } else {
-          cloneErrorsPostcode = formik.errors.postcode
-        }
+        } 
       }
 
       if (isTypeDeliveryLoad === "express delivery") {
@@ -147,9 +177,16 @@ const Header = () => {
         //cloneExpress = Object.assign({}, formik.errors);
       }
 
+    
       if ( e === "store pickup") {
         //Загрузка данных СТРАНЫ при воборе пункта
         dispatch({ type: 'LOADING_COUNTRY'})
+
+        delete formik.errors['country']
+        delete formik.errors['city']
+        delete formik.errors['street']
+        delete formik.errors['house']
+        delete formik.errors['postcode']
       }
     };
 
@@ -165,6 +202,7 @@ const Header = () => {
 
     //Formik доставки
     const initialValues = {
+      totalPrice: totalPrice,
       products: resultBasket,
       deliveryMethod: "",
       phone: "",
@@ -178,15 +216,32 @@ const Header = () => {
       country_store: "",
       storeAddress: "",
       card: "",
+      cashEmail: "",
+      paymentMethod: "",
+      cardDate: "",
+      cardCVV: "",
     }
     const formik = useFormik({
       initialValues,
     
       onSubmit: (values) => {
+          formik.values.totalPrice = totalPrice
           formik.values.products = resultBasket
           formik.values.deliveryMethod = isTypeDeliveryLoad
-          dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
-          dispatch({ type: 'SEND_DELIVERY_FORM', payload: formik.values})
+          formik.values.paymentMethod = isTypePaymentLoad
+
+          if (isTypeButtonLoad === 'Delivery Info') {
+            dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
+            dispatch({ type: 'SEND_DELIVERY_FORM', payload: formik.values})
+          }
+
+          if (isTypeButtonLoad === 'Payment') {
+            dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Application'})
+            //dispatch({ type: 'SEND_PAYMENT_FORM', payload: formik.values})
+            dispatch({ type: 'SEND_BASKET', payload: formik.values})
+          }
+          
+          
       },
       validate: (values) => {
       let error = {};
@@ -209,32 +264,36 @@ const Header = () => {
           error.email = 'Исправте формат почты';
         }
         
-        //Валидация country
-        if (!values.country) {
-            error.country = 'Введите страну';
-        }
-        //Валидация city
-        if (!values.city) {
-            error.city = 'Введите город';
-        }
-        //Валидация street
-        if (!values.street) {
-            error.street = 'Введите улицу';
-        }
-        //Валидация house
-        if (!values.house) {
-            error.house = 'Введите номер дома';
-        }
-        //Валидация postcode
-        if (isTypeDeliveryLoad === 'pickup from post offices') {
-          if (!values.postcode || values.postcode === "BY ______") {
-            error.postcode = 'Введите почтовый код';
-          } 
-          let str = values.postcode.split('_').join('');
-          if (str.length !== 9) {
-            error.postcode = 'Исправте формат почтового кода';
+        if (isTypeDeliveryLoad === 'pickup from post offices' || isTypeDeliveryLoad === 'express delivery') {
+          //Валидация country
+          if (!values.country) {
+              error.country = 'Введите страну';
           }
-        } 
+          //Валидация city
+          if (!values.city) {
+              error.city = 'Введите город';
+          }
+          //Валидация street
+          if (!values.street) {
+              error.street = 'Введите улицу';
+          }
+          //Валидация house
+          if (!values.house) {
+              error.house = 'Введите номер дома';
+          }
+          //Валидация postcode
+          if (isTypeDeliveryLoad === 'pickup from post offices') {
+            if (!values.postcode || values.postcode === "BY ______") {
+              error.postcode = 'Введите почтовый код';
+            } 
+            let str = values.postcode.split('_').join('');
+            if (str.length !== 9) {
+              error.postcode = 'Исправте формат почтового кода';
+            }
+          }
+        }
+
+
         //Валидация checkboxPolic
         if (!values.checkboxPolic) {
           error.checkboxPolic = 'Вы должны согласиться на обработку личной информации';
@@ -247,54 +306,129 @@ const Header = () => {
             error.country_store = 'Вы должны выбрать страну';
             //setErrorCheckbox(true)
           }
+          let searchCountry = isLoadingCountry.find((post, i) => {
+            if (post.name === values.country_store) {
+                return true; // stop searching
+            } else {
+                return false;
+            }
+          });
+          if (searchCountry === undefined) {
+            error.country_store = 'Вы должны выбрать страну из списка'
+          }
+          if (error.country_store !== undefined) {
+            setDeliveryformBtn(true)
+          }
+          //Валидация и запрос данных на storeAddress
           if (error.country_store === undefined) {
-            error.storeAddress = 'Вы должны выбрать адрес магазина'
+            if (values.storeAddress.length >= 3) {
+              dispatch({ type: 'LOADING_STORE_ADDRESS', payload: {
+                "city": values.storeAddress,
+                "country": values.country_store
+              }
+              })
+            }
+            let searchStoreAddress = isLoadingStoreAddress.find((post, i) => {
+              if (post.city === values.storeAddress) {
+                  return true; // stop searching
+              } else {
+                  return false;
+              }
+            });
+            if (searchStoreAddress === undefined) {
+              error.storeAddress = 'Вы должны выбрать страну из списка'
+            }
+            if (!values.storeAddress) {
+              error.storeAddress = 'Введите 3 первых буквы города'
+            }
           }
         }
-        //formik.errors.country_store === undefined || formik.values.country_store === 'Country'
       }
 
 
 
       //Валидация для Оплаты
       if (isTypeButtonLoad === 'Payment') {
-        //Валидация card
-        // if (!values.card) {
-        //   error.card = 'Введите данные карты';
-        // }
-        if (!values.card) {
-          error.card = 'Введите данные карты';
-        } else if (!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card)) {
-          error.card = 'Проверьте правильность введенных данных';
-        }
-        console.log(values.card)
-        //Валидация cardDate
-        if (!values.cardDate) {
-          error.cardDate = 'Введите срок службы карты';
-        }
-        //Валидация cardCVV
-        if (!values.cardCVV) {
-          error.cardCVV = 'Введите код';
+        if (isTypePaymentLoad === "visa" || isTypePaymentLoad === "mastercard") {
+          if (!values.card) {
+            error.card = 'Введите данные карты';
+          } else if (!/(\d{4})( )(\d{4})( )(\d{4})( )(\d{4})/i.test(values.card)) {
+            //(!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card))
+            error.card = 'Проверьте правильность введенных данных';
+          }
+          //Валидация cardDate
+          if (!values.cardDate) {
+            error.cardDate = 'Введите срок службы карты';
+          } else if (!/(01|02|03|04|05|06|07|08|09|10|11|12)(\/)(\d{2})/i.test(values.cardDate)) {
+            //(!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card))
+            //(\d{2})(\/)(\d{2})
+            error.cardDate = 'Проверьте правильность введенных данных';
+          } else {
+            let monthCard = Number(values.cardDate.slice(0, 2));
+            let monthToday = Number(new Date().toLocaleDateString().slice(3, 5));
+            let yearCard = values.cardDate.slice(-2);
+            let yearToday = new Date().toLocaleDateString().slice(-2);
+            if (yearCard < yearToday) {
+              error.cardDate = 'Ваша карта недействительна';
+            }
+            if (yearCard === yearToday && monthCard < monthToday) {
+              error.cardDate = 'Ваша карта недействительна';
+            }
+          }
+          //Валидация cardCVV
+          if (!values.cardCVV) {
+            error.cardCVV = 'Введите код';
+          } else if (values.cardCVV.length <= 2 || values.cardCVV.length >= 5) {
+            error.cardCVV = 'Проверьте правильность введенных данных';
+          }
         }
         // Валидация cashEmail
-        if (!values.cashEmail) {
-        error.cashEmail = 'Введите почту';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.cashEmail))
-        error.cashEmail = 'Исправте формат почты';
+        if (isTypePaymentLoad === "paypal") {
+          if (!values.cashEmail) {
+            error.cashEmail = 'Введите почту';
+          } else if (!/^[A-Z0-9._%+-]+(@[A-Z0-9.-]{2,63})+\.[A-Z]{2,4}$/i.test(values.cashEmail)) {
+            error.cashEmail = 'Исправте формат почты';
+          }
+        }
       }
           
       return error;
       },
     });
-    //Выводим СТРАНЫ на страницу
-    const { isLoadingCountry } = useSelector((state) => state.delivaryReducer);
-    isLoadingCountry.map(post => {
-      return (
-        console.log(post.name)
+    //Выводим СТРАНЫ на страницу + получение ответа сервера
+    const { isLoadingCountry, isLoadingStoreAddress, isDataRequest } = useSelector((state) => state.delivaryReducer);
 
-      )
-    })
-    console.log(isLoadingCountry)
+    //Функция получения и фильтрации storeAddress
+    //отображение кнопки открыть закрыть на Страны
+    const [deliveryformBtn, setDeliveryformBtn] = useState(true);
+    //const [deliveryformInputNotError, setdeliveryformInputNotError] = useState(false);
+    const handleChangeBtn = (e) => {
+      setDeliveryformBtn(!deliveryformBtn)
+    }
+    const handleChangeOnFocusInput = (event) => {
+      setDeliveryformBtn(true)
+      if (formik.errors.country_store === undefined) {
+        //setdeliveryformInputNotError(false)
+        console.log("В поле нету ошибок")
+      }
+    }
+
+    //костыль обновления value
+    const [countryStoreVisible, setCountryStoreVisible] = useState(false);
+    const handleChangeCountryStore = (e) => {
+      formik.values.country_store = e.target.innerText
+      setCountryStoreVisible(!countryStoreVisible)
+
+      setDeliveryformBtn(false)
+      formik.validateForm()
+      //delete formik.errors['country_store']
+    }
+
+    const [passwordIcon, setPasswordIcon] = useState(false);
+    const handleChangePassword = (e) => {
+      setPasswordIcon(!passwordIcon)
+    }
+    console.log(formik.errors)
     return (
     <>
     <header className="header">
@@ -436,35 +570,56 @@ const Header = () => {
             <div className="basket__top">
               <div className="basket__top__one">
                 <span className="basket__top__title">SHOPPING CART</span>
-                <button className="basket__top__close" onClick={tooggleBasketModeReset}>
+
+                <button
+                  className={classNames('basket__top__close basket__top__close_success', { display_block: (isDataRequest.message === 'success') })}
+                  onClick={tooggleBasketResetAll}
+                >
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </button>
+
+                <button
+                  className={classNames('basket__top__close', { display_none: (isDataRequest.message === 'success') })}
+                  onClick={tooggleBasketModeReset}
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+
+                {/* <button className="basket__top__close" onClick={tooggleBasketModeReset}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button> */}
+
+
               </div>
-              <div className="basket__top__two">
-                <button
-                  className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Item in Cart') })}
-                  id="Item in Cart"
-                  
-                >
-                  Item in Cart
-                </button>
-                <span className="basket__top_slash">/</span>
-                <button
-                  className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Delivery Info') })}
-                  id="Delivery Info"
-                >
-                  Delivery Info
-                </button>
-                <span className="basket__top_slash">/</span>
-                <button
-                  className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Payment') })}
-                  id="Payment"
-                >
-                  Payment
-                </button>
-              </div>
+                <div className={classNames('basket__top__two', { display_none: (isTypeButtonLoad === 'Application') })}>
+                  <button
+                    className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Item in Cart') })}
+                    id="Item in Cart"
+                    
+                  >
+                    Item in Cart
+                  </button>
+                  <span className="basket__top_slash">/</span>
+                  <button
+                    className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Delivery Info') })}
+                    id="Delivery Info"
+                  >
+                    Delivery Info
+                  </button>
+                  <span className="basket__top_slash">/</span>
+                  <button
+                    className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Payment') })}
+                    id="Payment"
+                  >
+                    Payment
+                  </button>
+                </div>
             </div>
 
             {/* Вывод товаров */}
@@ -521,7 +676,7 @@ const Header = () => {
                   </li>
               </ul>
 
-              <form id='delivery-form' className="deliveryform" name="form" onSubmit={formik.handleSubmit}>
+              <form id='delivery-form' autocomplete="off" className="deliveryform" name="form" onSubmit={formik.handleSubmit}>
 
                   <div className="deliveryform__name">
                       <span class="deliveryform__title">Phone</span>
@@ -632,54 +787,88 @@ const Header = () => {
                   <div>
                     <div className="deliveryform__name deliveryform__name_small">
                         <span class="deliveryform__title">Adress of store</span>
-                        <input
-                            list="country_store2"
-                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store !== undefined)})}
-                            id="country_store"
-                            type="text"
-                            name="country_store"
-                            placeholder='Country'
-                            value={formik.values.country_store}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                        />
-                        <datalist id="country_store2">
-                        {isTypeDeliveryLoad === 'store pickup' ?
-                          isLoadingCountry.map((post) => {
-                              return (
-                                <option className="deliveryform_option" value={post.name} id={post.id}>{post.name}</option>
-                              )
-                          })
-                          : null
-                        }               
-                        </datalist>
+
+                        <div className="deliveryform_wrapp">
+                          <div className='flex'>
+                            <input
+                                //list="country_store2"
+                                autocomplete="off"
+                                className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store !== undefined)})}
+                                id="country_store"
+                                type="text"
+                                name="country_store"
+                                placeholder='Country'
+                                disabled={true}
+                                //value={formik.values.country_store}
+                                value={
+                                  countryStoreVisible === true ? formik.values.country_store : formik.values.country_store                      
+                                  }
+                                onChange={formik.handleChange}
+                                //onClick={(event) => handleChangeOnFocusInput(event)}
+                                onFocus={(e) => handleChangeOnFocusInput(e)}
+                                //onBlur={(event) => handleChangeBtn(event)}
+                                onBlur={formik.handleBlur}
+                            />
+                            
+                            <button className="deliveryform_btn" onClick={(e) => handleChangeBtn(e)}>
+                              {
+                                deliveryformBtn === false ?
+                                <svg className="arrow_rotate" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
+                                </svg>
+                                :
+                                <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
+                                </svg>
+                              }
+                            </button>
+                          </div>
+
+                          <div className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryformBtn })}>
+                            {isTypeDeliveryLoad === 'store pickup' ?
+                              isLoadingCountry.map((post) => {
+                                  return (
+                                    <div className="deliveryform_option" value={post.name} id={post.id} onClick={(e) => handleChangeCountryStore(e)}>{post.name}</div>
+                                  )
+                              })
+                              : null
+                            }
+                          </div> 
+                        </div>
                         <span className="formik__error">{formik.errors.country_store}</span>
+                        
                     </div>
-
-                    
-                    
-
-
-
-
-
 
                     <div className="deliveryform__name deliveryform__name_small">
                         <input
-                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress !== undefined)})}
-                            id="storeAddress"
-                            type="text"
-                            name="storeAddress"
-                            placeholder="Street adress"
-                            disabled={
-                              formik.values.country_store === "" ?
-                              true 
-                              : (formik.errors.country_store === undefined ? false : true)
-                              }
-                            value={formik.values.storeAddress}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
+                          autoComplete="new-password"
+                          list="storeAddressDatalist"
+                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress !== undefined)})}
+                          id="storeAddress"
+                          type="text"
+                          name="storeAddress"
+                          placeholder="Street adress"
+                          disabled={
+                            formik.values.country_store === "" ?
+                            true 
+                            : (formik.errors.country_store === undefined ? false : true)
+                            }
+                          value={formik.values.storeAddress}
+                          onChange={formik.handleChange}
+                          //onChange={(e) => handleChangeStoreAddress(e.target.value)}
+                          onBlur={formik.handleBlur}
                         />
+                        <datalist id="storeAddressDatalist">
+                          {isLoadingStoreAddress.length !== 0 ?
+                            isLoadingStoreAddress.map((post) => {
+                                return (
+                                  <option className="deliveryform_option" value={post.city} id={post.city}>{post.city}</option>
+                                )
+                            })
+                            : null
+                          }               
+                        </datalist>
+                        <span className="formik__desc">Введите город и выберите магазин из списка</span>
                         <span className="formik__error">{formik.errors.storeAddress}</span>
                     </div>
                   </div>
@@ -794,7 +983,7 @@ const Header = () => {
 
               <form id='payment-form' className="deliveryform" name="form" onSubmit={formik.handleSubmit}>
                 {/* Проверка на VISA */}
-                {isTypePaymentLoad === 'visa' ?
+                {isTypePaymentLoad === 'visa' || isTypePaymentLoad === 'mastercard' ?
                   <div className="deliveryform__wrap">
                     <div className="deliveryform__name">
                         <span class="deliveryform__title">Card</span>
@@ -815,10 +1004,12 @@ const Header = () => {
 
                     <div className="flex">
                       <div className="flex deliveryform__block">
-                        <input
+                        <InputMask
+                            mask="99/99"
+                            maskChar="_"
                             className={classNames('deliveryform__input deliveryform__input_small', { deliveryform__input_error: (formik.errors.cardDate !== undefined)})}
                             id="cardDate"
-                            type="number"
+                            type="text"
                             name="cardDate"
                             placeholder="MM/YY"
                             value={formik.values.cardDate}
@@ -827,27 +1018,98 @@ const Header = () => {
                         /> 
                         <span className="formik__error">{formik.errors.cardDate}</span>
                       </div>
-                      <div className="flex deliveryform__block">
-                        <input
+                      <div className="flex deliveryform__block password">
+                        <InputMask
+                            mask="9999"
+                            maskChar=""
                             className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cardCVV !== undefined)})}
                             id="cardCVV"
-                            type="number"
+                            type={
+                              passwordIcon === false ? "password" : "text"                      
+                            }
                             name="cardCVV"
                             placeholder="CVV"
                             value={formik.values.cardCVV}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                         />
+                        {
+                          passwordIcon === false ?
+                          <button className="password-control" onClick={(e) => handleChangePassword(e)}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M2.06336 12C2.65768 10.8958 3.79576 9.33029 5.40445 8.0117C7.12095 6.60473 9.34594 5.5 12 5.5C14.654 5.5 16.879 6.60473 18.5955 8.0117C20.2042 9.33029 21.3423 10.8958 21.9366 12C21.3423 13.1042 20.2042 14.6697 18.5955 15.9883C16.879 17.3953 14.654 18.5 12 18.5C9.34594 18.5 7.12095 17.3953 5.40445 15.9883C3.79576 14.6697 2.65768 13.1042 2.06336 12ZM1.04153 12.1996C1.04585 12.2095 1.0505 12.2193 1.05547 12.229C1.66882 13.4536 2.93553 15.2576 4.77052 16.7617C6.61236 18.2714 9.05403 19.5 12 19.5C14.9459 19.5 17.3876 18.2714 19.2295 16.7617C21.0645 15.2576 22.3312 13.4535 22.9445 12.2289C22.9496 12.2191 22.9544 12.209 22.9588 12.1988C22.9868 12.1343 23.0001 12.0667 23.0001 12C23.0001 11.9333 22.9868 11.8657 22.9588 11.8012C22.9544 11.791 22.9496 11.7809 22.9445 11.7711C22.3312 10.5465 21.0645 8.74242 19.2295 7.2383C17.3876 5.7286 14.9459 4.5 12 4.5C9.05403 4.5 6.61236 5.7286 4.77052 7.2383C2.93553 8.74239 1.66882 10.5464 1.05547 11.771C1.0505 11.7807 1.04585 11.7905 1.04153 11.8004C1.01327 11.8652 0.999826 11.9331 0.999878 12C0.999826 12.0669 1.01327 12.1348 1.04153 12.1996Z" fill="#9C9C9C"/>
+                              <path d="M10.5835 8.80421C10.4707 8.54955 10.5851 8.24824 10.8519 8.16829C11.5189 7.96844 12.2296 7.94534 12.9132 8.10563C13.7612 8.30448 14.5211 8.77468 15.0775 9.44481C15.6339 10.1149 15.9563 10.9484 15.9959 11.8185C16.0277 12.5198 15.8744 13.2142 15.5553 13.833C15.4276 14.0806 15.1104 14.1377 14.8808 13.9799V13.9799C14.6513 13.8222 14.5975 13.5093 14.7146 13.2565C14.9151 12.8233 15.0101 12.346 14.9882 11.8642C14.9586 11.2136 14.7175 10.5903 14.3014 10.0892C13.8853 9.58807 13.317 9.23644 12.6829 9.08774C12.2134 8.97764 11.7268 8.98324 11.2641 9.10069C10.9941 9.16922 10.6964 9.05888 10.5835 8.80421V8.80421Z" fill="#9C9C9C"/>
+                              <path d="M14.1491 14.7638C14.3183 14.9814 14.2803 15.2979 14.0435 15.4387C13.3088 15.8752 12.4492 16.0674 11.5905 15.979C10.5654 15.8735 9.62052 15.3764 8.9529 14.5914C8.28528 13.8063 7.9464 12.7939 8.0069 11.7652C8.05758 10.9034 8.38527 10.0858 8.93417 9.4308C9.11115 9.21961 9.42966 9.233 9.61719 9.43488V9.43488C9.80473 9.63677 9.7891 9.95038 9.62103 10.1687C9.25601 10.6429 9.03859 11.2188 9.00301 11.8238C8.9576 12.5959 9.21195 13.3557 9.71302 13.9449C10.2141 14.5341 10.9232 14.9072 11.6926 14.9864C12.2954 15.0484 12.8988 14.9263 13.4254 14.6422C13.6679 14.5114 13.98 14.5463 14.1491 14.7638V14.7638Z" fill="#9C9C9C"/>
+                              <path d="M3.5 2.5L20 21.5" stroke="#9C9C9C" stroke-linecap="round"/>
+                            </svg>
+                          </button>
+                          :
+                          <button className="password-control" onClick={(e) => handleChangePassword(e)}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M2.06336 12C2.65768 10.8958 3.79576 9.33029 5.40445 8.0117C7.12095 6.60473 9.34594 5.5 12 5.5C14.654 5.5 16.879 6.60473 18.5955 8.0117C20.2042 9.33029 21.3423 10.8958 21.9366 12C21.3423 13.1042 20.2042 14.6697 18.5955 15.9883C16.879 17.3953 14.654 18.5 12 18.5C9.34594 18.5 7.12095 17.3953 5.40445 15.9883C3.79576 14.6697 2.65768 13.1042 2.06336 12ZM1.04153 12.1996C1.04585 12.2095 1.0505 12.2193 1.05547 12.229C1.66882 13.4536 2.93553 15.2576 4.77052 16.7617C6.61236 18.2714 9.05403 19.5 12 19.5C14.9459 19.5 17.3876 18.2714 19.2295 16.7617C21.0645 15.2576 22.3312 13.4535 22.9445 12.2289C22.9496 12.2191 22.9544 12.209 22.9588 12.1988C22.9868 12.1343 23.0001 12.0667 23.0001 12C23.0001 11.9333 22.9868 11.8657 22.9588 11.8012C22.9544 11.791 22.9496 11.7809 22.9445 11.7711C22.3312 10.5465 21.0645 8.74242 19.2295 7.2383C17.3876 5.7286 14.9459 4.5 12 4.5C9.05403 4.5 6.61236 5.7286 4.77052 7.2383C2.93553 8.74239 1.66882 10.5464 1.05547 11.771C1.0505 11.7807 1.04585 11.7905 1.04153 11.8004C1.01327 11.8652 0.999826 11.9331 0.999878 12C0.999826 12.0669 1.01327 12.1348 1.04153 12.1996Z" fill="#121212"/>
+                              <circle cx="12" cy="12" r="3.5" stroke="#121212"/>
+                            </svg>
+                          </button>
+                        }
+                        
                         <span className="formik__error">{formik.errors.cardCVV}</span>
                       </div>
                     </div>
                   </div>
                 : null
-              }
-                  
-                  
+                }
 
+                {isTypePaymentLoad === 'paypal' ?
+                  <div className="deliveryform__name">
+                    <span class="deliveryform__title">E-mail</span>
+                    <input
+                        className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cashEmail !== undefined)})}
+                        id="cashEmail"
+                        type="text"
+                        name="cashEmail"
+                        placeholder="e-mail"
+                        value={formik.values.cashEmail}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                    />
+                    <span className="formik__error">{formik.errors.cashEmail}</span>
+                  </div>
+                : null
+                }
               </form>
+            </div>
+
+            {/* Вывод заявки */}
+            <div className={classNames('application', { application_activ: (isTypeButtonLoad === 'Application') })}>
+                <div className={classNames('application__wrapp display_none', { display_block: (isDataRequest.message === 'success') })}>
+                  <div className="application__title">
+                    <span className="application__title_span">Thank you</span>
+                    <span className="application__title_span">for your order</span>
+                  </div>
+                  <div className="application__desc">
+                    Information about your order will appear in your e-mail.
+                  </div>
+                  <div className="application__desc">
+                    Our manager will call you back.
+                  </div>
+                </div>
+
+                <div className={classNames('application__wrapp', { display_none: (isDataRequest.message === 'success') })}>
+                  <div className="application__title">
+                    <span className="application__title_span">Sorry,</span>
+                    <span className="application__title_span">your payment</span>
+                    <span className="application__title_span">has not been</span>
+                    <span className="application__title_span">processed.</span>
+                  </div>
+                  <div className="application__desc">
+                    Failed to pay for the order: 
+                  </div>
+                  <div className="application__desc red">
+                    {isDataRequest.message}
+                  </div>
+                </div>
+
+
             </div>
 
             
@@ -859,11 +1121,11 @@ const Header = () => {
 
             {/* Вывод НИЗ корзины */}
 
-            <div className="basket__bottom">
+            <div className={classNames('basket__bottom', { display_none: (isTypeButtonLoad === 'Application') })}>
               {
               productInCart.length > 0 ?
               <>
-              <div className="basket__bottom__info">
+              <div className='basket__bottom__info'>
                 <span className="basket__bottom__total">Total</span>
                 <span className="basket__bottom__price">$ {totalPrice}</span>
               </div>
@@ -904,9 +1166,11 @@ const Header = () => {
                     <button
                       className="basket__bottom__btn basket__bottom__btn_black"
                       type="submit"
+                      onClick={handleSubmitBtn}
                       form='payment-form'
                     >
-                      FURTHER
+                      {isTypePaymentLoad === "cash" ? "READY" : "CHECK OUT"}
+
                     </button>
                   </div>
                 :
@@ -929,6 +1193,38 @@ const Header = () => {
               </div>
               </>
               }
+            </div>
+
+            {/* Вывод кнопок на форме заявки */}
+            <div className={classNames('basket__bottom_application', { display_block: (isTypeButtonLoad === 'Application') })}>
+
+              <div className={classNames('basket__bottom__btns display_none', { display_block: (isDataRequest.message === 'success') })}>
+                <button
+                  className="basket__bottom__btn basket__bottom__btn_black"
+                  onClick={tooggleBasketResetAll}
+                >
+                  BACK TO SHOPPING
+                </button>
+              </div>
+
+              <div className={classNames('basket__bottom__btns', { display_none: (isDataRequest.message === 'success') })}>
+                <button
+                  className="basket__bottom__btn basket__bottom__btn_black"
+                  onClick={tooggleBasketModeViewCart}
+                >
+                  BACK TO SHOPPING
+                </button>
+              </div>
+
+              <div className={classNames('basket__bottom__btns', { display_none: (isDataRequest.message === 'success') })}>
+                <button
+                  className="basket__bottom__btn basket__bottom__btn_white"
+                  onClick={tooggleBasketModeViewCartError}
+                >
+                  VIEW CART
+                </button>
+              </div>
+
             </div>
           </div>
       </section>

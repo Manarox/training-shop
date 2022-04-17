@@ -358,6 +358,9 @@ button {
 .basket__top__close {
   cursor: pointer;
 }
+.basket__top__close_success {
+  display: none;
+}
 .product__link {
   font-weight: 500;
   opacity: 60%;

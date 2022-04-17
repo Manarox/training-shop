@@ -1094,7 +1094,7 @@ const Header = () => {
                   </div>
                 </div>
 
-                <div className={classNames('application__wrapp', { display_none: (isDataRequest.message === 'success') })}>
+                <div className={classNames('application__wrapp display_none', { display_block: (isDataRequest.message === 'request-error' || isDataRequest.message === 'underfunded' || isDataRequest.message === 'bank-error' || isDataRequest.message === 'timeout') })}>
                   <div className="application__title">
                     <span className="application__title_span">Sorry,</span>
                     <span className="application__title_span">your payment</span>

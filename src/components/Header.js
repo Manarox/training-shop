@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import classNames from 'classnames';
@@ -16,7 +16,26 @@ import InputMask from "react-input-mask";
 
 
 let cloneErrorsPostcode = ''
- 
+
+const HightLight = (props) => {
+  //filter Это текст формик
+  //str то что перобразовываем
+  const { filter, str } = props 
+  if (!filter) return str
+  const regexp = new RegExp(filter, 'ig')
+  const matchValue = str.match(regexp)
+  if (matchValue) {
+    return str.split(regexp).map((s, index, array) => {
+      if (index < array.length - 1) {
+        const c = matchValue.shift()
+        return <>{s}<span className={'hightlight'}>{c}</span></>
+      }
+      return s
+    })
+  }
+  return str
+}
+
 const Header = () => {
     const dispatch = useDispatch();
 
@@ -334,6 +353,7 @@ const Header = () => {
             setDeliveryformBtn(true)
           }
           //Валидация и запрос данных на storeAddress
+          
           if (error.country_store === undefined) {
             if (values.storeAddress.length >= 3) {
               dispatch({ type: 'LOADING_STORE_ADDRESS', payload: {
@@ -484,6 +504,18 @@ const Header = () => {
 
     //Получение обновленного isDataRequest
     const dataRequest = store.getState().delivaryReducer.isDataRequest
+
+    const makeBold = item => {
+      const re = new RegExp(formik.values.storeAddress, "g");
+      return item.replace(re, "<b>" + formik.values.storeAddress + "</b>");
+    };
+
+    // const light = useCallback((str) => {
+    //   return <HightLight filter={formik.values.storeAddress} str={str}/>
+    // }, [filter])
+
+
+    
     return (
     <>
     <header className="header">
@@ -985,11 +1017,14 @@ const Header = () => {
                           </button>
                         </div>
                       
-                        <div className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryAdressBtn })}>
+                        <div id="searchAdress" className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryAdressBtn })}>
                           {isLoadingStoreAddress.length !== 0 ?
                             isLoadingStoreAddress.map((post) => {
                                 return (
-                                  <div className="deliveryform_option" value={post.city} id={post.city} onClick={(e) => handleChangeAdressStore(e)}>{post.city}</div>
+                                  <div className="deliveryform_option" value={post.city} id={post.city} onClick={(e) => handleChangeAdressStore(e)}>
+                                    <HightLight filter={formik.values.storeAddress} str={post.city}/>
+                                  </div>
+                                  
                                 )
                             })
                             : null

@@ -591,7 +591,6 @@ html {
     right: 5px;
     cursor: pointer;
     padding: 10px;
-    z-index: 2;
     background: #f8f8f8;
     /* display: flex;
     align-items: center; */

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import classNames from 'classnames';
-//import { store } from '../redux/Store';
+import store from '../redux/Store';
 import { ItemCart } from '../components/ItemCart';
 //import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import Error from '../components/Error';
 //import Payment from '../components/Payment';
 import { useDispatch } from "react-redux";
 import { useFormik } from 'formik';
+//import * as Yup from 'yup';
 import InputMask from "react-input-mask";
 
 
@@ -105,6 +106,7 @@ const Header = () => {
       } else if (isTypeButtonLoad === 'Application') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
       }
+      console.log(formik)
     }
 
 
@@ -140,6 +142,7 @@ const Header = () => {
       if (formik.isValid !== true) {
         formik.values.checkboxPolic = false
       }
+      dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
     }
     const handleSubmitBtn = () => {
       console.log(formik)
@@ -221,6 +224,7 @@ const Header = () => {
       cardDate: "",
       cardCVV: "",
     }
+
     const formik = useFormik({
       initialValues,
     
@@ -231,7 +235,6 @@ const Header = () => {
           formik.values.paymentMethod = isTypePaymentLoad
 
           if (isTypeButtonLoad === 'Delivery Info') {
-            dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
             dispatch({ type: 'SEND_DELIVERY_FORM', payload: formik.values})
           }
 
@@ -243,23 +246,32 @@ const Header = () => {
           
           
       },
+      // validationSchema: Yup.object().shape({
+      //   phone: Yup
+      //   .string()
+      //   .required('Поле должно быть заполнено2')
+      //   .matches(phoneRegExp, "Неправильный номер"),
+      // }),
+      
       validate: (values) => {
+      console.log(formik)
       let error = {};
   
       //Валидация для Доставки
       if (isTypeButtonLoad === 'Delivery Info') {
         //Валидация phone
         //const phoneRegExp = /(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$/;
-        if (!values.phone) {
-          error.phone = 'Введите телефон';
+        if (!values.phone || values.phone === "+375 (__)_______") {
+          error.phone = 'Поле должно быть заполнено';
           //(!/^(?:\+375)\s?\(?29|25|44|33\)?\s?\d\d(?:\d[\s]\d\d[\s]\d\d|[\s]\d\d[\s]\d\d\d|\d{5})$/i.test(values.phone))
         } else if (!/(\+375 \(25|29|33|44)\)(\s|)[0-9]{7}/.test(values.phone)) {
           error.phone = 'Исправте формат номера телефона';
         }
+
         //console.log(formik.values.phone)
         //Валидация mail
         if (!values.email) {
-          error.email = 'Введите почту';
+          error.email = 'Поле должно быть заполнено';
         } else if (!/^[A-Z0-9._%+-]+(@[A-Z0-9.-]{2,63})+\.[A-Z]{2,4}$/i.test(values.email)) {
           error.email = 'Исправте формат почты';
         }
@@ -267,24 +279,24 @@ const Header = () => {
         if (isTypeDeliveryLoad === 'pickup from post offices' || isTypeDeliveryLoad === 'express delivery') {
           //Валидация country
           if (!values.country) {
-              error.country = 'Введите страну';
+              error.country = 'Поле должно быть заполнено';
           }
           //Валидация city
           if (!values.city) {
-              error.city = 'Введите город';
+              error.city = 'Поле должно быть заполнено';
           }
           //Валидация street
           if (!values.street) {
-              error.street = 'Введите улицу';
+              error.street = 'Поле должно быть заполнено';
           }
           //Валидация house
           if (!values.house) {
-              error.house = 'Введите номер дома';
+              error.house = 'Поле должно быть заполнено';
           }
           //Валидация postcode
           if (isTypeDeliveryLoad === 'pickup from post offices') {
             if (!values.postcode || values.postcode === "BY ______") {
-              error.postcode = 'Введите почтовый код';
+              error.postcode = 'Поле должно быть заполнено';
             } 
             let str = values.postcode.split('_').join('');
             if (str.length !== 9) {
@@ -303,7 +315,7 @@ const Header = () => {
         //Валидация country_store
         if (isTypeDeliveryLoad === 'store pickup') {
           if (!values.country_store || values.country_store === 'Country') {
-            error.country_store = 'Вы должны выбрать страну';
+            error.country_store = 'Поле должно быть заполнено';
             //setErrorCheckbox(true)
           }
           let searchCountry = isLoadingCountry.find((post, i) => {
@@ -351,14 +363,14 @@ const Header = () => {
       if (isTypeButtonLoad === 'Payment') {
         if (isTypePaymentLoad === "visa" || isTypePaymentLoad === "mastercard") {
           if (!values.card) {
-            error.card = 'Введите данные карты';
+            error.card = 'Поле должно быть заполнено';
           } else if (!/(\d{4})( )(\d{4})( )(\d{4})( )(\d{4})/i.test(values.card)) {
             //(!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card))
             error.card = 'Проверьте правильность введенных данных';
           }
           //Валидация cardDate
           if (!values.cardDate) {
-            error.cardDate = 'Введите срок службы карты';
+            error.cardDate = 'Поле должно быть заполнено';
           } else if (!/(01|02|03|04|05|06|07|08|09|10|11|12)(\/)(\d{2})/i.test(values.cardDate)) {
             //(!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card))
             //(\d{2})(\/)(\d{2})
@@ -377,7 +389,7 @@ const Header = () => {
           }
           //Валидация cardCVV
           if (!values.cardCVV) {
-            error.cardCVV = 'Введите код';
+            error.cardCVV = 'Поле должно быть заполнено';
           } else if (values.cardCVV.length <= 2 || values.cardCVV.length >= 5) {
             error.cardCVV = 'Проверьте правильность введенных данных';
           }
@@ -385,7 +397,7 @@ const Header = () => {
         // Валидация cashEmail
         if (isTypePaymentLoad === "paypal") {
           if (!values.cashEmail) {
-            error.cashEmail = 'Введите почту';
+            error.cashEmail = 'Поле должно быть заполнено';
           } else if (!/^[A-Z0-9._%+-]+(@[A-Z0-9.-]{2,63})+\.[A-Z]{2,4}$/i.test(values.cashEmail)) {
             error.cashEmail = 'Исправте формат почты';
           }
@@ -428,7 +440,9 @@ const Header = () => {
     const handleChangePassword = (e) => {
       setPasswordIcon(!passwordIcon)
     }
-    console.log(formik.errors)
+
+    //Получение обновленного isDataRequest
+    const dataRequest = store.getState().delivaryReducer.isDataRequest
     return (
     <>
     <header className="header">
@@ -570,24 +584,36 @@ const Header = () => {
             <div className="basket__top">
               <div className="basket__top__one">
                 <span className="basket__top__title">SHOPPING CART</span>
-
-                <button
-                  className={classNames('basket__top__close basket__top__close_success', { display_block: (isDataRequest.message === 'success') })}
+                
+                {
+                  dataRequest.message === "success"
+                  ?
+                  <button
+                  className='basket__top__close'
                   onClick={tooggleBasketResetAll}
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  :
+                  null
+                }
 
-                <button
-                  className={classNames('basket__top__close', { display_none: (isDataRequest.message === 'success') })}
-                  onClick={tooggleBasketModeReset}
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
+                {
+                  dataRequest.message === "success"
+                  ?
+                  null
+                  :
+                  <button
+                    className={classNames('basket__top__close', { display_none: (isDataRequest.message === 'success') })}
+                    onClick={tooggleBasketModeReset}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                }
 
                 {/* <button className="basket__top__close" onClick={tooggleBasketModeReset}>
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -683,7 +709,7 @@ const Header = () => {
                         <InputMask
                           mask="+375 (99)9999999"
                           maskChar="_"
-                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.phone !== undefined)})}
+                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.phone && formik.touched.phone)})}
                           id="phone"
                           type="text"
                           name="phone"
@@ -692,13 +718,19 @@ const Header = () => {
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
-                        <span className="formik__error">{formik.errors.phone}</span>
+                        <span className="formik__error">
+                          {
+                            formik.errors.phone && formik.touched.phone
+                            ? formik.errors.phone
+                            : null
+                          }
+                        </span>
                   </div>
 
                   <div className="deliveryform__name">
                       <span class="deliveryform__title">E-mail</span>
                       <input
-                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.email !== undefined)})}
+                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.email && formik.touched.email)})}
                           id="email"
                           type="text"
                           name="email"
@@ -707,28 +739,40 @@ const Header = () => {
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                       />
-                      <span className="formik__error">{formik.errors.email}</span>
+                      <span className="formik__error">
+                        {
+                          formik.errors.email && formik.touched.email
+                          ? formik.errors.email
+                          : null
+                        }
+                      </span>
                   </div>
                   {isTypeDeliveryLoad === 'pickup from post offices' || isTypeDeliveryLoad === 'express delivery' ?
                     <div>
                       <div className="deliveryform__name deliveryform__name_small">
                           <span class="deliveryform__title">Adress</span>
                           <input
-                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country !== undefined)})}
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country && formik.touched.country)})}
                               id="country"
                               type="text"
                               name="country"
-                              placeholder="Country"
+                              placeholder="Country&nbsp;"
                               value={formik.values.country}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                           />
-                          <span className="formik__error">{formik.errors.country}</span>
+                          <span className="formik__error">
+                            {
+                              formik.errors.country && formik.touched.country
+                              ? formik.errors.country
+                              : null
+                            }
+                          </span>
                       </div>
 
                       <div className="deliveryform__name deliveryform__name_small">
                           <input
-                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.city !== undefined)})}
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.city && formik.touched.city)})}
                               id="city"
                               type="text"
                               name="city"
@@ -737,12 +781,18 @@ const Header = () => {
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                           />
-                          <span className="formik__error">{formik.errors.city}</span>
+                          <span className="formik__error">
+                            {
+                              formik.errors.city && formik.touched.city
+                              ? formik.errors.city
+                              : null
+                            }
+                          </span>
                       </div>
 
                       <div className="deliveryform__name deliveryform__name_small">
                           <input
-                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.street !== undefined)})}
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.street && formik.touched.street)})}
                               id="street"
                               type="text"
                               name="street"
@@ -751,12 +801,18 @@ const Header = () => {
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                           />
-                          <span className="formik__error">{formik.errors.street}</span>
+                          <span className="formik__error">
+                            {
+                              formik.errors.street && formik.touched.street
+                              ? formik.errors.street
+                              : null
+                            }
+                          </span>
                       </div>
 
                       <div className="flex margin_bot">
                           <input
-                              className={classNames('deliveryform__input deliveryform__input_small', { deliveryform__input_error: (formik.errors.house !== undefined)})}
+                              className={classNames('deliveryform__input deliveryform__input_small', { deliveryform__input_error: (formik.errors.house && formik.touched.house)})}
                               id="house"
                               type="text"
                               name="house"
@@ -767,7 +823,7 @@ const Header = () => {
                           /> 
 
                           <input
-                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.apartment !== undefined)})}
+                              className="deliveryform__input"
                               id="apartment"
                               type="text"
                               name="apartment"
@@ -777,7 +833,13 @@ const Header = () => {
                               onBlur={formik.handleBlur}
                           />
                       </div>
-                      <span className="formik__error">{formik.errors.house}</span>
+                      <span className="formik__error">
+                        {
+                          formik.errors.house && formik.touched.house
+                          ? formik.errors.house
+                          : null
+                        }
+                      </span>
                     </div>
                     :
                     null
@@ -793,7 +855,7 @@ const Header = () => {
                             <input
                                 //list="country_store2"
                                 autocomplete="off"
-                                className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store !== undefined)})}
+                                className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store && formik.touched.country_store)})}
                                 id="country_store"
                                 type="text"
                                 name="country_store"
@@ -835,15 +897,20 @@ const Header = () => {
                             }
                           </div> 
                         </div>
-                        <span className="formik__error">{formik.errors.country_store}</span>
-                        
+                        <span className="formik__error">
+                          {
+                            formik.errors.country_store && formik.touched.country_store
+                            ? formik.errors.country_store
+                            : null
+                          }
+                        </span>
                     </div>
 
                     <div className="deliveryform__name deliveryform__name_small">
                         <input
-                          autoComplete="new-password"
+                          autoComplete="new-storeAddress"
                           list="storeAddressDatalist"
-                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress !== undefined)})}
+                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress && formik.touched.storeAddress)})}
                           id="storeAddress"
                           type="text"
                           name="storeAddress"
@@ -869,7 +936,13 @@ const Header = () => {
                           }               
                         </datalist>
                         <span className="formik__desc">Введите город и выберите магазин из списка</span>
-                        <span className="formik__error">{formik.errors.storeAddress}</span>
+                        <span className="formik__error">
+                          {
+                            formik.errors.storeAddress && formik.touched.storeAddress
+                            ? formik.errors.storeAddress
+                            : null
+                          }
+                        </span>
                     </div>
                   </div>
                   : null
@@ -880,7 +953,7 @@ const Header = () => {
                           <span class="deliveryform__title">Postcode</span>
                           <InputMask
                             mask="BY 999999"
-                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.postcode !== undefined)})}
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.postcode && formik.touched.postcode)})}
                             id="postcode"
                             type="text"
                             name="postcode"
@@ -889,7 +962,13 @@ const Header = () => {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                           />
-                          <span className="formik__error">{formik.errors.postcode}</span>
+                          <span className="formik__error">
+                            {
+                              formik.errors.postcode && formik.touched.postcode
+                              ? formik.errors.postcode
+                              : null
+                            }
+                          </span>
                       </div>
                       : null
                   }
@@ -909,13 +988,19 @@ const Header = () => {
                         checked={formik.values.checkboxPolic === true ? true : false}
                       />
                       <label
-                        className={classNames('delivery__label-checkbox', { delivery__label_error: (formik.errors.checkboxPolic !== undefined)})}
+                        className={classNames('delivery__label-checkbox', { delivery__label_error: (formik.errors.checkboxPolic && formik.touched.checkboxPolic)})}
                         for="checkboxPolic"
                       >
                         I agree to the processing of my personal information
                       </label>
                     </div>
-                      <span className="formik__error">{formik.errors.checkboxPolic}</span>
+                      <span className="formik__error">
+                        {
+                          formik.errors.checkboxPolic && formik.touched.checkboxPolic
+                          ? formik.errors.checkboxPolic
+                          : null
+                        }
+                      </span>
                   </div>
                   : null
                   }
@@ -990,7 +1075,7 @@ const Header = () => {
                         <InputMask
                             mask="9999 9999 9999 9999"
                             maskChar="_"
-                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.card !== undefined)})}
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.card && formik.touched.card)})}
                             id="card"
                             type="text"
                             name="card"
@@ -999,7 +1084,13 @@ const Header = () => {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                         />
-                        <span className="formik__error">{formik.errors.card}</span>
+                        <span className="formik__error">
+                          {
+                            formik.errors.card && formik.touched.card
+                            ? formik.errors.card
+                            : null
+                          }
+                        </span>
                     </div>
 
                     <div className="flex">
@@ -1007,7 +1098,7 @@ const Header = () => {
                         <InputMask
                             mask="99/99"
                             maskChar="_"
-                            className={classNames('deliveryform__input deliveryform__input_small', { deliveryform__input_error: (formik.errors.cardDate !== undefined)})}
+                            className={classNames('deliveryform__input deliveryform__input_small', { deliveryform__input_error: (formik.errors.cardDate && formik.touched.cardDate)})}
                             id="cardDate"
                             type="text"
                             name="cardDate"
@@ -1016,13 +1107,19 @@ const Header = () => {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                         /> 
-                        <span className="formik__error">{formik.errors.cardDate}</span>
+                        <span className="formik__error">
+                          {
+                            formik.errors.cardDate && formik.touched.cardDate
+                            ? formik.errors.cardDate
+                            : null
+                          }
+                        </span>
                       </div>
                       <div className="flex deliveryform__block password">
                         <InputMask
                             mask="9999"
                             maskChar=""
-                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cardCVV !== undefined)})}
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cardCVV && formik.touched.cardCVV)})}
                             id="cardCVV"
                             type={
                               passwordIcon === false ? "password" : "text"                      
@@ -1052,7 +1149,13 @@ const Header = () => {
                           </button>
                         }
                         
-                        <span className="formik__error">{formik.errors.cardCVV}</span>
+                        <span className="formik__error">
+                          {
+                            formik.errors.cardCVV && formik.touched.cardCVV
+                            ? formik.errors.cardCVV
+                            : null
+                          }
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -1063,7 +1166,7 @@ const Header = () => {
                   <div className="deliveryform__name">
                     <span class="deliveryform__title">E-mail</span>
                     <input
-                        className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cashEmail !== undefined)})}
+                        className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cashEmail && formik.touched.cashEmail)})}
                         id="cashEmail"
                         type="text"
                         name="cashEmail"
@@ -1072,7 +1175,13 @@ const Header = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                     />
-                    <span className="formik__error">{formik.errors.cashEmail}</span>
+                    <span className="formik__error">
+                      {
+                        formik.errors.cashEmail && formik.touched.cashEmail
+                        ? formik.errors.cashEmail
+                        : null
+                      }
+                    </span>
                   </div>
                 : null
                 }
@@ -1080,44 +1189,67 @@ const Header = () => {
             </div>
 
             {/* Вывод заявки */}
-            <div className={classNames('application', { application_activ: (isTypeButtonLoad === 'Application') })}>
-                <div className={classNames('application__wrapp display_none', { display_block: (isDataRequest.message === 'success') })}>
-                  <div className="application__title">
-                    <span className="application__title_span">Thank you</span>
-                    <span className="application__title_span">for your order</span>
-                  </div>
-                  <div className="application__desc">
-                    Information about your order will appear in your e-mail.
-                  </div>
-                  <div className="application__desc">
-                    Our manager will call you back.
-                  </div>
-                </div>
-
-                <div className={classNames('application__wrapp display_none', { display_block: (isDataRequest.message === 'request-error' || isDataRequest.message === 'underfunded' || isDataRequest.message === 'bank-error' || isDataRequest.message === 'timeout') })}>
-                  <div className="application__title">
-                    <span className="application__title_span">Sorry,</span>
-                    <span className="application__title_span">your payment</span>
-                    <span className="application__title_span">has not been</span>
-                    <span className="application__title_span">processed.</span>
-                  </div>
-                  <div className="application__desc">
-                    Failed to pay for the order: 
-                  </div>
-                  <div className="application__desc red">
-                    {isDataRequest.message}
-                  </div>
-                </div>
-
-
-            </div>
-
-            
-            
-
-
-
-
+            {
+            isTypeButtonLoad === 'Application'
+            ? 
+              <div className="application">
+                  {
+                    dataRequest.message === "success"
+                    ? 
+                    <div className="application__wrapp">
+                      <div className="application__title">
+                        <span className="application__title_span">Thank you</span>
+                        <span className="application__title_span">for your order</span>
+                      </div>
+                      <div className="application__desc">
+                        Information about your order will appear in your e-mail.
+                      </div>
+                      <div className="application__desc">
+                        Our manager will call you back.
+                      </div>
+                    </div>
+                    :
+                    null
+                  }
+                  {
+                    dataRequest.message === "request-error" || dataRequest.message === "underfunded" || dataRequest.message === "bank-error" || dataRequest.message === "timeout"
+                    ? 
+                    <div className="application__wrapp">
+                      <div className="application__title">
+                        <span className="application__title_span">Sorry,</span>
+                        <span className="application__title_span">your payment</span>
+                        <span className="application__title_span">has not been</span>
+                        <span className="application__title_span">processed.</span>
+                      </div>
+                      <div className="application__desc">
+                        Failed to pay for the order: 
+                      </div>
+                      <div className="application__desc red">
+                        Сообщение: {dataRequest.message}
+                      </div>
+                      <div className="application__desc red">
+                        Описание: 
+                      </div>
+                      <div className="application__desc">
+                        {dataRequest.unavailableCartValues !== undefined ?
+                          dataRequest.unavailableCartValues.map((post) => {
+                              return (
+                                <div className='flex'>
+                                  <div className="dataError__title">{post.name}: </div><div className="dataError__desc red">{post.value}</div>
+                                </div>
+                              )
+                          })
+                          : null
+                        }
+                      </div>
+                    </div>
+                  :
+                  null
+                }
+              </div>
+            :
+              null
+            }
 
             {/* Вывод НИЗ корзины */}
 
@@ -1176,15 +1308,21 @@ const Header = () => {
                 :
                 null
               }
-
-              <div className="basket__bottom__btns">
-                <button
-                  className="basket__bottom__btn basket__bottom__btn_white"
-                  onClick={tooggleBasketModeViewCart}
-                >
-                  VIEW CART
-                </button>
-              </div>
+              
+              {
+                dataRequest.message === "success" || dataRequest.message === "request-error" || dataRequest.message === "underfunded" || dataRequest.message === "bank-error" || dataRequest.message === "timeout"
+                ?
+                null
+                :
+                <div className="basket__bottom__btns">
+                  <button
+                    className="basket__bottom__btn basket__bottom__btn_white"
+                    onClick={tooggleBasketModeViewCart}
+                  >
+                    VIEW CART
+                  </button>
+                </div>
+              }
               </>
               :
               <>
@@ -1196,36 +1334,57 @@ const Header = () => {
             </div>
 
             {/* Вывод кнопок на форме заявки */}
-            <div className={classNames('basket__bottom_application', { display_block: (isTypeButtonLoad === 'Application') })}>
+            {/* {isDataRequest} */}
+            {/* {isDataRequest.message === "success" ? "success" : "no success"} */}
+            {
+            isTypeButtonLoad === 'Application'
+            ?
+            <div className="basket__bottom_application">
+              {
+                dataRequest.message === "success"
+                ?
+                <div className='basket__bottom__btns'>
+                  <button
+                    className="basket__bottom__btn basket__bottom__btn_black"
+                    onClick={tooggleBasketResetAll}
+                  >
+                    BACK TO SHOPPING
+                  </button>
+                </div>
+                :
+                null
+              }
+              {
+                dataRequest.message !== "success"
+                ?
+                <div>
+                  <div className='basket__bottom__btns'>
+                    <button
+                      className="basket__bottom__btn basket__bottom__btn_black"
+                      onClick={tooggleBasketModeViewCart}
+                    >
+                      BACK TO SHOPPING
+                    </button>
+                  </div>
 
-              <div className={classNames('basket__bottom__btns display_none', { display_block: (isDataRequest.message === 'success') })}>
-                <button
-                  className="basket__bottom__btn basket__bottom__btn_black"
-                  onClick={tooggleBasketResetAll}
-                >
-                  BACK TO SHOPPING
-                </button>
-              </div>
-
-              <div className={classNames('basket__bottom__btns', { display_none: (isDataRequest.message === 'success') })}>
-                <button
-                  className="basket__bottom__btn basket__bottom__btn_black"
-                  onClick={tooggleBasketModeViewCart}
-                >
-                  BACK TO SHOPPING
-                </button>
-              </div>
-
-              <div className={classNames('basket__bottom__btns', { display_none: (isDataRequest.message === 'success') })}>
-                <button
-                  className="basket__bottom__btn basket__bottom__btn_white"
-                  onClick={tooggleBasketModeViewCartError}
-                >
-                  VIEW CART
-                </button>
-              </div>
+                  <div className='basket__bottom__btns'>
+                    <button
+                      className="basket__bottom__btn basket__bottom__btn_white"
+                      onClick={tooggleBasketModeViewCartError}
+                    >
+                      VIEW CART
+                    </button>
+                  </div>
+                </div>
+                :
+                null
+              }
 
             </div>
+            :
+              null
+            }
+
           </div>
       </section>
     </>

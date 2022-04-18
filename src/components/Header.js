@@ -756,7 +756,7 @@ const Header = () => {
                               id="country"
                               type="text"
                               name="country"
-                              placeholder="Country&nbsp;"
+                              placeholder="Country"
                               value={formik.values.country}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}

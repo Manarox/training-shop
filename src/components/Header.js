@@ -142,7 +142,9 @@ const Header = () => {
       if (formik.isValid !== true) {
         formik.values.checkboxPolic = false
       }
-      dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
+      if (formik.isValid === true) {
+        dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
+      }
     }
     const handleSubmitBtn = () => {
       console.log(formik)
@@ -756,7 +758,7 @@ const Header = () => {
                               id="country"
                               type="text"
                               name="country"
-                              placeholder="Country"
+                              placeholder={isTypeDeliveryLoad === 'store pickup' ? "Country " : "Country"}
                               value={formik.values.country}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
@@ -1334,8 +1336,7 @@ const Header = () => {
             </div>
 
             {/* Вывод кнопок на форме заявки */}
-            {/* {isDataRequest} */}
-            {/* {isDataRequest.message === "success" ? "success" : "no success"} */}
+
             {
             isTypeButtonLoad === 'Application'
             ?
@@ -1363,7 +1364,7 @@ const Header = () => {
                       className="basket__bottom__btn basket__bottom__btn_black"
                       onClick={tooggleBasketModeViewCart}
                     >
-                      BACK TO SHOPPING
+                      BACK TO PAYMENT
                     </button>
                   </div>
 

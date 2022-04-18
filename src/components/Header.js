@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import classNames from 'classnames';
@@ -504,11 +504,6 @@ const Header = () => {
 
     //Получение обновленного isDataRequest
     const dataRequest = store.getState().delivaryReducer.isDataRequest
-
-    const makeBold = item => {
-      const re = new RegExp(formik.values.storeAddress, "g");
-      return item.replace(re, "<b>" + formik.values.storeAddress + "</b>");
-    };
 
     // const light = useCallback((str) => {
     //   return <HightLight filter={formik.values.storeAddress} str={str}/>

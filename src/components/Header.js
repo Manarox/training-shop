@@ -355,6 +355,9 @@ const Header = () => {
             if (!values.storeAddress) {
               error.storeAddress = 'Введите 3 первых буквы города'
             }
+            if (error.storeAddress !== undefined) {
+              setDeliveryAdressBtn(true)
+            }
           }
         }
       }
@@ -416,9 +419,9 @@ const Header = () => {
     //отображение кнопки открыть закрыть на Страны
     const [deliveryformBtn, setDeliveryformBtn] = useState(true);
     //const [deliveryformInputNotError, setdeliveryformInputNotError] = useState(false);
-    const handleChangeBtn = (e) => {
-      setDeliveryformBtn(!deliveryformBtn)
-    }
+    // const handleChangeBtn = (e) => {
+    //   setDeliveryformBtn(!deliveryformBtn)
+    // }
     const handleChangeOnFocusInput = (event) => {
       setDeliveryformBtn(true)
       if (formik.errors.country_store === undefined) {
@@ -434,9 +437,45 @@ const Header = () => {
       setCountryStoreVisible(!countryStoreVisible)
 
       setDeliveryformBtn(false)
+
       formik.validateForm()
       //delete formik.errors['country_store']
     }
+
+
+    //Отображение адреса магазина
+    const [deliveryAdressBtn, setDeliveryAdressBtn] = useState(false);
+    // const handleChangeAdressBtn = (e) => {
+    //   setDeliveryAdressBtn(!deliveryAdressBtn)
+    // }
+    const handleChangeAdressOnFocusInput = (event) => {
+      setDeliveryAdressBtn(true)
+      if (formik.errors.storeAddress === undefined) {
+        //setdeliveryformInputNotError(false)
+        console.log("В поле нету ошибок")
+      }
+    }
+    //костыль обновления value для адреса
+    const [adressStoreVisible, setAdressStoreVisible] = useState(false);
+    const handleChangeAdressStore = (e) => {
+      formik.values.storeAddress = e.target.innerText
+      setAdressStoreVisible(!adressStoreVisible)
+
+      setDeliveryAdressBtn(false)
+      formik.validateForm()
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     const [passwordIcon, setPasswordIcon] = useState(false);
     const handleChangePassword = (e) => {
@@ -855,31 +894,28 @@ const Header = () => {
                         <div className="deliveryform_wrapp">
                           <div className='flex'>
                             <input
-                                //list="country_store2"
                                 autocomplete="off"
                                 className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store && formik.touched.country_store)})}
                                 id="country_store"
                                 type="text"
                                 name="country_store"
                                 placeholder='Country'
-                                
-                                //value={formik.values.country_store}
                                 value={
                                   countryStoreVisible === true ? formik.values.country_store : formik.values.country_store                      
                                   }
                                 onChange={formik.handleChange}
-                                //onClick={(event) => handleChangeOnFocusInput(event)}
                                 onFocus={(e) => handleChangeOnFocusInput(e)}
-                                //onBlur={(event) => handleChangeBtn(event)}
                                 onBlur={formik.handleBlur}
                             />
                             
-                            <button className="deliveryform_btn" onClick={(e) => handleChangeBtn(e)}>
+                            {/* <button className="deliveryform_btn" onClick={(e) => handleChangeBtn(e)}> */}
+                            <button className="deliveryform_btn" disabled={true}>
                               {
                                 deliveryformBtn === false ?
-                                <svg className="arrow_rotate" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
-                                </svg>
+                                null
+                                // <svg className="arrow_rotate" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                //   <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
+                                // </svg>
                                 :
                                 <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
@@ -909,25 +945,63 @@ const Header = () => {
                     </div>
 
                     <div className="deliveryform__name deliveryform__name_small">
-                        <input
-                          autoComplete="new-storeAddress"
-                          list="storeAddressDatalist"
-                          className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress && formik.touched.storeAddress)})}
-                          id="storeAddress"
-                          type="text"
-                          name="storeAddress"
-                          placeholder="Street adress"
-                          disabled={
-                            formik.values.country_store === "" ?
-                            true 
-                            : (formik.errors.country_store === undefined ? false : true)
+                      <div className="deliveryform_wrapp">
+                        <div className='flex'>
+                          <input
+                            autoComplete="new-storeAddress"
+                            //list="storeAddressDatalist"
+                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress && formik.touched.storeAddress)})}
+                            id="storeAddress"
+                            type="text"
+                            name="storeAddress"
+                            placeholder="Street adress"
+                            disabled={
+                              formik.values.country_store === "" ?
+                              true 
+                              : (formik.errors.country_store === undefined ? false : true)
+                              }
+                            //value={formik.values.storeAddress}
+                            value={
+                              adressStoreVisible === true ? formik.values.storeAddress : formik.values.storeAddress                      
+                              }
+                            onChange={formik.handleChange}
+                            onFocus={(e) => handleChangeAdressOnFocusInput(e)}
+                            onBlur={formik.handleBlur}
+                          />
+
+                          {/* <button className="deliveryform_btn" onClick={(e) => handleChangeAdressBtn(e)}> */}
+                          <button className="deliveryform_btn" disabled={true}>
+                            {
+                              deliveryAdressBtn === true ?
+                              <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
+                              </svg>
+                              :
+                              null
+                              // <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              //   <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
+                              // </svg>
                             }
-                          value={formik.values.storeAddress}
-                          onChange={formik.handleChange}
-                          //onChange={(e) => handleChangeStoreAddress(e.target.value)}
-                          onBlur={formik.handleBlur}
-                        />
-                        <datalist id="storeAddressDatalist">
+                          </button>
+                        </div>
+                      
+                        <div className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryAdressBtn })}>
+                          {isLoadingStoreAddress.length !== 0 ?
+                            isLoadingStoreAddress.map((post) => {
+                                return (
+                                  <div className="deliveryform_option" value={post.city} id={post.city} onClick={(e) => handleChangeAdressStore(e)}>{post.city}</div>
+                                )
+                            })
+                            : null
+                          }
+                        </div>
+                      </div>
+
+
+
+
+
+                        {/* <datalist id="storeAddressDatalist">
                           {isLoadingStoreAddress.length !== 0 ?
                             isLoadingStoreAddress.map((post) => {
                                 return (
@@ -936,7 +1010,7 @@ const Header = () => {
                             })
                             : null
                           }               
-                        </datalist>
+                        </datalist> */}
                         <span className="formik__desc">Введите город и выберите магазин из списка</span>
                         <span className="formik__error">
                           {
@@ -946,6 +1020,10 @@ const Header = () => {
                           }
                         </span>
                     </div>
+
+
+
+
                   </div>
                   : null
                   }

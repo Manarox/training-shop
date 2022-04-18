@@ -862,7 +862,7 @@ const Header = () => {
                                 type="text"
                                 name="country_store"
                                 placeholder='Country'
-                                disabled={true}
+                                
                                 //value={formik.values.country_store}
                                 value={
                                   countryStoreVisible === true ? formik.values.country_store : formik.values.country_store                      
@@ -1214,7 +1214,7 @@ const Header = () => {
                     null
                   }
                   {
-                    dataRequest.message === "request-error" || dataRequest.message === "underfunded" || dataRequest.message === "bank-error" || dataRequest.message === "timeout"
+                    dataRequest === "error" || dataRequest.message === "request-error" || dataRequest.message === "underfunded" || dataRequest.message === "bank-error" || dataRequest.message === "timeout"
                     ? 
                     <div className="application__wrapp">
                       <div className="application__title">
@@ -1312,7 +1312,7 @@ const Header = () => {
               }
               
               {
-                dataRequest.message === "success" || dataRequest.message === "request-error" || dataRequest.message === "underfunded" || dataRequest.message === "bank-error" || dataRequest.message === "timeout"
+                dataRequest.message === "success" || dataRequest.message === "request-error" || dataRequest.message === "underfunded" || dataRequest.message === "bank-error" || dataRequest.message === "timeout" || dataRequest === "error"
                 ?
                 null
                 :

@@ -13,7 +13,6 @@ let cloneErrorsPostcode = ''
 
 export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxReset, setCheckBoxReset, tooggleBasketModeButton}) => {
     const dispatch = useDispatch();
-
     //Кнопка закрытия корзины, Очистка товаров
     function tooggleBasketResetAll() {
       dispatch({ type: 'RESET_ITEMS_IN_CART' })
@@ -354,7 +353,6 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
     }
     //Получение обновленного loadingDataRequest
     const dataRequest = store.getState().delivaryReducer.loadingDataRequest
-    
     return (
     <>
     <div className={classNames('basket__wrapp', { visible_basket_wrapp: isBasketOpen })} onClick={tooggleBasketMode}></div>

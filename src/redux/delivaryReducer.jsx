@@ -9,7 +9,6 @@ const defaultState = {
     typePaymentLoad: 'visa',
     loadingDataRequest: "",
 };
-console.log('delivaryReducer')
  
 const delivaryReducer = (state = defaultState, action) => {
 switch (action.type) {

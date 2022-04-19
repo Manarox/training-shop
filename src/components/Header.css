@@ -592,8 +592,6 @@ html {
     cursor: pointer;
     padding: 10px;
     background: #f8f8f8;
-    /* display: flex;
-    align-items: center; */
 }
 .arrow_rotate {
     transform: rotate(180deg);
@@ -616,32 +614,9 @@ html {
     font-weight: 600;
     color: #000000;
 }
-
-
-
-
-
-
-
-
 input::-webkit-calendar-picker-indicator {
     opacity: 100;
- }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 .margin_bot {
     margin-bottom: 40px;
 }
@@ -666,7 +641,6 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 .deliveryform__title {
     font-size: 12px;
     font-weight: 600;
@@ -719,7 +693,6 @@ input[type=number]::-webkit-outer-spin-button {
 .delivery__label_error:before {
     border: 1px solid red;
 }
-
 .delivery__input-checkbox[type=checkbox]:checked + label:before {
     content: "\2611";
     color: #121212;
@@ -766,16 +739,6 @@ input[type=number]::-webkit-outer-spin-button {
     padding-left: 20px;
     padding-bottom: 20px;
 }
-
-
-
-
-
-
-
-
-
-
 /*Получение данных*/
 .warning {
     display: flex;
@@ -794,11 +757,6 @@ input[type=number]::-webkit-outer-spin-button {
 .loader__img {
     max-width: 300px;
 }
-
-
-
-
-
 .display_none {
     display: none;
 }
@@ -808,7 +766,6 @@ input[type=number]::-webkit-outer-spin-button {
 .red {
     color: red;
 }
-
 /*menu close*/
     @media (max-width: 1110px){
         .banners__list {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 // import Data from "./data.json";
 //import { PRODUCTS } from "../components/products.js";
-import { main_clothes_block_menu } from "../components/Buttons.js";
+import { main_clothes_block_menu } from "../components/Buttons.jsx";
 import { ProductHome } from '../components/ProductHome';
 import '../components/ProductList.css';
 import { useSelector } from "react-redux";

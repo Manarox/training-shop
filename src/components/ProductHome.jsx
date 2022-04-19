@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Rating } from '../components/Rating';
+import { Rating } from './Rating';
 
 const ProductHome = (props) => {
     const {post} = props;

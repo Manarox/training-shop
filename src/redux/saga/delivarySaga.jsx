@@ -30,7 +30,7 @@ function* loadingBasket(action) {
   //const data = action.payload
   //ПРОВЕРКА
   let resultData = Object.assign({}, action.payload)
-  //Формирование paymentMethod isTypePaymentLoad
+  //Формирование paymentMethod typePaymentLoad
   if (resultData.paymentMethod === "mastercard" || resultData.paymentMethod === "visa") {
     resultData.paymentMethod = "card"
   } 

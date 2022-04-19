@@ -364,6 +364,7 @@ button {
 .product__link {
   font-weight: 500;
   opacity: 60%;
+  cursor: pointer;
 }
 .product__link_active {
   font-weight: 600;
@@ -854,6 +855,7 @@ button {
   background: #FFFFFF;
   opacity: 0.6;
   margin-right: 15px;
+  cursor: pointer;
 }
 .related__right {
   display: flex;
@@ -863,6 +865,7 @@ button {
   height: 40px;
   background: #FFFFFF;
   opacity: 0.6;
+  cursor: pointer;
 }
 .related__slide {
   display: flex;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Rating } from '../components/Rating';
+import { Rating } from './Rating';
 
 const Review = (props) => {
     const {reviews} = props;

@@ -3,38 +3,36 @@ import { Link } from 'react-router-dom';
 import { useState } from "react";
 import classNames from 'classnames';
 import store from '../redux/Store';
-import { ItemCart } from '../components/ItemCart';
-//import { useDispatch } from "react-redux";
+import { ItemCart } from './ItemCart';
+import { HightLight } from './HightLight';
 import { useSelector } from "react-redux";
-import Error from '../components/Error';
-//import Delivery from '../components/Delivery';
-//import Payment from '../components/Payment';
+import Error from './Error';
 import { useDispatch } from "react-redux";
 import { useFormik } from 'formik';
-//import * as Yup from 'yup';
 import InputMask from "react-input-mask";
 
 
 let cloneErrorsPostcode = ''
 
-const HightLight = (props) => {
-  //filter Это текст формик
-  //str то что перобразовываем
-  const { filter, str } = props 
-  if (!filter) return str
-  const regexp = new RegExp(filter, 'ig')
-  const matchValue = str.match(regexp)
-  if (matchValue) {
-    return str.split(regexp).map((s, index, array) => {
-      if (index < array.length - 1) {
-        const c = matchValue.shift()
-        return <>{s}<span className={'hightlight'}>{c}</span></>
-      }
-      return s
-    })
-  }
-  return str
-}
+// const HightLight = (props) => {
+//   //filter Это текст формик
+//   //str то что перобразовываем
+//   const { filter, str } = props 
+//   if (!filter) return str
+//   const regexp = new RegExp(filter, 'ig')
+//   const matchValue = str.match(regexp)
+//   if (matchValue) {
+//     return str.split(regexp).map((s, index, array) => {
+//       if (index < array.length - 1) {
+//         const c = matchValue.shift()
+//         // return <>{s}<span className={'hightlight'}>{c}</span></>
+//         return <>{s}<b className='hightlight'>{c}</b></>
+//       }
+//       return s
+//     })
+//   }
+//   return str
+// }
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -43,15 +41,10 @@ const Header = () => {
     function tooggleMenuMode() {
         toggleMenu(!isMenuOpen);
         document.body.style.overflow = 'hidden';
-        //num++;
-        // if (num%2 === 0) {
-        //   document.body.style.overflow = 'inherit';
-        // }
         if (!isMenuOpen === false) {
           document.body.style.overflow = 'inherit';
         }
     }
-    //
     const [isBasketOpen, toggleBasket] = useState(false);
     function tooggleBasketMode() {
         toggleBasket(!isBasketOpen);
@@ -79,7 +72,6 @@ const Header = () => {
       tooggleBasketModeViewCart()
       //Очищаем данные + в Форме
       formik.resetForm()
-      //setCheckBoxReset(false)
       setDeliveryformBtn(true)
       formik.values.checkboxPolic = false
       formik.values.country_store = ""
@@ -107,57 +99,35 @@ const Header = () => {
     }
     //Кнопка VIEW CART
     function tooggleBasketModeViewCart() {
-      if (isTypeButtonLoad === 'Item in Cart') {
+      if (typeButtonLoad === 'Item in Cart') {
         toggleBasket(!isBasketOpen);
         document.body.style.overflow = 'hidden';
         if (!isBasketOpen === false) {
           document.body.style.overflow = 'inherit';
         }
-      } else if (isTypeButtonLoad === 'Delivery Info') {
+      } else if (typeButtonLoad === 'Delivery Info') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Item in Cart'})
-      } else if (isTypeButtonLoad === 'Payment') {
+      } else if (typeButtonLoad === 'Payment') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Delivery Info'})
         //Удаляем ошибки на форме оплаты при переходе на форму доставки
-        delete formik.errors['card']
-        delete formik.errors['cardDate']
-        delete formik.errors['cardCVV']
-        delete formik.errors['cashEmail']
-      } else if (isTypeButtonLoad === 'Application') {
+        formik.setFieldError('card')
+        formik.setFieldError('cardDate')
+        formik.setFieldError('cardCVV')
+        formik.setFieldError('cashEmail')
+      } else if (typeButtonLoad === 'Application') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
       }
-      console.log(formik)
     }
 
-
     const productInCart = useSelector(state => state.basketReducer.basket)
-    //const productInCart = useSelector(state => state.basket) было без combineReducers
     const totalPrice = +(productInCart.reduce((allPrice, post) => allPrice + +post.price, 0)).toFixed(2);
-
-    //console.log(productInCart)
-
     const { isError } = useSelector((state) => state.loadReducer);
 
     //Выбор кнопки
-    const { isTypeButtonLoad } = useSelector((state) => state.delivaryReducer);
-
+    const { typeButtonLoad } = useSelector((state) => state.delivaryReducer);
     //Показ и очистка checkbox формы
     const [checkBoxReset, setCheckBoxReset] = useState(true);
-    //const [agree, setAgree] = useState(false);
-    //const [errorCheckbox, setErrorCheckbox] = useState(false);
-    // const handleSetAgree = () => {
-    //   // )
-    //   setAgree(!agree);
-    //   // if (agree === false) {
-    //   //   formik.errors.checkboxPolic = null;
-    //   // }
-    //   //formik.errors = null
-    //   formik.validateForm()
-    //   // console.log(agree)
-    // };
     const handleAgree = () => {
-      console.log(formik.errors)
-      console.log(formik)
-      
       if (formik.isValid !== true) {
         formik.values.checkboxPolic = false
       }
@@ -166,46 +136,37 @@ const Header = () => {
       }
     }
     const handleSubmitBtn = () => {
-      console.log(formik)
       formik.handleSubmit()
     }
     //Проверяем какая кнопка выбрана и переходим на следующую
     const changeFurtherButton = (e) => {
-      if (isTypeButtonLoad === 'Item in Cart') {
+      if (typeButtonLoad === 'Item in Cart') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Delivery Info'})
-      } else if (isTypeButtonLoad === 'Delivery Info') {
+      } else if (typeButtonLoad === 'Delivery Info') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
-      } else if (isTypeButtonLoad === 'Payment') {
+      } else if (typeButtonLoad === 'Payment') {
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Application'})
       } 
     };
-    //
     //ФОРМА ДОСТАВКИ
     //Выбор radio доставки
-    const { isTypeDeliveryLoad } = useSelector((state) => state.delivaryReducer);
-
+    const { typeDeliveryLoad } = useSelector((state) => state.delivaryReducer);
     const changeDeliveryChose = (e) => {
       dispatch({ type: 'CHANGE_TYPE_DELIVERY_CHOSE', payload: e})
-
-      if (isTypeDeliveryLoad === "pickup from post offices") {
+      if (typeDeliveryLoad === "pickup from post offices") {
         if (formik.errors.postcode !== undefined) {
           cloneErrorsPostcode = formik.errors.postcode.slice();
           delete formik.errors['postcode']
         } 
       }
-
-      if (isTypeDeliveryLoad === "express delivery") {
+      if (typeDeliveryLoad === "express delivery") {
         if (cloneErrorsPostcode !== undefined) {
           formik.errors.postcode = cloneErrorsPostcode.slice();
         }
-        //cloneExpress = Object.assign({}, formik.errors);
       }
-
-    
       if ( e === "store pickup") {
-        //Загрузка данных СТРАНЫ при воборе пункта
+        //Загрузка данных СТРАНЫ при выборе пункта
         dispatch({ type: 'LOADING_COUNTRY'})
-
         delete formik.errors['country']
         delete formik.errors['city']
         delete formik.errors['street']
@@ -215,12 +176,10 @@ const Header = () => {
     };
 
     //Выбор radio оплаты
-    const { isTypePaymentLoad } = useSelector((state) => state.delivaryReducer);
-
+    const { typePaymentLoad } = useSelector((state) => state.delivaryReducer);
     const changePaymentChose = (e) => {
       dispatch({ type: 'CHANGE_TYPE_PAYMENT_CHOSE', payload: e})
     }
-
     //Преобразуем итоговый объект с товарами в корзине
     var resultBasket = productInCart.map(obj => ({name: obj.name, size: obj.size, color: obj.color, quantity: obj.counter}));
 
@@ -252,44 +211,31 @@ const Header = () => {
       onSubmit: (values) => {
           formik.values.totalPrice = totalPrice
           formik.values.products = resultBasket
-          formik.values.deliveryMethod = isTypeDeliveryLoad
-          formik.values.paymentMethod = isTypePaymentLoad
+          formik.values.deliveryMethod = typeDeliveryLoad
+          formik.values.paymentMethod = typePaymentLoad
 
-          if (isTypeButtonLoad === 'Delivery Info') {
+          if (typeButtonLoad === 'Delivery Info') {
+            //dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
             dispatch({ type: 'SEND_DELIVERY_FORM', payload: formik.values})
           }
 
-          if (isTypeButtonLoad === 'Payment') {
+          if (typeButtonLoad === 'Payment') {
             dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Application'})
-            //dispatch({ type: 'SEND_PAYMENT_FORM', payload: formik.values})
             dispatch({ type: 'SEND_BASKET', payload: formik.values})
           }
-          
-          
       },
-      // validationSchema: Yup.object().shape({
-      //   phone: Yup
-      //   .string()
-      //   .required('Поле должно быть заполнено2')
-      //   .matches(phoneRegExp, "Неправильный номер"),
-      // }),
       
       validate: (values) => {
-      console.log(formik)
       let error = {};
   
       //Валидация для Доставки
-      if (isTypeButtonLoad === 'Delivery Info') {
+      if (typeButtonLoad === 'Delivery Info') {
         //Валидация phone
-        //const phoneRegExp = /(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$/;
         if (!values.phone || values.phone === "+375 (__)_______") {
           error.phone = 'Поле должно быть заполнено';
-          //(!/^(?:\+375)\s?\(?29|25|44|33\)?\s?\d\d(?:\d[\s]\d\d[\s]\d\d|[\s]\d\d[\s]\d\d\d|\d{5})$/i.test(values.phone))
         } else if (!/(\+375 \(25|29|33|44)\)(\s|)[0-9]{7}/.test(values.phone)) {
           error.phone = 'Исправте формат номера телефона';
         }
-
-        //console.log(formik.values.phone)
         //Валидация mail
         if (!values.email) {
           error.email = 'Поле должно быть заполнено';
@@ -297,7 +243,7 @@ const Header = () => {
           error.email = 'Исправте формат почты';
         }
         
-        if (isTypeDeliveryLoad === 'pickup from post offices' || isTypeDeliveryLoad === 'express delivery') {
+        if (typeDeliveryLoad === 'pickup from post offices' || typeDeliveryLoad === 'express delivery') {
           //Валидация country
           if (!values.country) {
               error.country = 'Поле должно быть заполнено';
@@ -315,7 +261,7 @@ const Header = () => {
               error.house = 'Поле должно быть заполнено';
           }
           //Валидация postcode
-          if (isTypeDeliveryLoad === 'pickup from post offices') {
+          if (typeDeliveryLoad === 'pickup from post offices') {
             if (!values.postcode || values.postcode === "BY ______") {
               error.postcode = 'Поле должно быть заполнено';
             } 
@@ -326,22 +272,19 @@ const Header = () => {
           }
         }
 
-
         //Валидация checkboxPolic
         if (!values.checkboxPolic) {
           error.checkboxPolic = 'Вы должны согласиться на обработку личной информации';
-          //setErrorCheckbox(true)
         }
         
         //Валидация country_store
-        if (isTypeDeliveryLoad === 'store pickup') {
+        if (typeDeliveryLoad === 'store pickup') {
           if (!values.country_store || values.country_store === 'Country') {
             error.country_store = 'Поле должно быть заполнено';
-            //setErrorCheckbox(true)
           }
-          let searchCountry = isLoadingCountry.find((post, i) => {
+          let searchCountry = loadingCountry.find((post, i) => {
             if (post.name === values.country_store) {
-                return true; // stop searching
+                return true;
             } else {
                 return false;
             }
@@ -353,7 +296,6 @@ const Header = () => {
             setDeliveryformBtn(true)
           }
           //Валидация и запрос данных на storeAddress
-          
           if (error.country_store === undefined) {
             if (values.storeAddress.length >= 3) {
               dispatch({ type: 'LOADING_STORE_ADDRESS', payload: {
@@ -362,9 +304,9 @@ const Header = () => {
               }
               })
             }
-            let searchStoreAddress = isLoadingStoreAddress.find((post, i) => {
+            let searchStoreAddress = loadingStoreAddress.find((post, i) => {
               if (post.city === values.storeAddress) {
-                  return true; // stop searching
+                  return true;
               } else {
                   return false;
               }
@@ -381,24 +323,18 @@ const Header = () => {
           }
         }
       }
-
-
-
       //Валидация для Оплаты
-      if (isTypeButtonLoad === 'Payment') {
-        if (isTypePaymentLoad === "visa" || isTypePaymentLoad === "mastercard") {
+      if (typeButtonLoad === 'Payment') {
+        if (typePaymentLoad === "visa" || typePaymentLoad === "mastercard") {
           if (!values.card) {
             error.card = 'Поле должно быть заполнено';
           } else if (!/(\d{4})( )(\d{4})( )(\d{4})( )(\d{4})/i.test(values.card)) {
-            //(!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card))
             error.card = 'Проверьте правильность введенных данных';
           }
           //Валидация cardDate
           if (!values.cardDate) {
             error.cardDate = 'Поле должно быть заполнено';
           } else if (!/(01|02|03|04|05|06|07|08|09|10|11|12)(\/)(\d{2})/i.test(values.cardDate)) {
-            //(!/^4[0-9]{12}(?:[0-9]{3})?$/i.test(values.card))
-            //(\d{2})(\/)(\d{2})
             error.cardDate = 'Проверьте правильность введенных данных';
           } else {
             let monthCard = Number(values.cardDate.slice(0, 2));
@@ -419,8 +355,8 @@ const Header = () => {
             error.cardCVV = 'Проверьте правильность введенных данных';
           }
         }
-        // Валидация cashEmail
-        if (isTypePaymentLoad === "paypal") {
+        //Валидация cashEmail
+        if (typePaymentLoad === "paypal") {
           if (!values.cashEmail) {
             error.cashEmail = 'Поле должно быть заполнено';
           } else if (!/^[A-Z0-9._%+-]+(@[A-Z0-9.-]{2,63})+\.[A-Z]{2,4}$/i.test(values.cashEmail)) {
@@ -433,21 +369,13 @@ const Header = () => {
       },
     });
     //Выводим СТРАНЫ на страницу + получение ответа сервера
-    const { isLoadingCountry, isLoadingStoreAddress, isDataRequest } = useSelector((state) => state.delivaryReducer);
+    const { loadingCountry, loadingStoreAddress, loadingDataRequest } = useSelector((state) => state.delivaryReducer);
 
     //Функция получения и фильтрации storeAddress
-    //отображение кнопки открыть закрыть на Страны
+    //Отображение кнопки открыть/закрыть на Страны
     const [deliveryformBtn, setDeliveryformBtn] = useState(true);
-    //const [deliveryformInputNotError, setdeliveryformInputNotError] = useState(false);
-    // const handleChangeBtn = (e) => {
-    //   setDeliveryformBtn(!deliveryformBtn)
-    // }
     const handleChangeOnFocusInput = (event) => {
       setDeliveryformBtn(true)
-      if (formik.errors.country_store === undefined) {
-        //setdeliveryformInputNotError(false)
-        console.log("В поле нету ошибок")
-      }
     }
 
     //костыль обновления value
@@ -455,61 +383,30 @@ const Header = () => {
     const handleChangeCountryStore = (e) => {
       formik.values.country_store = e.target.innerText
       setCountryStoreVisible(!countryStoreVisible)
-
       setDeliveryformBtn(false)
-
       formik.validateForm()
-      //delete formik.errors['country_store']
     }
-
 
     //Отображение адреса магазина
     const [deliveryAdressBtn, setDeliveryAdressBtn] = useState(false);
-    // const handleChangeAdressBtn = (e) => {
-    //   setDeliveryAdressBtn(!deliveryAdressBtn)
-    // }
     const handleChangeAdressOnFocusInput = (event) => {
       setDeliveryAdressBtn(true)
-      if (formik.errors.storeAddress === undefined) {
-        //setdeliveryformInputNotError(false)
-        console.log("В поле нету ошибок")
-      }
     }
     //костыль обновления value для адреса
     const [adressStoreVisible, setAdressStoreVisible] = useState(false);
     const handleChangeAdressStore = (e) => {
-      formik.values.storeAddress = e.target.innerText
+      formik.values.storeAddress = e.target.id
       setAdressStoreVisible(!adressStoreVisible)
-
       setDeliveryAdressBtn(false)
       formik.validateForm()
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     const [passwordIcon, setPasswordIcon] = useState(false);
     const handleChangePassword = (e) => {
       setPasswordIcon(!passwordIcon)
     }
-
-    //Получение обновленного isDataRequest
-    const dataRequest = store.getState().delivaryReducer.isDataRequest
-
-    // const light = useCallback((str) => {
-    //   return <HightLight filter={formik.values.storeAddress} str={str}/>
-    // }, [filter])
-
-
+    //Получение обновленного loadingDataRequest
+    const dataRequest = store.getState().delivaryReducer.loadingDataRequest
     
     return (
     <>
@@ -604,13 +501,10 @@ const Header = () => {
               </li>
               <li className="menu__icon-item menu__icon-item_relative">
                 {productInCart.length > 0 ? <span className="basket-btn__kol">{productInCart.length}</span> : null}
-
                 <button type="button" className={classNames('button-cart', { visible: isBasketOpen })} onClick={tooggleBasketModeButton} data-test-id='cart-button'>
-
-                <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13 9V5C13 3.93913 12.5786 2.92172 11.8284 2.17157C11.0783 1.42143 10.0609 1 9 1C7.93913 1 6.92172 1.42143 6.17157 2.17157C5.42143 2.92172 5 3.93913 5 5V9H13ZM2 7H16L17 19H1L2 7Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-
+                  <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13 9V5C13 3.93913 12.5786 2.92172 11.8284 2.17157C11.0783 1.42143 10.0609 1 9 1C7.93913 1 6.92172 1.42143 6.17157 2.17157C5.42143 2.92172 5 3.93913 5 5V9H13ZM2 7H16L17 19H1L2 7Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </button>
               </li>
             </ul>
@@ -674,7 +568,7 @@ const Header = () => {
                   null
                   :
                   <button
-                    className={classNames('basket__top__close', { display_none: (isDataRequest.message === 'success') })}
+                    className={classNames('basket__top__close', { display_none: (loadingDataRequest.message === 'success') })}
                     onClick={tooggleBasketModeReset}
                   >
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -683,17 +577,10 @@ const Header = () => {
                   </button>
                 }
 
-                {/* <button className="basket__top__close" onClick={tooggleBasketModeReset}>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L13 13M1 13L13 1L1 13Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button> */}
-
-
               </div>
-                <div className={classNames('basket__top__two', { display_none: (isTypeButtonLoad === 'Application') })}>
+                <div className={classNames('basket__top__two', { display_none: (typeButtonLoad === 'Application') })}>
                   <button
-                    className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Item in Cart') })}
+                    className={classNames('basket__top_btn', { basket__top_btn_activ: (typeButtonLoad === 'Item in Cart') })}
                     id="Item in Cart"
                     
                   >
@@ -701,14 +588,14 @@ const Header = () => {
                   </button>
                   <span className="basket__top_slash">/</span>
                   <button
-                    className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Delivery Info') })}
+                    className={classNames('basket__top_btn', { basket__top_btn_activ: (typeButtonLoad === 'Delivery Info') })}
                     id="Delivery Info"
                   >
                     Delivery Info
                   </button>
                   <span className="basket__top_slash">/</span>
                   <button
-                    className={classNames('basket__top_btn', { basket__top_btn_activ: (isTypeButtonLoad === 'Payment') })}
+                    className={classNames('basket__top_btn', { basket__top_btn_activ: (typeButtonLoad === 'Payment') })}
                     id="Payment"
                   >
                     Payment
@@ -717,20 +604,21 @@ const Header = () => {
             </div>
 
             {/* Вывод товаров */}
-            {isTypeButtonLoad === 'Item in Cart' ?
+            {typeButtonLoad === 'Item in Cart' ?
               <div className="basket__products">
                   {
-                  productInCart.length > 0 ?
-                  productInCart.map((post, i) => (<ItemCart product={post} key={i} />))
-                  : <span className='empty__basket'>Sorry, your cart is empty</span>
+                    productInCart.length > 0
+                    ?
+                    productInCart.map((post, i) => (<ItemCart product={post} key={i} />))
+                    :
+                    <span className='empty__basket'>Sorry, your cart is empty</span>
                   }
               </div>
             : null
             }
 
             {/* Вывод доставка */}
-            
-            <div className={classNames('delivery', { delivery_activ: (isTypeButtonLoad === 'Delivery Info') })}>
+            <div className={classNames('delivery', { delivery_activ: (typeButtonLoad === 'Delivery Info') })}>
               <span className="delivery__title">
                   Choose the method of delivery of the items
               </span>
@@ -742,7 +630,7 @@ const Header = () => {
                           id="pickup from post offices"
                           name="btn-delivery"
                           onClick={(e) => changeDeliveryChose(e.target.id)}
-                          checked={isTypeDeliveryLoad === 'pickup from post offices' ? 'checked' : null}
+                          checked={typeDeliveryLoad === 'pickup from post offices' ? 'checked' : null}
                       />
                       <label className="delivery__label" for="pickup from post offices">Pickup from post offices</label>
                   </li>
@@ -753,7 +641,7 @@ const Header = () => {
                           id="express delivery"
                           name="btn-delivery"
                           onClick={(e) => changeDeliveryChose(e.target.id)}
-                          checked={isTypeDeliveryLoad === 'express delivery' ? 'checked' : null}
+                          checked={typeDeliveryLoad === 'express delivery' ? 'checked' : null}
                       />
                       <label className="delivery__label" for="express delivery">Express delivery</label>
                   </li>
@@ -764,16 +652,15 @@ const Header = () => {
                           id="store pickup"
                           name="btn-delivery"
                           onClick={(e) => changeDeliveryChose(e.target.id)}
-                          checked={isTypeDeliveryLoad === 'store pickup' ? 'checked' : null}
+                          checked={typeDeliveryLoad === 'store pickup' ? 'checked' : null}
                       />
                       <label className="delivery__label" for="store pickup">Store pickup</label>
                   </li>
               </ul>
 
               <form id='delivery-form' autocomplete="off" className="deliveryform" name="form" onSubmit={formik.handleSubmit}>
-
                   <div className="deliveryform__name">
-                      <span class="deliveryform__title">Phone</span>
+                      <span className="deliveryform__title">Phone</span>
                         <InputMask
                           mask="+375 (99)9999999"
                           maskChar="_"
@@ -796,7 +683,7 @@ const Header = () => {
                   </div>
 
                   <div className="deliveryform__name">
-                      <span class="deliveryform__title">E-mail</span>
+                      <span className="deliveryform__title">E-mail</span>
                       <input
                           className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.email && formik.touched.email)})}
                           id="email"
@@ -815,7 +702,7 @@ const Header = () => {
                         }
                       </span>
                   </div>
-                  {isTypeDeliveryLoad === 'pickup from post offices' || isTypeDeliveryLoad === 'express delivery' ?
+                  {typeDeliveryLoad === 'pickup from post offices' || typeDeliveryLoad === 'express delivery' ?
                     <div>
                       <div className="deliveryform__name deliveryform__name_small">
                           <span class="deliveryform__title">Adress</span>
@@ -824,7 +711,7 @@ const Header = () => {
                               id="country"
                               type="text"
                               name="country"
-                              placeholder={isTypeDeliveryLoad === 'store pickup' ? "Country " : "Country"}
+                              placeholder={typeDeliveryLoad === 'store pickup' ? "Country " : "Country"}
                               value={formik.values.country}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
@@ -913,135 +800,112 @@ const Header = () => {
                     null
                   }
 
-                  {isTypeDeliveryLoad === 'store pickup' ?
-                  <div>
-                    <div className="deliveryform__name deliveryform__name_small">
-                        <span class="deliveryform__title">Adress of store</span>
+                  {typeDeliveryLoad === 'store pickup' ?
+                    <div>
+                      <div className="deliveryform__name deliveryform__name_small">
+                          <span class="deliveryform__title">Adress of store</span>
 
+                          <div className="deliveryform_wrapp">
+                            <div className='flex'>
+                              <input
+                                  autocomplete="off"
+                                  className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store && formik.touched.country_store)})}
+                                  id="country_store"
+                                  type="text"
+                                  name="country_store"
+                                  placeholder='Country'
+                                  value={
+                                    countryStoreVisible === true ? formik.values.country_store : formik.values.country_store                      
+                                    }
+                                  onChange={formik.handleChange}
+                                  onFocus={(e) => handleChangeOnFocusInput(e)}
+                                  onBlur={formik.handleBlur}
+                              />
+                              
+                              <button className="deliveryform_btn" disabled={true}>
+                                {
+                                  deliveryformBtn === false
+                                  ?
+                                    null
+                                  :
+                                    <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
+                                    </svg>
+                                }
+                              </button>
+                            </div>
+
+                            <div className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryformBtn })}>
+                              {typeDeliveryLoad === 'store pickup' ?
+                                loadingCountry.map((post) => {
+                                    return (
+                                      <div className="deliveryform_option" value={post.name} id={post.id} onClick={(e) => handleChangeCountryStore(e)}>{post.name}</div>
+                                    )
+                                })
+                                : null
+                              }
+                            </div> 
+                          </div>
+                          <span className="formik__error">
+                            {
+                              formik.errors.country_store && formik.touched.country_store
+                              ? formik.errors.country_store
+                              : null
+                            }
+                          </span>
+                      </div>
+
+                      <div className="deliveryform__name deliveryform__name_small">
                         <div className="deliveryform_wrapp">
                           <div className='flex'>
                             <input
-                                autocomplete="off"
-                                className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.country_store && formik.touched.country_store)})}
-                                id="country_store"
-                                type="text"
-                                name="country_store"
-                                placeholder='Country'
-                                value={
-                                  countryStoreVisible === true ? formik.values.country_store : formik.values.country_store                      
-                                  }
-                                onChange={formik.handleChange}
-                                onFocus={(e) => handleChangeOnFocusInput(e)}
-                                onBlur={formik.handleBlur}
+                              autoComplete="new-storeAddress"
+                              className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress && formik.touched.storeAddress)})}
+                              id="storeAddress"
+                              type="text"
+                              name="storeAddress"
+                              placeholder="Street adress"
+                              disabled={
+                                formik.values.country_store === "" ?
+                                true 
+                                : (formik.errors.country_store === undefined ? false : true)
+                                }
+                              value={
+                                adressStoreVisible === true ? formik.values.storeAddress : formik.values.storeAddress                      
+                                }
+                              onChange={formik.handleChange}
+                              onFocus={(e) => handleChangeAdressOnFocusInput(e)}
+                              onBlur={formik.handleBlur}
                             />
-                            
-                            {/* <button className="deliveryform_btn" onClick={(e) => handleChangeBtn(e)}> */}
+
                             <button className="deliveryform_btn" disabled={true}>
                               {
-                                deliveryformBtn === false ?
-                                null
-                                // <svg className="arrow_rotate" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                //   <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
-                                // </svg>
-                                :
+                                deliveryAdressBtn === true ?
                                 <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
                                 </svg>
+                                :
+                                null
                               }
                             </button>
                           </div>
-
-                          <div className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryformBtn })}>
-                            {isTypeDeliveryLoad === 'store pickup' ?
-                              isLoadingCountry.map((post) => {
+                        
+                          <div id="searchAdress" className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryAdressBtn })}>
+                            {loadingStoreAddress.length !== 0 ?
+                              loadingStoreAddress.map((post) => {
                                   return (
-                                    <div className="deliveryform_option" value={post.name} id={post.id} onClick={(e) => handleChangeCountryStore(e)}>{post.name}</div>
+                                    <div className="deliveryform_option" value={post.city} id={post.city} onClick={(e) => handleChangeAdressStore(e)}>
+                                      <HightLight formikValues={formik.values.storeAddress} dataCity={post.city}/>
+                                    </div>
                                   )
                               })
                               : null
                             }
-                          </div> 
+                          </div>
                         </div>
-                        <span className="formik__error">
-                          {
-                            formik.errors.country_store && formik.touched.country_store
-                            ? formik.errors.country_store
-                            : null
-                          }
+                        <span className="formik__desc">
+                          Введите город и выберите магазин из списка
                         </span>
-                    </div>
-
-                    <div className="deliveryform__name deliveryform__name_small">
-                      <div className="deliveryform_wrapp">
-                        <div className='flex'>
-                          <input
-                            autoComplete="new-storeAddress"
-                            //list="storeAddressDatalist"
-                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.storeAddress && formik.touched.storeAddress)})}
-                            id="storeAddress"
-                            type="text"
-                            name="storeAddress"
-                            placeholder="Street adress"
-                            disabled={
-                              formik.values.country_store === "" ?
-                              true 
-                              : (formik.errors.country_store === undefined ? false : true)
-                              }
-                            //value={formik.values.storeAddress}
-                            value={
-                              adressStoreVisible === true ? formik.values.storeAddress : formik.values.storeAddress                      
-                              }
-                            onChange={formik.handleChange}
-                            onFocus={(e) => handleChangeAdressOnFocusInput(e)}
-                            onBlur={formik.handleBlur}
-                          />
-
-                          {/* <button className="deliveryform_btn" onClick={(e) => handleChangeAdressBtn(e)}> */}
-                          <button className="deliveryform_btn" disabled={true}>
-                            {
-                              deliveryAdressBtn === true ?
-                              <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
-                              </svg>
-                              :
-                              null
-                              // <svg width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              //   <path d="M15.5 9L8 1.5L0.5 9" stroke="#9C9C9C" stroke-linecap="round"/>
-                              // </svg>
-                            }
-                          </button>
-                        </div>
-                      
-                        <div id="searchAdress" className={classNames('deliveryform_block', { deliveryform_block_avtive: deliveryAdressBtn })}>
-                          {isLoadingStoreAddress.length !== 0 ?
-                            isLoadingStoreAddress.map((post) => {
-                                return (
-                                  <div className="deliveryform_option" value={post.city} id={post.city} onClick={(e) => handleChangeAdressStore(e)}>
-                                    <HightLight filter={formik.values.storeAddress} str={post.city}/>
-                                  </div>
-                                  
-                                )
-                            })
-                            : null
-                          }
-                        </div>
-                      </div>
-
-
-
-
-
-                        {/* <datalist id="storeAddressDatalist">
-                          {isLoadingStoreAddress.length !== 0 ?
-                            isLoadingStoreAddress.map((post) => {
-                                return (
-                                  <option className="deliveryform_option" value={post.city} id={post.city}>{post.city}</option>
-                                )
-                            })
-                            : null
-                          }               
-                        </datalist> */}
-                        <span className="formik__desc">Введите город и выберите магазин из списка</span>
                         <span className="formik__error">
                           {
                             formik.errors.storeAddress && formik.touched.storeAddress
@@ -1049,61 +913,54 @@ const Header = () => {
                             : null
                           }
                         </span>
+                      </div>
                     </div>
-
-
-
-
-                  </div>
                   : null
                   }
-
-                  {isTypeDeliveryLoad === 'pickup from post offices' ?
-                      <div className="deliveryform__name deliveryform__name_postcode">
-                          <span class="deliveryform__title">Postcode</span>
-                          <InputMask
-                            mask="BY 999999"
-                            className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.postcode && formik.touched.postcode)})}
-                            id="postcode"
-                            type="text"
-                            name="postcode"
-                            placeholder="BY ______"
-                            value={formik.values.postcode}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                          />
-                          <span className="formik__error">
-                            {
-                              formik.errors.postcode && formik.touched.postcode
-                              ? formik.errors.postcode
-                              : null
-                            }
-                          </span>
-                      </div>
-                      : null
-                  }
-                  {checkBoxReset === true ?
-                  <div>
-                    <div className="deliveryform__checkbox">
-                      <input
-                        className='delivery__input-checkbox'
-                        type="checkbox"
-                        id="checkboxPolic"
-                        name="checkboxPolic"
-                        value={formik.values.checkboxPolic}
+                  {typeDeliveryLoad === 'pickup from post offices' ?
+                    <div className="deliveryform__name deliveryform__name_postcode">
+                      <span className="deliveryform__title">Postcode</span>
+                      <InputMask
+                        mask="BY 999999"
+                        className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.postcode && formik.touched.postcode)})}
+                        id="postcode"
+                        type="text"
+                        name="postcode"
+                        placeholder="BY ______"
+                        value={formik.values.postcode}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        //checked={Object.keys(formik.errors).length !== 0 ? false : true}
-                        //{agree === true ? checked : null}
-                        checked={formik.values.checkboxPolic === true ? true : false}
                       />
-                      <label
-                        className={classNames('delivery__label-checkbox', { delivery__label_error: (formik.errors.checkboxPolic && formik.touched.checkboxPolic)})}
-                        for="checkboxPolic"
-                      >
-                        I agree to the processing of my personal information
-                      </label>
+                      <span className="formik__error">
+                        {
+                          formik.errors.postcode && formik.touched.postcode
+                          ? formik.errors.postcode
+                          : null
+                        }
+                      </span>
                     </div>
+                    : null
+                  }
+                  {checkBoxReset === true ?
+                    <div>
+                      <div className="deliveryform__checkbox">
+                        <input
+                          className='delivery__input-checkbox'
+                          type="checkbox"
+                          id="checkboxPolic"
+                          name="checkboxPolic"
+                          value={formik.values.checkboxPolic}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          checked={formik.values.checkboxPolic === true ? true : false}
+                        />
+                        <label
+                          className={classNames('delivery__label-checkbox', { delivery__label_error: (formik.errors.checkboxPolic && formik.touched.checkboxPolic)})}
+                          for="checkboxPolic"
+                        >
+                          I agree to the processing of my personal information
+                        </label>
+                      </div>
                       <span className="formik__error">
                         {
                           formik.errors.checkboxPolic && formik.touched.checkboxPolic
@@ -1111,15 +968,14 @@ const Header = () => {
                           : null
                         }
                       </span>
-                  </div>
+                    </div>
                   : null
                   }
               </form>
             </div>
-              
 
             {/* Вывод оплаты */}
-            <div className={classNames('payment', { payment_activ: (isTypeButtonLoad === 'Payment') })}>
+            <div className={classNames('payment', { payment_activ: (typeButtonLoad === 'Payment') })}>
               <span className="delivery__title">
                 Method of payments
               </span>
@@ -1131,7 +987,7 @@ const Header = () => {
                           id="paypal"
                           name="btn"
                           onClick={(e) => changePaymentChose(e.target.id)}
-                          checked={isTypePaymentLoad === 'paypal' ? 'checked' : null}
+                          checked={typePaymentLoad === 'paypal' ? 'checked' : null}
                       />
                       <label className="delivery__label" for="paypal">
                         <img src={process.env.PUBLIC_URL + "/images/icon-paypal.png"} alt="paypal" />
@@ -1144,7 +1000,7 @@ const Header = () => {
                           id="visa"
                           name="btn"
                           onClick={(e) => changePaymentChose(e.target.id)}
-                          checked={isTypePaymentLoad === 'visa' ? 'checked' : null}
+                          checked={typePaymentLoad === 'visa' ? 'checked' : null}
                       />
                       <label className="delivery__label" for="visa">
                         <img src={process.env.PUBLIC_URL + "/images/icon-visa.png"} alt="visa" />
@@ -1157,7 +1013,7 @@ const Header = () => {
                           id="mastercard"
                           name="btn"
                           onClick={(e) => changePaymentChose(e.target.id)}
-                          checked={isTypePaymentLoad === 'mastercard' ? 'checked' : null}
+                          checked={typePaymentLoad === 'mastercard' ? 'checked' : null}
                       />
                       <label className="delivery__label" for="mastercard">
                         <img src={process.env.PUBLIC_URL + "/images/icon-mastercard.png"} alt="mastercard" />
@@ -1170,7 +1026,7 @@ const Header = () => {
                           id="cash"
                           name="btn"
                           onClick={(e) => changePaymentChose(e.target.id)}
-                          checked={isTypePaymentLoad === 'cash' ? 'checked' : null}
+                          checked={typePaymentLoad === 'cash' ? 'checked' : null}
                       />
                       <label className="delivery__label" for="cash">Cash</label>
                   </li>
@@ -1178,10 +1034,10 @@ const Header = () => {
 
               <form id='payment-form' className="deliveryform" name="form" onSubmit={formik.handleSubmit}>
                 {/* Проверка на VISA */}
-                {isTypePaymentLoad === 'visa' || isTypePaymentLoad === 'mastercard' ?
+                {typePaymentLoad === 'visa' || typePaymentLoad === 'mastercard' ?
                   <div className="deliveryform__wrap">
                     <div className="deliveryform__name">
-                        <span class="deliveryform__title">Card</span>
+                        <span className="deliveryform__title">Card</span>
                         <InputMask
                             mask="9999 9999 9999 9999"
                             maskChar="_"
@@ -1258,7 +1114,6 @@ const Header = () => {
                             </svg>
                           </button>
                         }
-                        
                         <span className="formik__error">
                           {
                             formik.errors.cardCVV && formik.touched.cardCVV
@@ -1272,9 +1127,9 @@ const Header = () => {
                 : null
                 }
 
-                {isTypePaymentLoad === 'paypal' ?
+                {typePaymentLoad === 'paypal' ?
                   <div className="deliveryform__name">
-                    <span class="deliveryform__title">E-mail</span>
+                    <span className="deliveryform__title">E-mail</span>
                     <input
                         className={classNames('deliveryform__input', { deliveryform__input_error: (formik.errors.cashEmail && formik.touched.cashEmail)})}
                         id="cashEmail"
@@ -1300,7 +1155,7 @@ const Header = () => {
 
             {/* Вывод заявки */}
             {
-            isTypeButtonLoad === 'Application'
+            typeButtonLoad === 'Application'
             ? 
               <div className="application">
                   {
@@ -1362,8 +1217,7 @@ const Header = () => {
             }
 
             {/* Вывод НИЗ корзины */}
-
-            <div className={classNames('basket__bottom', { display_none: (isTypeButtonLoad === 'Application') })}>
+            <div className={classNames('basket__bottom', { display_none: (typeButtonLoad === 'Application') })}>
               {
               productInCart.length > 0 ?
               <>
@@ -1373,7 +1227,7 @@ const Header = () => {
               </div>
 
               {
-                isTypeButtonLoad === "Item in Cart" ?
+                typeButtonLoad === "Item in Cart" ?
                   <div className="basket__bottom__btns">
                     <button
                       className="basket__bottom__btn basket__bottom__btn_black"
@@ -1387,7 +1241,7 @@ const Header = () => {
               }
 
               {
-                isTypeButtonLoad === "Delivery Info" ?
+                typeButtonLoad === "Delivery Info" ?
                   <div className="basket__bottom__btns">
                     <button
                       className="basket__bottom__btn basket__bottom__btn_black"
@@ -1403,7 +1257,7 @@ const Header = () => {
               }
 
               {
-                isTypeButtonLoad === "Payment" ?
+                typeButtonLoad === "Payment" ?
                   <div className="basket__bottom__btns">
                     <button
                       className="basket__bottom__btn basket__bottom__btn_black"
@@ -1411,7 +1265,7 @@ const Header = () => {
                       onClick={handleSubmitBtn}
                       form='payment-form'
                     >
-                      {isTypePaymentLoad === "cash" ? "READY" : "CHECK OUT"}
+                      {typePaymentLoad === "cash" ? "READY" : "CHECK OUT"}
 
                     </button>
                   </div>
@@ -1446,7 +1300,7 @@ const Header = () => {
             {/* Вывод кнопок на форме заявки */}
 
             {
-            isTypeButtonLoad === 'Application'
+            typeButtonLoad === 'Application'
             ?
             <div className="basket__bottom_application">
               {

@@ -8,7 +8,7 @@ import '../components/ProductList.css';
 import { useSelector } from "react-redux";
 import Loading from '../components/Loading';
 
-const CategoryHome = (props) => {
+export const CategoryHome = (props) => {
     const {category} = props;
     const arr = []; 
     let categor = ''
@@ -108,5 +108,3 @@ const CategoryHome = (props) => {
     </>
     )
 }
-
-export {CategoryHome}

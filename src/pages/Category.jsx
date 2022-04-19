@@ -9,7 +9,7 @@ import '../components/ProductList.css';
 import { useSelector } from "react-redux";
 import Loading from '../components/Loading';
 
-const Category = (props) => {
+export const Category = (props) => {
     const {category} = useParams();
     const arr = [];
     let colorResult = [];
@@ -464,5 +464,3 @@ const Category = (props) => {
         
     )
 }
-
-export {Category}

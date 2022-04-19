@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import loader from '../components/Loading.gif';
 import { useParams } from "react-router-dom";
 
-const Home = () => {
+export const Home = () => {
   const dispatch = useDispatch();
 
   const dataURL = useParams();
@@ -278,5 +278,3 @@ const Home = () => {
 </main>   
     )
 }
-
-export {Home}

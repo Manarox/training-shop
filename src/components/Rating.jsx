@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Rating = ({ rating, onClickRating }) => {
+export const Rating = ({ rating, onClickRating }) => {
     // const {rating} = props;
     // console.log({rating})
     return (
@@ -13,5 +13,3 @@ const Rating = ({ rating, onClickRating }) => {
 		</div>
     )
 }
-
-export {Rating}

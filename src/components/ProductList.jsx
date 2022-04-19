@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import { useFormik } from 'formik';
 import { useDispatch } from "react-redux";
 
-const ProductList = () => {
+export const ProductList = () => {
   const id = useParams();
   const {category} = useParams();
   const arr = [];
@@ -574,5 +574,3 @@ return (
   </div>
   )
 }
-
-export {ProductList}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Unique = (props) => {
+export const Unique = (props) => {
     const {content} = props;
 
     let arr = [];
@@ -27,5 +27,3 @@ const Unique = (props) => {
         </>   
     )
 }
-
-export {Unique}

@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
-const Slider = (props) => {
+export const Slider = (props) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const {images} = props;
     // console.log(`arr`, {images})
@@ -123,5 +123,3 @@ return (
     </>   
     )
 }
-
-export {Slider}

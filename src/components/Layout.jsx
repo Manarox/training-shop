@@ -5,7 +5,7 @@ import { Footer } from './Footer';
 import './Header.css';
 import './Footer.css';
 
-const Layout = () => {
+export const Layout = () => {
     return (
         <>
         <div data-test-id='app'>
@@ -18,5 +18,3 @@ const Layout = () => {
         </>        
     )
 }
-
-export {Layout}

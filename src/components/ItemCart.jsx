@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from "react-redux";
 
-const ItemCart = (props) => {
+export const ItemCart = (props) => {
     const product = props.product;
     const dispatch = useDispatch();
 
@@ -63,4 +63,3 @@ const ItemCart = (props) => {
     )
 
 }
-export {ItemCart}

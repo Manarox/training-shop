@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 
-const Footer = () => {
+export const Footer = () => {
     const dispatch = useDispatch();
     const dataURL = useParams();
  
@@ -233,5 +233,3 @@ const Footer = () => {
     </>
     )
 }
-
-export {Footer}

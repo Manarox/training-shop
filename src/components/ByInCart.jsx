@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-const ByInCart = (props) => {
+export const ByInCart = (props) => {
     const productitem = props.productitem;
     const dispatch = useDispatch();
 
@@ -48,5 +48,3 @@ const ByInCart = (props) => {
     )
 
 }
-
-export {ByInCart}

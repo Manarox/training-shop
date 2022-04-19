@@ -1,7 +1,7 @@
 import React from 'react';
 import { Rating } from './Rating';
 
-const Review = (props) => {
+export const Review = (props) => {
     const {reviews} = props;
 
     // console.log(`result`, result)
@@ -29,5 +29,3 @@ const Review = (props) => {
         </>   
     )
 }
-
-export {Review}

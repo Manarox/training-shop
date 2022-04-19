@@ -265,7 +265,6 @@ export const Category = (props) => {
     }
 
     useEffect(() => {
-
         toggleFilter(false);
         setUseColor([]);
         setUseSize([]);
@@ -461,6 +460,5 @@ export const Category = (props) => {
         </div>
         </div>
         </>
-        
     )
 }

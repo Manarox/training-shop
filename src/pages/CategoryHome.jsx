@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-// import Data from "./data.json";
-//import { PRODUCTS } from "../components/products.js";
 import { main_clothes_block_menu } from "../components/Buttons.jsx";
 import { ProductHome } from '../components/ProductHome';
 import '../components/ProductList.css';
@@ -12,13 +10,7 @@ export const CategoryHome = (props) => {
     const {category} = props;
     const arr = []; 
     let categor = ''
-    // let particulars = '';
-
-    //console.log(PRODUCTS)
-    
     const productsLoad = useSelector(state => state.loadReducer.products)
-    //console.log(productsLoad)
-
     let i = 0;
     if ({category}.category === 'women') {
         productsLoad.women.map(post => {

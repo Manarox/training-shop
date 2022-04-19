@@ -11,15 +11,12 @@ export const Unique = (props) => {
             arr.push(elem.color)
         )
     })
-    // console.log(`arr`, arr)
 
     for (let str of arr) {
         if (!result.includes(str)) {
             result.push(str);
         }
-        }
-
-    // console.log(`result`, result)
+    }
 
     return (
         <>

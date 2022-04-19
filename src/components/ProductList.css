@@ -232,11 +232,7 @@
 }
 /*Filtered*/
 .filtered {
-
-
   display: flex;
-
-
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
@@ -820,13 +816,6 @@ button {
   left: 12px;
   top: 7px;
 }
-
-
-
-
-
-
-
 
 /*related*/
 .related {

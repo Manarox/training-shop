@@ -179,15 +179,14 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
       validate: (values) => {
       let error = {};
   
-      //Валидация для Доставки
       if (typeButtonLoad === 'Delivery Info') {
-        //Валидация phone
+
         if (!values.phone || values.phone === "+375 (__)_______") {
           error.phone = 'Поле должно быть заполнено';
         } else if (!/(\+375 \(25|29|33|44)\)(\s|)[0-9]{7}/.test(values.phone)) {
           error.phone = 'Исправте формат номера телефона';
         }
-        //Валидация mail
+
         if (!values.email) {
           error.email = 'Поле должно быть заполнено';
         } else if (!/^[A-Z0-9._%+-]+(@[A-Z0-9.-]{2,63})+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -195,40 +194,38 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
         }
         
         if (typeDeliveryLoad === 'pickup from post offices' || typeDeliveryLoad === 'express delivery') {
-          //Валидация country
+
           if (!values.country) {
               error.country = 'Поле должно быть заполнено';
           }
-          //Валидация city
+
           if (!values.city) {
               error.city = 'Поле должно быть заполнено';
           }
-          //Валидация street
+
           if (!values.street) {
               error.street = 'Поле должно быть заполнено';
           }
-          //Валидация house
+
           if (!values.house) {
               error.house = 'Поле должно быть заполнено';
           }
-          //Валидация postcode
+
           if (typeDeliveryLoad === 'pickup from post offices') {
             if (!values.postcode || values.postcode === "BY ______") {
               error.postcode = 'Поле должно быть заполнено';
             } 
-            let str = values.postcode.split('_').join('');
-            if (str.length !== 9) {
+            const postcodeClear = values.postcode.split('_').join('');
+            if (postcodeClear.length !== 9) {
               error.postcode = 'Исправте формат почтового кода';
             }
           }
         }
 
-        //Валидация checkboxPolic
         if (!values.checkboxPolic) {
           error.checkboxPolic = 'Вы должны согласиться на обработку личной информации';
         }
         
-        //Валидация country_store
         if (typeDeliveryLoad === 'store pickup') {
           if (!values.country_store || values.country_store === 'Country') {
             error.country_store = 'Поле должно быть заполнено';
@@ -246,7 +243,7 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
           if (error.country_store !== undefined) {
             setDeliveryformBtn(true)
           }
-          //Валидация и запрос данных на storeAddress
+
           if (error.country_store === undefined) {
             if (values.storeAddress.length >= 3) {
               dispatch({ type: 'LOADING_STORE_ADDRESS', payload: {
@@ -256,11 +253,11 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
               })
             }
             let searchStoreAddress = loadingStoreAddress.find((post, i) => {
-              if (post.city === values.storeAddress) {
-                  return true;
-              } else {
-                  return false;
-              }
+                if (post.city === values.storeAddress) {
+                    return true;
+                } else {
+                    return false;
+                }
             });
             if (searchStoreAddress === undefined) {
               error.storeAddress = 'Вы должны выбрать страну из списка'
@@ -274,7 +271,6 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
           }
         }
       }
-      //Валидация для Оплаты
       if (typeButtonLoad === 'Payment') {
         if (typePaymentLoad === "visa" || typePaymentLoad === "mastercard") {
           if (!values.card) {
@@ -282,16 +278,16 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
           } else if (!/(\d{4})( )(\d{4})( )(\d{4})( )(\d{4})/i.test(values.card)) {
             error.card = 'Проверьте правильность введенных данных';
           }
-          //Валидация cardDate
+
           if (!values.cardDate) {
             error.cardDate = 'Поле должно быть заполнено';
           } else if (!/(01|02|03|04|05|06|07|08|09|10|11|12)(\/)(\d{2})/i.test(values.cardDate)) {
             error.cardDate = 'Проверьте правильность введенных данных';
           } else {
-            let monthCard = Number(values.cardDate.slice(0, 2));
-            let monthToday = Number(new Date().toLocaleDateString().slice(3, 5));
-            let yearCard = values.cardDate.slice(-2);
-            let yearToday = new Date().toLocaleDateString().slice(-2);
+            const monthCard = Number(values.cardDate.slice(0, 2));
+            const monthToday = Number(new Date().toLocaleDateString().slice(3, 5));
+            const yearCard = values.cardDate.slice(-2);
+            const yearToday = new Date().toLocaleDateString().slice(-2);
             if (yearCard < yearToday) {
               error.cardDate = 'Ваша карта недействительна';
             }
@@ -299,14 +295,14 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
               error.cardDate = 'Ваша карта недействительна';
             }
           }
-          //Валидация cardCVV
+
           if (!values.cardCVV) {
             error.cardCVV = 'Поле должно быть заполнено';
           } else if (values.cardCVV.length <= 2 || values.cardCVV.length >= 5) {
             error.cardCVV = 'Проверьте правильность введенных данных';
           }
         }
-        //Валидация cashEmail
+
         if (typePaymentLoad === "paypal") {
           if (!values.cashEmail) {
             error.cashEmail = 'Поле должно быть заполнено';

@@ -41,7 +41,6 @@ switch (action.type) {
         return { ...state, loadingCountryError: true };
     }
 
-
     case 'LOAD_STORE_ADDRESS_SUCCESS': {
         return { ...state, loadingStoreAddress: action.payload };
     }

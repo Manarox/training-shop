@@ -3,8 +3,6 @@ import { call, put, all, takeEvery, takeLatest } from 'redux-saga/effects';
 
 export const LOADING_COUNTRY = 'LOADING_COUNTRY'
 
-console.log('delivarySaga')
-
 function* loadingCountry() {
   try {
     const request = yield call(fetch, 'https://training.cleverland.by/shop/countries');

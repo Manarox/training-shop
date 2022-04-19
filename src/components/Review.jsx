@@ -3,13 +3,9 @@ import { Rating } from './Rating';
 
 export const Review = (props) => {
     const {reviews} = props;
-
-    // console.log(`result`, result)
-
     return (
         <>
             {{reviews}.reviews.map(post => {
-                // console.log(post.url)
                 return (
                     <div class="reviews__item" id={post.id}>
                         <div class="reviews__fio">

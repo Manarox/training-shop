@@ -27,7 +27,6 @@ function* loadingStoreAddress(action) {
 }
 
 function* loadingBasket(action) {
-  //const data = action.payload
   //ПРОВЕРКА
   let resultData = Object.assign({}, action.payload)
   //Формирование paymentMethod typePaymentLoad
@@ -48,7 +47,6 @@ function* loadingBasket(action) {
   delete resultData['country_store']
   //Удаление checkboxPolic
   delete resultData['checkboxPolic']
-  //
   try {
     const dataRequest = yield call(axios.post, 'https://training.cleverland.by/shop/cart', resultData);
     yield put({ type: 'LOAD_BASKET_SUCCESS', payload: dataRequest.data });

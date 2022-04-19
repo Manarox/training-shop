@@ -26,7 +26,6 @@ export const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ dataURL.id, dataURL.category ]);
 
-
   const formik = useFormik({
     initialValues: {
       mail: [],
@@ -34,7 +33,6 @@ export const Home = () => {
     onSubmit: (values) => {
       dispatch({ type: 'SEND_EMAIL', payload: formik.values.mail})
       dispatch({ type: 'SEND_EMAIL_SAGA', payload: formik.values.mail})
-      //formik.resetForm();
     },
     validate: (values) => {
       let error = {};

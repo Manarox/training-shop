@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HightLight = ({formikValues, dataCity}) => {
+export const HightLight = ({formikValues, dataCity}) => {
     if (!formikValues) return dataCity
     const regexp = new RegExp(formikValues, 'ig')
     const matchValue = dataCity.match(regexp)
@@ -15,5 +15,3 @@ const HightLight = ({formikValues, dataCity}) => {
     }
     return dataCity
 }
-
-export {HightLight}

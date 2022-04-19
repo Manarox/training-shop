@@ -53,7 +53,7 @@ export const ProductList = () => {
     return accumulator;
   }, []);
 
-  //Функция цвета//////////////////////////////////////////////////
+  //Функция цвета
   const [colorr, setColor] = useState(result[0].color);
   const [colorr_url, setColorUrl] = useState(result[0].url);
 
@@ -67,8 +67,8 @@ export const ProductList = () => {
       setColorUrl(result[0].url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id.id]);
-  //Конец функции цвета////////////////////////////////////////////
-  //Функция размера////////////////////////////////////////////////
+  //Конец функции цвета
+  //Функция размера
   const [sizee, setSize] = useState(resultArr[0].sizes[0]);
 
   const changeSize = (e) => {
@@ -80,7 +80,7 @@ export const ProductList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id.id]);
 
-  /////////Сборка продукта/////////
+  //Сборка продукта
     let arrColorUrl = []
     arrColorUrl.color = {colorr}.colorr
     arrColorUrl.url = {colorr_url}.colorr_url
@@ -228,7 +228,6 @@ return (
               <span class="color__text">size:</span><span class="color__span">{sizee}</span>
           </div>
           <ul class="size__image-list flex list-reset">
-
               {resultArr[0].sizes.map((post) => {
                   return (
 
@@ -238,17 +237,11 @@ return (
 
                   )
               })}
-
           </ul>
-
           <div class="size__guide">
               <button className="size__guide-btn">Size guide</button>
           </div>
       </div>
-
-
-
-
       <div class="strip"></div>
       <div class="actions">
         <div class="actions__price">
@@ -256,13 +249,6 @@ return (
         </div>
         <div class="actions__add">
           <ByInCart productitem={arrColorUrl}/>
-
-          {/* <button class="add-to-card" onClick={() => isFind()} id={colorr}>Add to card</button> */}
-
-          {/* {find === true ? <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card Удалить</button>
-          : <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card Добавить {colorr}</button>
-          } */}
-          {/* <button class="add-to-card" onClick={() => {dispatch(actionAddProduct)}}>Add to card</button> */}
         </div>
         <div class="actions__like">
           <button class="action__btn">
@@ -430,7 +416,6 @@ return (
             <textarea
               className="reviewform__rextarea"
               data-test-id="review-text-field"
-              
               placeholder="Комментарий"
               name="text"
               rows="10"
@@ -438,8 +423,6 @@ return (
               value={formik.values.text}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              // value={}
-              // onChange={}
             >
             </textarea>
             <span className="formik__error">{formik.errors.text}</span>

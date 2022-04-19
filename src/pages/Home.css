@@ -107,7 +107,6 @@
     opacity: 0.6;
     border-radius: 25px;
   }
-  
   /*Advantage*/
   .advantage {
     flex-wrap: wrap;
@@ -146,7 +145,6 @@
     font-size: 12px;
     line-height: 22px;
   }
-    
   /*news*/
   .news {
     padding-bottom: 96px;
@@ -185,7 +183,6 @@
   .news__item_span {
     color: #E91E63;
   }
-  
   /*subscrib*/
   .background-grey {
     background: linear-gradient(180deg, #F3F2F2 0%, #DCDBDB 100%);
@@ -270,8 +267,6 @@
     left: 28px;
     top: 3px;
   }
-
-
   .subscrib-bg {
     position: absolute;
     left: 42px;
@@ -344,7 +339,6 @@
     padding-right: 20px;
   }
 
-  
   /*latest*/
   .latest {
     flex-direction: column;

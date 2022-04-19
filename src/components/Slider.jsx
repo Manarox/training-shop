@@ -10,8 +10,6 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 export const Slider = (props) => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const {images} = props;
-    // console.log(`arr`, {images})
-
 return (
     <>
     <div className="prod__image flex" data-test-id="product-slider">
@@ -45,44 +43,14 @@ return (
                 style={{height: '500px'}}
                 >
                 {{images}.images.map(post => {
-                    // console.log(post.url)
                     return (
                         <SwiperSlide>
                             <div class="image__img-item">
-                                {/* <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="img"/> */}
                                 <img src={"https://training.cleverland.by/shop" + post.url} alt="Product name" class="image__small-img" />
                             </div>
                         </SwiperSlide>
                     )
                 })}
-
-                    {/* <SwiperSlide>
-                    <div class="image__img-item">
-                        <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="img"/>
-                    </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div class="image__img-item">
-                        <img src={process.env.PUBLIC_URL + "/images/prod-img-2.jpg"} alt="img"/>
-                    </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div class="image__img-item">
-                        <img src={process.env.PUBLIC_URL + "/images/prod-img-3.jpg"} alt="img"/>
-                    </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div class="image__img-item">
-                        <img src={process.env.PUBLIC_URL + "/images/prod-img-4.jpg"} alt="img"/>
-                    </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                    <div class="image__img-item">
-                        <img src={process.env.PUBLIC_URL + "/images/prod-img-1.jpg"} alt="img"/>
-                    </div>
-                    </SwiperSlide> */}
-
-
                 </Swiper>
             </div>
         </div>
@@ -96,28 +64,12 @@ return (
         style={{height: '555px'}}
         >
             {{images}.images.map(post => {
-                // console.log(post.url)
                 return (
                     <SwiperSlide>
                         <img className="big-image" src={"https://training.cleverland.by/shop" + post.url} alt="img"/>
                     </SwiperSlide>
                 )
             })}
-            {/* <SwiperSlide>
-                <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-            </SwiperSlide>
-            <SwiperSlide>
-                <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-            </SwiperSlide>
-            <SwiperSlide>
-                <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-            </SwiperSlide>
-            <SwiperSlide>
-                <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-            </SwiperSlide>
-            <SwiperSlide>
-                <img className="big-image" src={process.env.PUBLIC_URL + "/images/prod-image-full.jpg"} alt="img"/>
-            </SwiperSlide> */}
         </Swiper>
     </div>
     </>   

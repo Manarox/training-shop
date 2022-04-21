@@ -9,8 +9,6 @@ import { useDispatch } from "react-redux";
 import { useFormik } from 'formik';
 import InputMask from "react-input-mask";
 
-let cloneErrorsPostcode = ''
-
 export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxReset, setCheckBoxReset, tooggleBasketModeButton}) => {
     const dispatch = useDispatch();
     //Кнопка закрытия корзины, Очистка товаров
@@ -24,6 +22,7 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
       //Очищаем данные + в Форме
       formik.resetForm()
       setDeliveryformBtn(true)
+      setPasswordIcon(false)
       formik.values.checkboxPolic = false
       formik.values.country_store = ""
       formik.values.cardDate = ""
@@ -42,6 +41,7 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
       formik.resetForm()
       setCheckBoxReset(false)
       setDeliveryformBtn(true)
+      setPasswordIcon(false)
       formik.values.checkboxPolic = false
       formik.values.country_store = ""
       formik.values.cardDate = ""
@@ -75,16 +75,6 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
 
     //Выбор кнопки
     const { typeButtonLoad } = useSelector((state) => state.delivaryReducer);
-    //Показ и очистка checkbox формы
-
-    const handleAgree = () => {
-      if (formik.isValid !== true) {
-        formik.values.checkboxPolic = false
-      }
-      if (formik.isValid === true) {
-        dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
-      }
-    }
     const handleSubmitBtn = () => {
       formik.handleSubmit()
     }
@@ -98,30 +88,13 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
         dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Application'})
       } 
     };
-    //ФОРМА ДОСТАВКИ
+
     //Выбор radio доставки
     const { typeDeliveryLoad } = useSelector((state) => state.delivaryReducer);
     const changeDeliveryChose = (e) => {
       dispatch({ type: 'CHANGE_TYPE_DELIVERY_CHOSE', payload: e})
-      if (typeDeliveryLoad === "pickup from post offices") {
-        if (formik.errors.postcode !== undefined) {
-          cloneErrorsPostcode = formik.errors.postcode.slice();
-          delete formik.errors['postcode']
-        } 
-      }
-      if (typeDeliveryLoad === "express delivery") {
-        if (cloneErrorsPostcode !== undefined) {
-          formik.errors.postcode = cloneErrorsPostcode.slice();
-        }
-      }
       if ( e === "store pickup") {
-        //Загрузка данных СТРАНЫ при выборе пункта
         dispatch({ type: 'LOADING_COUNTRY'})
-        delete formik.errors['country']
-        delete formik.errors['city']
-        delete formik.errors['street']
-        delete formik.errors['house']
-        delete formik.errors['postcode']
       }
     };
 
@@ -165,7 +138,7 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
           formik.values.paymentMethod = typePaymentLoad
 
           if (typeButtonLoad === 'Delivery Info') {
-            //dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
+            dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Payment'})
             dispatch({ type: 'SEND_DELIVERY_FORM', payload: formik.values})
           }
 
@@ -173,12 +146,13 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
             dispatch({ type: 'CHANGE_TYPE_BUTTON', payload: 'Application'})
             dispatch({ type: 'SEND_BASKET', payload: formik.values})
           }
+          formik.setTouched({});
       },
       
       validate: (values) => {
       let error = {};
   
-      if (typeButtonLoad === 'Delivery Info') {
+      if (typeButtonLoadInStore === 'Delivery Info') {
 
         if (!values.phone || values.phone === "+375 (__)_______") {
           error.phone = 'Поле должно быть заполнено';
@@ -192,7 +166,7 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
           error.email = 'Исправте формат почты';
         }
         
-        if (typeDeliveryLoad === 'pickup from post offices' || typeDeliveryLoad === 'express delivery') {
+        if (typeDeliveryLoadInStore === 'pickup from post offices' || typeDeliveryLoadInStore === 'express delivery') {
 
           if (!values.country) {
               error.country = 'Поле должно быть заполнено';
@@ -210,22 +184,18 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
               error.house = 'Поле должно быть заполнено';
           }
 
-          if (typeDeliveryLoad === 'pickup from post offices') {
+          if (typeDeliveryLoadInStore === 'pickup from post offices') {
             if (!values.postcode || values.postcode === "BY ______") {
               error.postcode = 'Поле должно быть заполнено';
-            } 
-            const postcodeClear = values.postcode.split('_').join('');
+            }
+             const postcodeClear = values.postcode.split('_').join('');
             if (postcodeClear.length !== 9) {
               error.postcode = 'Исправте формат почтового кода';
             }
           }
         }
 
-        if (!values.checkboxPolic) {
-          error.checkboxPolic = 'Вы должны согласиться на обработку личной информации';
-        }
-        
-        if (typeDeliveryLoad === 'store pickup') {
+        if (typeDeliveryLoadInStore === 'store pickup') {
           if (!values.country_store || values.country_store === 'Country') {
             error.country_store = 'Поле должно быть заполнено';
           }
@@ -270,7 +240,15 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
           }
         }
       }
-      if (typeButtonLoad === 'Payment') {
+
+      if (!values.checkboxPolic) {
+        error.checkboxPolic = 'Вы должны согласиться на обработку личной информации';
+      }
+      if (Object.keys(error).length !== 0) {
+        values.checkboxPolic = false;
+      }
+
+      if (typeButtonLoadInStore === 'Payment') {
         if (typePaymentLoad === "visa" || typePaymentLoad === "mastercard") {
           if (!values.card) {
             error.card = 'Поле должно быть заполнено';
@@ -351,6 +329,9 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
     const handleChangePassword = (e) => {
       setPasswordIcon(!passwordIcon)
     }
+    //Получаем данные из store
+    const typeButtonLoadInStore = store.getState().delivaryReducer.typeButtonLoad
+    const typeDeliveryLoadInStore = store.getState().delivaryReducer.typeDeliveryLoad
     //Получение обновленного loadingDataRequest
     const dataRequest = store.getState().delivaryReducer.loadingDataRequest
     return (
@@ -914,21 +895,21 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
                         />
                         {
                           passwordIcon === false ?
-                          <button className="password-control" onClick={(e) => handleChangePassword(e)}>
+                          <span className="password-control" onClick={(e) => handleChangePassword(e)}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd" d="M2.06336 12C2.65768 10.8958 3.79576 9.33029 5.40445 8.0117C7.12095 6.60473 9.34594 5.5 12 5.5C14.654 5.5 16.879 6.60473 18.5955 8.0117C20.2042 9.33029 21.3423 10.8958 21.9366 12C21.3423 13.1042 20.2042 14.6697 18.5955 15.9883C16.879 17.3953 14.654 18.5 12 18.5C9.34594 18.5 7.12095 17.3953 5.40445 15.9883C3.79576 14.6697 2.65768 13.1042 2.06336 12ZM1.04153 12.1996C1.04585 12.2095 1.0505 12.2193 1.05547 12.229C1.66882 13.4536 2.93553 15.2576 4.77052 16.7617C6.61236 18.2714 9.05403 19.5 12 19.5C14.9459 19.5 17.3876 18.2714 19.2295 16.7617C21.0645 15.2576 22.3312 13.4535 22.9445 12.2289C22.9496 12.2191 22.9544 12.209 22.9588 12.1988C22.9868 12.1343 23.0001 12.0667 23.0001 12C23.0001 11.9333 22.9868 11.8657 22.9588 11.8012C22.9544 11.791 22.9496 11.7809 22.9445 11.7711C22.3312 10.5465 21.0645 8.74242 19.2295 7.2383C17.3876 5.7286 14.9459 4.5 12 4.5C9.05403 4.5 6.61236 5.7286 4.77052 7.2383C2.93553 8.74239 1.66882 10.5464 1.05547 11.771C1.0505 11.7807 1.04585 11.7905 1.04153 11.8004C1.01327 11.8652 0.999826 11.9331 0.999878 12C0.999826 12.0669 1.01327 12.1348 1.04153 12.1996Z" fill="#9C9C9C"/>
                               <path d="M10.5835 8.80421C10.4707 8.54955 10.5851 8.24824 10.8519 8.16829C11.5189 7.96844 12.2296 7.94534 12.9132 8.10563C13.7612 8.30448 14.5211 8.77468 15.0775 9.44481C15.6339 10.1149 15.9563 10.9484 15.9959 11.8185C16.0277 12.5198 15.8744 13.2142 15.5553 13.833C15.4276 14.0806 15.1104 14.1377 14.8808 13.9799V13.9799C14.6513 13.8222 14.5975 13.5093 14.7146 13.2565C14.9151 12.8233 15.0101 12.346 14.9882 11.8642C14.9586 11.2136 14.7175 10.5903 14.3014 10.0892C13.8853 9.58807 13.317 9.23644 12.6829 9.08774C12.2134 8.97764 11.7268 8.98324 11.2641 9.10069C10.9941 9.16922 10.6964 9.05888 10.5835 8.80421V8.80421Z" fill="#9C9C9C"/>
                               <path d="M14.1491 14.7638C14.3183 14.9814 14.2803 15.2979 14.0435 15.4387C13.3088 15.8752 12.4492 16.0674 11.5905 15.979C10.5654 15.8735 9.62052 15.3764 8.9529 14.5914C8.28528 13.8063 7.9464 12.7939 8.0069 11.7652C8.05758 10.9034 8.38527 10.0858 8.93417 9.4308C9.11115 9.21961 9.42966 9.233 9.61719 9.43488V9.43488C9.80473 9.63677 9.7891 9.95038 9.62103 10.1687C9.25601 10.6429 9.03859 11.2188 9.00301 11.8238C8.9576 12.5959 9.21195 13.3557 9.71302 13.9449C10.2141 14.5341 10.9232 14.9072 11.6926 14.9864C12.2954 15.0484 12.8988 14.9263 13.4254 14.6422C13.6679 14.5114 13.98 14.5463 14.1491 14.7638V14.7638Z" fill="#9C9C9C"/>
                               <path d="M3.5 2.5L20 21.5" stroke="#9C9C9C" stroke-linecap="round"/>
                             </svg>
-                          </button>
+                          </span>
                           :
-                          <button className="password-control" onClick={(e) => handleChangePassword(e)}>
+                          <span className="password-control" onClick={(e) => handleChangePassword(e)}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd" d="M2.06336 12C2.65768 10.8958 3.79576 9.33029 5.40445 8.0117C7.12095 6.60473 9.34594 5.5 12 5.5C14.654 5.5 16.879 6.60473 18.5955 8.0117C20.2042 9.33029 21.3423 10.8958 21.9366 12C21.3423 13.1042 20.2042 14.6697 18.5955 15.9883C16.879 17.3953 14.654 18.5 12 18.5C9.34594 18.5 7.12095 17.3953 5.40445 15.9883C3.79576 14.6697 2.65768 13.1042 2.06336 12ZM1.04153 12.1996C1.04585 12.2095 1.0505 12.2193 1.05547 12.229C1.66882 13.4536 2.93553 15.2576 4.77052 16.7617C6.61236 18.2714 9.05403 19.5 12 19.5C14.9459 19.5 17.3876 18.2714 19.2295 16.7617C21.0645 15.2576 22.3312 13.4535 22.9445 12.2289C22.9496 12.2191 22.9544 12.209 22.9588 12.1988C22.9868 12.1343 23.0001 12.0667 23.0001 12C23.0001 11.9333 22.9868 11.8657 22.9588 11.8012C22.9544 11.791 22.9496 11.7809 22.9445 11.7711C22.3312 10.5465 21.0645 8.74242 19.2295 7.2383C17.3876 5.7286 14.9459 4.5 12 4.5C9.05403 4.5 6.61236 5.7286 4.77052 7.2383C2.93553 8.74239 1.66882 10.5464 1.05547 11.771C1.0505 11.7807 1.04585 11.7905 1.04153 11.8004C1.01327 11.8652 0.999826 11.9331 0.999878 12C0.999826 12.0669 1.01327 12.1348 1.04153 12.1996Z" fill="#121212"/>
                               <circle cx="12" cy="12" r="3.5" stroke="#121212"/>
                             </svg>
-                          </button>
+                          </span>
                         }
                         <span className="formik__error">
                           {
@@ -1062,7 +1043,6 @@ export const Basket = ({isBasketOpen, toggleBasket, tooggleBasketMode, checkBoxR
                     <button
                       className="basket__bottom__btn basket__bottom__btn_black"
                       type="submit"
-                      onClick={handleAgree}
                       form='delivery-form'
                     >
                       FURTHER

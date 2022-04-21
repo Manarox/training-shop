@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-const Size = (props) => {
+export const Size = (props) => {
     const {product} = props;
-
-    console.log({product}.product.sizes[0])
 
     const [sizee, setSize] = useState({product}.product.sizes[0]);
 
@@ -14,7 +12,6 @@ const Size = (props) => {
     useEffect(() => {
         setSize({product}.product.sizes[0]);
     }, [product]);
-
 
     return (
         <>
@@ -43,5 +40,3 @@ const Size = (props) => {
         </>   
     )
 }
-
-export {Size}

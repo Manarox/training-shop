@@ -49,6 +49,8 @@ switch (action.type) {
         state.basket = newArr3.slice()
         return { ...state};
 
+    case 'RESET_ITEMS_IN_CART':
+        return { ...state, basket: [] };
     default:
         return state
     }

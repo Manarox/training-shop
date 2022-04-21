@@ -1,8 +1,6 @@
 import React from 'react';
 
-const Rating = ({ rating, onClickRating }) => {
-    // const {rating} = props;
-    // console.log({rating})
+export const Rating = ({ rating, onClickRating }) => {
     return (
         <div className='rating-block'>
             <img src={rating >= 1 ? process.env.PUBLIC_URL + "/images/i-star.png" : process.env.PUBLIC_URL + "/images/i-star-empty.png"} id="1" alt="Rating product" onClick={onClickRating} />
@@ -13,5 +11,3 @@ const Rating = ({ rating, onClickRating }) => {
 		</div>
     )
 }
-
-export {Rating}

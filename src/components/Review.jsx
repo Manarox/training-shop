@@ -1,15 +1,11 @@
 import React from 'react';
-import { Rating } from '../components/Rating';
+import { Rating } from './Rating';
 
-const Review = (props) => {
+export const Review = (props) => {
     const {reviews} = props;
-
-    // console.log(`result`, result)
-
     return (
         <>
             {{reviews}.reviews.map(post => {
-                // console.log(post.url)
                 return (
                     <div class="reviews__item" id={post.id}>
                         <div class="reviews__fio">
@@ -29,5 +25,3 @@ const Review = (props) => {
         </>   
     )
 }
-
-export {Review}

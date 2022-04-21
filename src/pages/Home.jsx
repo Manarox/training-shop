@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import loader from '../components/Loading.gif';
 import { useParams } from "react-router-dom";
 
-const Home = () => {
+export const Home = () => {
   const dispatch = useDispatch();
 
   const dataURL = useParams();
@@ -26,7 +26,6 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ dataURL.id, dataURL.category ]);
 
-
   const formik = useFormik({
     initialValues: {
       mail: [],
@@ -34,7 +33,6 @@ const Home = () => {
     onSubmit: (values) => {
       dispatch({ type: 'SEND_EMAIL', payload: formik.values.mail})
       dispatch({ type: 'SEND_EMAIL_SAGA', payload: formik.values.mail})
-      //formik.resetForm();
     },
     validate: (values) => {
       let error = {};
@@ -278,5 +276,3 @@ const Home = () => {
 </main>   
     )
 }
-
-export {Home}

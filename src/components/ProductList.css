@@ -232,11 +232,7 @@
 }
 /*Filtered*/
 .filtered {
-
-
   display: flex;
-
-
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
@@ -351,13 +347,20 @@ button {
   font: inherit;
   color: inherit;
   background-color: transparent;
-  /* отображаем курсор в виде руки при наведении; некоторые
-  считают, что необходимо оставлять стрелочный вид для кнопок */
+}
+.button-cart {
   cursor: pointer;
+}
+.basket__top__close {
+  cursor: pointer;
+}
+.basket__top__close_success {
+  display: none;
 }
 .product__link {
   font-weight: 500;
   opacity: 60%;
+  cursor: pointer;
 }
 .product__link_active {
   font-weight: 600;
@@ -533,6 +536,7 @@ button {
   line-height: 15px;
   text-transform: uppercase;
   color: #FFFFFF;
+  cursor: pointer;
 }
 .actions__add {
   padding-right: 16px;
@@ -813,13 +817,6 @@ button {
   top: 7px;
 }
 
-
-
-
-
-
-
-
 /*related*/
 .related {
   flex-direction: column;
@@ -847,6 +844,7 @@ button {
   background: #FFFFFF;
   opacity: 0.6;
   margin-right: 15px;
+  cursor: pointer;
 }
 .related__right {
   display: flex;
@@ -856,6 +854,7 @@ button {
   height: 40px;
   background: #FFFFFF;
   opacity: 0.6;
+  cursor: pointer;
 }
 .related__slide {
   display: flex;

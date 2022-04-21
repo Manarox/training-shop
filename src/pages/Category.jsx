@@ -9,7 +9,7 @@ import '../components/ProductList.css';
 import { useSelector } from "react-redux";
 import Loading from '../components/Loading';
 
-const Category = (props) => {
+export const Category = (props) => {
     const {category} = useParams();
     const arr = [];
     let colorResult = [];
@@ -265,7 +265,6 @@ const Category = (props) => {
     }
 
     useEffect(() => {
-
         toggleFilter(false);
         setUseColor([]);
         setUseSize([]);
@@ -461,8 +460,5 @@ const Category = (props) => {
         </div>
         </div>
         </>
-        
     )
 }
-
-export {Category}

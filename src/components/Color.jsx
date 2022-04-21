@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const Color = (props) => {
+export const Color = (props) => {
     const {res} = props;
 
     const [colorr, setColor] = useState({res}.res[0].color);
@@ -49,5 +49,3 @@ const Color = (props) => {
         </>   
     )
 }
-
-export {Color}
